@@ -2,13 +2,17 @@
  * Required External Modules
  */
 import * as dotenv from 'dotenv';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
+import debug from 'debug';
+import passport from 'passport';
 
 import { router } from './routes';
+import { HttpError } from './interfaces/error.interface';
+import { setupPassport } from './middlewares/auth.middleware';
 
 dotenv.config();
 
@@ -19,6 +23,7 @@ dotenv.config();
 const PORT: number = parseInt(process.env.PORT as string, 10) || 7000;
 
 const app = express();
+const debugLog: debug.IDebugger = debug('app');
 /**
  *  App Configuration
  */
@@ -43,7 +48,15 @@ if (!process.env.DEBUG) {
 
 app.use(expressWinston.logger(loggerOptions));
 
+setupPassport();
+app.use(passport.initialize());
+
 app.use('/', router);
+
+app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
+  debugLog(err);
+  return res.status(err.statusCode || err.status || 500).json(err);
+});
 
 /**
  * Server Activation
