@@ -19,7 +19,7 @@ export const setupPassport = () => {
       async (req: Request, email: string, password: string, done: Function) => {
         try {
           const user = await authServices.signup(req.body);
-  
+
           return done(null, user);
         } catch (error) {
           done(error);
@@ -41,7 +41,7 @@ export const setupPassport = () => {
             email,
             password,
           });
-  
+
           return done(null, user);
         } catch (error) {
           return done(error);
@@ -54,7 +54,7 @@ export const setupPassport = () => {
     new passportJwt.Strategy(
       {
         secretOrKey: 'TOP_SECRET',
-        jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken()
+        jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
       },
       async (token, done) => {
         try {
@@ -65,16 +65,35 @@ export const setupPassport = () => {
       }
     )
   );
-}
+};
 
-export const validateSameEmailDoesntExist = async (req: Request, res: Response, next: NextFunction) => {
+export const validateSameEmailDoesntExist = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const user = await userServices.getUserByEmail(req.body.email);
   if (user) {
-      res.status(httpStatus.BAD_REQUEST).send({ message: `User email already exists` });
+    res
+      .status(httpStatus.BAD_REQUEST)
+      .send({ message: `User email already exists` });
   } else {
-      next();
+    next();
   }
-}
+};
 
-export const authenticateUser = passport.authenticate('jwt', { session: false });
-
+export const authenticateJwt = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      res.setHeader('Authentication-Error', 'Invalid token');
+      res.send(httpStatus.UNAUTHORIZED);
+    }
+    req.user = user;
+    next();
+  })(req, res, next);
+};

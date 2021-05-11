@@ -1,0 +1,16 @@
+.login {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  text-align: center;
+
+  &__form {
+    margin-top: 20px;
+  }
+
+  &__access-switch {
+    margin-top: 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}

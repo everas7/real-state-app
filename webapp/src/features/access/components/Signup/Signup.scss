@@ -1,0 +1,23 @@
+.signup {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  text-align: center;
+  &__role-toggle {
+    margin-top: 20px;
+  }
+
+  &__form {
+    margin-top: 20px;
+  }
+
+  &__access-switch {
+    margin-top: 20px;
+
+    .control {
+      font-weight: 600;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  }
+}
