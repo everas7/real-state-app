@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import cx from 'classnames';
+import _ from 'lodash';
 
 import './Signup.scss';
 import { Input } from '../../../../components/Input/Input';
@@ -10,6 +11,7 @@ import { SignupForm } from '../../models/signup';
 import { Access } from '../../services/accessApi';
 import { useAppDispatch } from '../../../../store/hooks';
 import { login } from '../../services/accessSlice';
+import { signupSchema } from '../../validators/accessValidator';
 
 interface Props {
   onSwitch(): void;
@@ -60,13 +62,14 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
       <div className="signup__form">
         <Formik
           initialValues={{ name: '', email: '', password: '' }}
+          validationSchema={signupSchema}
           onSubmit={(values, { setSubmitting }) => {
             handleSignup({ ...values, role }).then(() => {
               setSubmitting(false);
             });
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, errors }) => (
             <Form>
               <Field
                 type="text"
@@ -86,8 +89,7 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
                 placeholder="Password"
                 component={Input}
               />
-              <ErrorMessage name="password" component="div" />
-              <Button type="submit" disabled={isSubmitting}>
+              <Button type="submit" disabled={isSubmitting || !_.isEmpty(errors)}>
                 SIGN UP
               </Button>
             </Form>

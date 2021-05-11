@@ -8,7 +8,14 @@ interface Props extends FormControlProps, FieldProps {}
 export const Input: React.FC<Props> = ({ field, form, meta, ...props }) => {
   return (
     <Form.Group className="form-input">
-      <Form.Control {...field} {...props}></Form.Control>
+      <Form.Control
+        {...field}
+        {...props}
+        isInvalid={form.touched[field.name] && !!form.errors[field.name]}
+      ></Form.Control>
+      <Form.Control.Feedback type="invalid">
+        {form.errors[field.name]}
+      </Form.Control.Feedback>
     </Form.Group>
   );
 };

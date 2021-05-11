@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import _ from 'lodash';
 
 import './Login.scss';
 import { Input } from '../../../../components/Input/Input';
 import Button from '../../../../components/Button/Button';
-import { login } from '../../services/accessSlice';
-import { useAppDispatch } from '../../../../store/hooks';
+import { login, selectAuthenticationError } from '../../services/accessSlice';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { loginSchema } from '../../validators/accessValidator';
 
 interface Props {
   onSwitch(): void;
@@ -13,6 +15,7 @@ interface Props {
 
 export default function Login({ onSwitch }: Props): React.ReactElement<Props> {
   const dispatch = useAppDispatch();
+  const authenticationError = useAppSelector(selectAuthenticationError);
   return (
     <div className="login">
       <div className="login__header">
@@ -21,12 +24,13 @@ export default function Login({ onSwitch }: Props): React.ReactElement<Props> {
       <div className="login__form">
         <Formik
           initialValues={{ email: '', password: '' }}
+          validationSchema={loginSchema}
           onSubmit={(values, { setSubmitting }) => {
             dispatch(login(values));
             setSubmitting(false);
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, errors }) => (
             <Form>
               <Field
                 type="email"
@@ -40,8 +44,15 @@ export default function Login({ onSwitch }: Props): React.ReactElement<Props> {
                 placeholder="Password"
                 component={Input}
               />
-              <ErrorMessage name="password" component="div" />
-              <Button type="submit" disabled={isSubmitting}>
+              {authenticationError && (
+                <div className="login__form-invalid-text text-danger">
+                  Invalid email or password, please try again
+                </div>
+              )}
+              <Button
+                type="submit"
+                disabled={isSubmitting || !_.isEmpty(errors)}
+              >
                 LOG IN
               </Button>
             </Form>
