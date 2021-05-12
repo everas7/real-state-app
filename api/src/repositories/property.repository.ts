@@ -40,3 +40,22 @@ export const create = async (
     (u) => findById(u.getDataValue('id')) as Promise<Property>
   );
 };
+
+export const update = async (
+  id: number,
+  property: PropertyCreationAttributes
+): Promise<Property> => {
+  return db.Property.update(property, {
+    where: {
+      id: property.id,
+    },
+  }).then(() => findById(id) as Promise<Property>);
+};
+
+export const remove = async (id: number): Promise<number> => {
+  return db.Property.destroy({
+    where: {
+      id,
+    },
+  });
+};
