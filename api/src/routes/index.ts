@@ -1,8 +1,9 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 
 import { userRouter } from './user.route';
 import { authRouter } from './auth.route';
 import { authenticateJwt } from '../middlewares/auth.middleware';
+import { propertyRouter } from './property.route';
 
 export const router = express.Router();
 
@@ -10,6 +11,11 @@ const routes = [
   {
     path: '/users',
     route: userRouter,
+    authenticate: true,
+  },
+  {
+    path: '/properties',
+    route: propertyRouter,
     authenticate: true,
   },
   {
@@ -24,10 +30,10 @@ router.get('/', (req: express.Request, res: express.Response) => {
 
 routes.forEach((route) => {
   router.use(
-    ...[
+    ...([
       route.path,
       route.authenticate ? authenticateJwt : null,
       route.route,
-    ].filter((r) => r)
+    ] as RequestHandler[]).filter((r) => r)
   );
 });

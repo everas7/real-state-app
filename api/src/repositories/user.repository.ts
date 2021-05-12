@@ -1,5 +1,6 @@
 import { User } from '../interfaces/user.interface';
 import db from '../models';
+import { UserCreationAttributes } from '../models/user.model';
 
 export const findAll = async (): Promise<User[]> => {
   return db.User.findAll().then((ul) =>
@@ -27,6 +28,6 @@ export const findByEmail = async (email: string): Promise<User | undefined> => {
   );
 };
 
-export const create = async (user: User): Promise<User | undefined> => {
+export const create = async (user: UserCreationAttributes): Promise<User | undefined> => {
   return db.User.create(user).then((u) => findById(u.getDataValue('id')));
 };

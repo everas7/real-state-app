@@ -55,6 +55,7 @@ app.use('/', router);
 
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
   debugLog(err);
+  console.log('LLEGO ?')
   return res.status(err.statusCode || err.status || 500).json(err);
 });
 

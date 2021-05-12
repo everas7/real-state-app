@@ -10,11 +10,4 @@ export interface User {
   updatedAt?: string;
 }
 
-export interface UserDto {
-  id: number;
-  name: string;
-  email: string;
-  role: Role;
-  createdAt?: string;
-  updatedAt?: string;
-}
+export interface UserDto extends Omit<User, 'password'> {}
