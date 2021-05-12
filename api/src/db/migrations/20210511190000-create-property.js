@@ -18,6 +18,7 @@ module.exports = {
         type: Sequelize.GEOMETRY('POINT', 4326),
         allowNull: false,
       },
+      address: { type: Sequelize.STRING, allowNull: true },
       realtorId: { type: Sequelize.INTEGER, allowNull: false },
       createdAt: {
         allowNull: false,

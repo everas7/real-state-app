@@ -24,6 +24,7 @@ export function initProperty(
     rooms: { type: Sequelize.INTEGER, allowNull: false },
     available: { type: Sequelize.BOOLEAN, allowNull: false },
     geolocation: { type: Sequelize.GEOMETRY('POINT', 4326), allowNull: false },
+    address: { type: Sequelize.STRING, allowNull: true },
     realtorId: { type: Sequelize.INTEGER, allowNull: false },
   };
   const Property: ModelDefined<

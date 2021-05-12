@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 
 import './index.scss';
-import Routes from './routes/Routes';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store/store';
 
@@ -15,7 +15,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router history={history}>
-        <Routes />
+        <App />
       </Router>
     </Provider>
   </React.StrictMode>,

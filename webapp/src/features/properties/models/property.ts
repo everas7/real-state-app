@@ -3,7 +3,7 @@ export interface GeoLocation {
   coordinates: number[];
 }
 
-export interface Property {
+export interface PropertyForList {
   id: number;
   name: string;
   description: string;
@@ -15,10 +15,5 @@ export interface Property {
   address: string;
   realtorId: number;
   createdAt?: string;
-  updatedAt?: string;
+  updatedAt?: string; 
 }
-
-export interface PropertyDto extends Property {}
-
-export interface PropertyForm
-  extends Omit<Property, 'id' | 'createdAt' | 'updatedAt'> {}

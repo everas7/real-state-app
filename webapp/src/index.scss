@@ -1,41 +1,25 @@
-
-body,html, #root {
-  height:100%;
-}
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body,
+html,
+#root {
+  height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+$customprimary: #3ab19b;
+$primary: #3eb49e;
 
-$customprimary: #3AB19B;
-$primary: #3EB49E;
-
-@import "../node_modules/bootstrap/scss/bootstrap";
-
+@import '../node_modules/bootstrap/scss/bootstrap';
 
 .btn-primary {
   @include button-variant(
     $customprimary,
     $customprimary,
     #ffffff,
-
     darken($customprimary, 5%),
     darken($customprimary, 5%),
     #ffffff,
-
     $customprimary,
     $customprimary,
     #ffffff,
-
     lighten($customprimary, 5%),
     lighten($customprimary, 5%),
     #ffffff
@@ -51,27 +35,14 @@ $primary: #3EB49E;
     #ffffff
   );
 }
-  
-// .btn-outline-primary {
-//   @include button-outline-variant($customprimary, #222222, lighten($customprimary,5%), $customprimary);
-// // }
-//    $color,
-//   $color-hover: color-contrast($color),
-//   $active-background: $color,
-//   $active-border: $color,
-//   $active-color: color-contrast($active-background)
 
-/*
-$background,
-$border,
-$color: color-contrast($background),
-$hover-background: if($color == $color-contrast-light, shade-color($background, $btn-hover-bg-shade-amount), tint-color($background, $btn-hover-bg-tint-amount)),
-$hover-border: if($color == $color-contrast-light, shade-color($border, $btn-hover-border-shade-amount), tint-color($border, $btn-hover-border-tint-amount)),
-$hover-color: color-contrast($hover-background),
-$active-background: if($color == $color-contrast-light, shade-color($background,$btn-active-bg-shade-amount), tint-color($background, $btn-active-bg-tint-amount)),
-$active-border: if($color == $color-contrast-light, shade-color($border, $btn-active-border-shade-amount), tint-color($border, $btn-active-border-tint-amount)),
-$active-color: color-contrast($active-background),
-$disabled-background: $background,
-$disabled-border: $border,
-$disabled-color: color-contrast($disabled-background)
-*/
+.app {
+  height: 100%;
+  &__header {
+    height: 10%;
+  }
+
+  &__body {
+    height: 90%;
+  }
+}
