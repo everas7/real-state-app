@@ -1,13 +1,13 @@
 import React from 'react';
 import { Form, FormControlProps } from 'react-bootstrap';
 import { FieldProps } from 'formik';
-import './Input.scss';
+import styles from './Input.module.scss';
 
 interface Props extends FormControlProps, FieldProps {}
 
 export const Input: React.FC<Props> = ({ field, form, meta, ...props }) => {
   return (
-    <Form.Group className="form-input">
+    <Form.Group className={styles.input}>
       <Form.Control
         {...field}
         {...props}

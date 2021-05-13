@@ -1,12 +1,12 @@
 import React from 'react';
 import { Navbar as BootstrapNavbar } from 'react-bootstrap';
 
-import './Navbar.scss';
+import styles from './Navbar.module.scss';
 
 export default function Navbar() {
   return (
-    <BootstrapNavbar>
-      <BootstrapNavbar.Brand>
+    <BootstrapNavbar className={styles.navbar}>
+      <BootstrapNavbar.Brand className={styles.navbar__brand}>
         Real State
       </BootstrapNavbar.Brand>
       <BootstrapNavbar.Toggle />

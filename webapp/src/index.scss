@@ -1,13 +1,14 @@
-body,
-html,
-#root {
-  height: 100%;
-}
 
 $customprimary: #3ab19b;
 $primary: #3eb49e;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
+
+body,
+html,
+#root {
+  height: 100%;
+}
 
 .btn-primary {
   @include button-variant(
@@ -34,15 +35,4 @@ $primary: #3eb49e;
     $customprimary,
     #ffffff
   );
-}
-
-.app {
-  height: 100%;
-  &__header {
-    height: 10%;
-  }
-
-  &__body {
-    height: 90%;
-  }
 }
