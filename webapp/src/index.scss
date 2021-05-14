@@ -1,6 +1,5 @@
-
-$customprimary: #3ab19b;
-$primary: #3eb49e;
+$customprimary: #157DFF;
+$primary: #157DFF;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
@@ -35,4 +34,15 @@ html,
     $customprimary,
     #ffffff
   );
+}
+
+.card {
+  background: #fff;
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }

@@ -1,0 +1,32 @@
+.property-details {
+  font-size: 14px;
+
+  &__name {
+    font-size: 20px;
+  }
+  &__price {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  &__address {
+    margin-top: 20px;
+  }
+
+  &__dimensions {
+    div {
+      margin-top: 20px;
+    }
+  }
+
+  &__description {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+    div {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+}

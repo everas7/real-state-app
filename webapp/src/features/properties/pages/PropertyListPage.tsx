@@ -4,6 +4,7 @@ import { Properties } from '../services/propertiesApi';
 import PropertyCard from '../components/PropertyCard/PropertyCard';
 import Map from '../../../components/Map/Map';
 import { Row, Col } from 'react-bootstrap';
+import { history } from '../../../index';
 
 export default function PropertyListPage() {
   const [properties, setProperties] = useState<PropertyForList[]>([]);
@@ -29,19 +30,25 @@ export default function PropertyListPage() {
         Apartments
         <Row>
           {properties.map((property) => (
-            <Col xl="6" lg="12" md="12" sm="12">
+            <Col
+              xl="6"
+              lg="12"
+              md="12"
+              sm="12"
+              onClick={() => history.push(`/apartments/${property.id}`)}
+            >
               <PropertyCard
                 title={property.name}
                 rooms={property.rooms}
                 price={property.price}
                 floorAreaSize={property.floorAreaSize}
-                address={'Av. Boulevard #21, Suite 20p'}
+                address={property.address}
               />
             </Col>
           ))}
         </Row>
       </Col>
-      <Col md="6">
+      <Col md="6" className="overflow-hidden mh-100">
         <div style={{ height: '100%', width: '100%' }}>
           {(properties.length && (
             <Map defaultCenter={defaultCenter} markers={coordinates} />

@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import httpStatus from 'http-status';
 
 import * as propertyService from '../services/property.service';
-import { toPropertyDto } from '../dtos/property.dto';
+import * as userService from '../services/user.service';
+import { toPropertyDto, toPropertyDetailedDto } from '../dtos/property.dto';
 import { User } from '../interfaces/user.interface';
 
 export const get = async (req: Request, res: Response) => {
@@ -13,7 +14,8 @@ export const get = async (req: Request, res: Response) => {
 };
 
 export const getById = async (req: Request, res: Response) => {
-  res.status(httpStatus.OK).send(toPropertyDto(req.property!));
+  const realtor = await userService.getById(req.property!.realtorId);
+  res.status(httpStatus.OK).send(toPropertyDetailedDto(req.property!, realtor!));
 };
 
 export const add = async (req: Request, res: Response) => {

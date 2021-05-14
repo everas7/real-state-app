@@ -1,3 +1,5 @@
+import { UserDto } from "./user.interface";
+
 export interface GeoLocation {
   type: 'POINT';
   coordinates: number[];
@@ -19,6 +21,9 @@ export interface Property {
 }
 
 export interface PropertyDto extends Property {}
+export interface PropertyDetailedDto extends Property {
+  realtor: UserDto;
+}
 
 export interface PropertyForm
   extends Omit<Property, 'id' | 'createdAt' | 'updatedAt'> {}

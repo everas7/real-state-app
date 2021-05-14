@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import './PropertyCard.scss';
+import styles from './PropertyCard.module.scss';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
+import * as Constants from '../../../../constants';
 
 interface Props {
   title: string;
@@ -19,18 +20,15 @@ export default function PropertyCard({
   price,
 }: Props): React.ReactElement<Props> {
   return (
-    <Card className="property-card">
-      <Card.Img
-        variant="top"
-        src="https://assets-us-01.kc-usercontent.com/28e7bd12-5b30-009d-524e-785407f8bd6e/b1d5e71f-9c8d-4398-be2a-80a2ebaf7832/Apartment-Living-Placeholder.png?w=600&h=400&fit=crop"
-      />
+    <Card className={styles['property-card']}>
+      <Card.Img variant="top" src={Constants.PROPERTY_PLACEHOLDER} />
       <Card.Body>
         <Card.Title>${price}</Card.Title>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{address}</Card.Text>
         <Card.Text>
-          {rooms} <FaBed color="#3eb49e" /> | {floorAreaSize} ft<sup>2</sup>{' '}
-          <FaRulerCombined color="#3eb49e" />
+          {rooms} <FaBed color={Constants.PRIMARY_COLOR} /> | {floorAreaSize} ft
+          <sup>2</sup> <FaRulerCombined color={Constants.PRIMARY_COLOR} />
         </Card.Text>
       </Card.Body>
     </Card>

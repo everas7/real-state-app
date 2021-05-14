@@ -12,6 +12,7 @@ export const create = {
       latitude: Joi.number().required(),
       longitude: Joi.number().required(),
     }).required(),
+    address: Joi.string().required(),
     realtorId: Joi.number().required(),
   }),
 };
@@ -28,6 +29,7 @@ export const update = {
       latitude: Joi.number().required(),
       longitude: Joi.number().required(),
     }).required(),
+    address: Joi.string().required(),
     realtorId: Joi.number().required(),
   }),
 };

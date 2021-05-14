@@ -17,3 +17,18 @@ export interface PropertyForList {
   createdAt?: string;
   updatedAt?: string; 
 }
+
+export interface Property {
+  id: number;
+  name: string;
+  description: string;
+  floorAreaSize: number;
+  price: number;
+  rooms: number;
+  available: boolean;
+  geolocation: GeoLocation;
+  address: string;
+  realtorId: number;
+  createdAt?: string;
+  updatedAt?: string; 
+}

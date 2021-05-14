@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { AccessPage } from './features/access';
-import { PropertyListPage } from './features/properties';
+import { PropertyListPage, PropertyDetailPage } from './features/properties';
 import * as authHelper from './helpers/authHelper';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { NotFound } from './components/NotFound/NotFound';
@@ -53,7 +49,7 @@ export default function Routes() {
         path="/*"
         render={() => (
           <>
-            <Container className="h-100 d-flex flex-column">
+            <Container className="d-flex flex-column vh-100 overflow-hidden">
               <Row className="flex-shrink-0">
                 <Navbar />
               </Row>
@@ -63,6 +59,12 @@ export default function Routes() {
                     path={['/', '/apartments']}
                     isLoggedIn={isAuthenticated}
                     component={PropertyListPage}
+                    exact
+                  />
+                  <PrivateRoute
+                    path={['/apartments/:id']}
+                    isLoggedIn={isAuthenticated}
+                    component={PropertyDetailPage}
                     exact
                   />
                   <Route path="/(.+)" component={NotFound} />
