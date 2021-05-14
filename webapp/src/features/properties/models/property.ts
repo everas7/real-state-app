@@ -15,7 +15,7 @@ export interface PropertyForList {
   address: string;
   realtorId: number;
   createdAt?: string;
-  updatedAt?: string; 
+  updatedAt?: string;
 }
 
 export interface Property {
@@ -29,6 +29,22 @@ export interface Property {
   geolocation: GeoLocation;
   address: string;
   realtorId: number;
+  realtor: Realtor;
   createdAt?: string;
-  updatedAt?: string; 
+  updatedAt?: string;
+}
+
+export type Role = 'CLIENT' | 'REALTOR' | 'ADMIN';
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  role: Role;
+  createdAt?: string;
+  updatedAt?: string;
+}
+export interface Realtor extends User {
+  role: 'CLIENT';
 }

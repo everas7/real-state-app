@@ -31,6 +31,11 @@ export default function PropertyDetails({
         Description
         <div>{property.description}</div>
       </div>
+      <div className={styles['property-details__realtor']}>
+        Contact Information
+        <div>{property.realtor.name}</div>
+        <div>{property.realtor.email}</div>
+      </div>
     </div>
   );
 }
