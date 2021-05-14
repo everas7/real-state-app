@@ -1,0 +1,17 @@
+.property-form-page {
+  &__content {
+    overflow-y: scroll;
+    height: 100%;
+  }
+  &__map {
+    height: 50%;
+    margin-top: 10px;
+  }
+
+  &__controls {
+    margin-bottom: 15px;
+    button:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}

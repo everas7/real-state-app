@@ -16,6 +16,7 @@ export default function Map({
   defaultCenter,
   markers,
   className,
+  ...props
 }: Props): React.ReactElement<Props> {
   return (
     <div className={cx(styles.map, className)}>
@@ -25,6 +26,7 @@ export default function Map({
         }}
         defaultCenter={defaultCenter}
         defaultZoom={15}
+        {...props}
       >
         {markers.map((marker) => (
           <MapMarker lat={marker.lat} lng={marker.lng} />

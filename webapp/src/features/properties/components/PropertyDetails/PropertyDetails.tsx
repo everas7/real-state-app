@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
-import { Property } from '../../models/property';
+import { Property, GeoLocation, IPropertyForm } from '../../models/property';
 import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../constants';
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, FormikContextType, useField } from 'formik';
 import { Input } from '../../../../components/Input/Input';
 import { propertySchema } from '../../validators/propertyValidator';
-import { TabContent } from 'react-bootstrap';
+import { getGeolocationByAddress } from '../../../../services/googleApi';
+
+interface Values
+  extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
+
 interface Props {
   property: Property;
   edit?: boolean;
+  formik?: FormikContextType<Values>;
 }
 
 export default function PropertyDetails({
   property,
   edit = false,
+  formik,
 }: Props): React.ReactElement<Props> {
   return (
     <div className={styles['property-details']}>
@@ -25,6 +31,8 @@ export default function PropertyDetails({
             name="name"
             placeholder="Apartment Name"
             component={Input}
+            value={formik!.values.name}
+            onChange={formik!.handleChange}
           />
         ) : (
           property.name
@@ -37,6 +45,8 @@ export default function PropertyDetails({
             name="price"
             placeholder="$0000"
             component={Input}
+            value={formik!.values.price}
+            onChange={formik!.handleChange}
           />
         ) : (
           `$${property.price}`
@@ -49,6 +59,8 @@ export default function PropertyDetails({
             name="address"
             placeholder="Address"
             component={Input}
+            value={formik!.values.address}
+            onChange={formik!.handleChange}
           />
         ) : (
           property.address
@@ -62,6 +74,8 @@ export default function PropertyDetails({
               name="rooms"
               placeholder="0"
               component={Input}
+              value={formik!.values.rooms}
+              onChange={formik!.handleChange}
               icon={<FaBed color={Constants.PRIMARY_COLOR} />}
             />
           ) : (
@@ -79,6 +93,8 @@ export default function PropertyDetails({
               name="floorAreaSize"
               placeholder="0 ft²"
               component={Input}
+              value={formik!.values.floorAreaSize}
+              onChange={formik!.handleChange}
               icon={<FaRulerCombined color={Constants.PRIMARY_COLOR} />}
             />
           ) : (
@@ -95,7 +111,11 @@ export default function PropertyDetails({
           <Field
             name="description"
             placeholder="Description of the apartment"
-            component={(props: any) => <Input as="textarea" {...props} rows={3} />}
+            value={formik!.values.description}
+            onChange={formik!.handleChange}
+            component={(props: any) => (
+              <Input as="textarea" {...props} rows={3} />
+            )}
           />
         ) : (
           <div>{property.description}</div>

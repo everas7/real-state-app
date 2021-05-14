@@ -34,7 +34,7 @@ export interface Property {
   updatedAt?: string;
 }
 
-export interface PropertyForm
+export interface IPropertyForm
   extends Omit<Property, 'id' | 'realtor' | 'createdAt' | 'updatedAt'> {}
 
 export type Role = 'CLIENT' | 'REALTOR' | 'ADMIN';
