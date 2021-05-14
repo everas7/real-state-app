@@ -36,3 +36,11 @@ export interface PropertyDetailedDto extends PropertyDto {
 
 export interface PropertyForm
   extends Omit<Property, 'id' | 'createdAt' | 'updatedAt'> {}
+
+export interface PropertyFilters {
+  minPrice?: number;
+  maxPrice?: number;
+  minFloorAreaSize?: number;
+  maxFloorAreaSize?: number;
+  rooms?: number[];
+}

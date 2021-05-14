@@ -17,6 +17,19 @@ export const create = {
   }),
 };
 
+
+export const get = {
+  query: Joi.object().keys({
+    filters: Joi.object().keys({
+      minFloorAreaSize: Joi.number(),
+      maxFloorAreaSize: Joi.number(),
+      minPrice: Joi.number(),
+      maxPrice: Joi.number(),
+      rooms: Joi.array().items(Joi.number()),
+    }),
+  }),
+};
+
 export const update = {
   body: Joi.object().keys({
     name: Joi.string().required(),

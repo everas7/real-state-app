@@ -5,9 +5,10 @@ import * as propertyService from '../services/property.service';
 import * as userService from '../services/user.service';
 import { toPropertyDto, toPropertyDetailedDto } from '../dtos/property.dto';
 import { User } from '../interfaces/user.interface';
+import { PropertyFilters } from '../interfaces/property.interface';
 
 export const get = async (req: Request, res: Response) => {
-  const properties = (await propertyService.getAll(req.user as User)).map((u) =>
+  const properties = (await propertyService.getAll(req.user as User, req.query.filters  as PropertyFilters || {})).map((u) =>
     toPropertyDto(u)
   );
   res.status(httpStatus.OK).send(properties);

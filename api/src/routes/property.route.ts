@@ -14,7 +14,12 @@ import { setUserInRequest } from '../middlewares/custom.middleware';
 
 export const propertyRouter = express.Router();
 
-propertyRouter.get('/', setUserInRequest, catchAsync(propertyController.get));
+propertyRouter.get(
+  '/',
+  validate(propertyValidator.get),
+  setUserInRequest,
+  catchAsync(propertyController.get)
+);
 
 propertyRouter.get(
   '/:id',
