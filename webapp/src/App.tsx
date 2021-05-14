@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { AccessPage } from './features/access';
-import { PropertyListPage, PropertyDetailPage } from './features/properties';
+import { PropertyListPage, PropertyDetailPage, PropertyEditPage } from './features/properties';
 import * as authHelper from './helpers/authHelper';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { NotFound } from './components/NotFound/NotFound';
@@ -65,6 +65,12 @@ export default function Routes() {
                     path={['/apartments/:id']}
                     isLoggedIn={isAuthenticated}
                     component={PropertyDetailPage}
+                    exact
+                  />
+                  <PrivateRoute
+                    path={['/apartments/:id/edit']}
+                    isLoggedIn={isAuthenticated}
+                    component={PropertyEditPage}
                     exact
                   />
                   <Route path="/(.+)" component={NotFound} />

@@ -15,13 +15,13 @@ export default function PropertyListPage() {
   }, []);
 
   const defaultCenter = {
-    lat: properties[0]?.geolocation.coordinates[0] || 0,
-    lng: properties[0]?.geolocation.coordinates[1] || 0,
+    lat: properties[0]?.geolocation.latitude || 0,
+    lng: properties[0]?.geolocation.longitude || 0,
   };
 
   const coordinates = properties.map((p) => ({
-    lat: p.geolocation.coordinates[0],
-    lng: p.geolocation.coordinates[1],
+    lat: p.geolocation.latitude,
+    lng: p.geolocation.longitude,
   }));
 
   return (

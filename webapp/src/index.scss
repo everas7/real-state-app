@@ -1,5 +1,5 @@
-$customprimary: #157DFF;
-$primary: #157DFF;
+$customprimary: #157dff;
+$primary: #157dff;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
@@ -45,4 +45,31 @@ html,
 
 .card:hover {
   transform: scale(1.05);
+}
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon {
+  left: 0px;
+}
+.right-addon .glyphicon {
+  right: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+  padding-left: 30px;
+}
+.right-addon input {
+  padding-right: 30px;
 }

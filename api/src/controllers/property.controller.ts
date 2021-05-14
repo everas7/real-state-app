@@ -29,7 +29,7 @@ export const add = async (req: Request, res: Response) => {
       ],
     },
   });
-  res.status(httpStatus.OK).send(toPropertyDto(property));
+  res.status(httpStatus.OK).send(toPropertyDetailedDto(property));
 };
 
 export const update = async (req: Request, res: Response) => {
@@ -43,7 +43,8 @@ export const update = async (req: Request, res: Response) => {
       ],
     },
   });
-  res.status(httpStatus.OK).send(toPropertyDto(property));
+  console.log(property, 'KLk')
+  res.status(httpStatus.OK).send(toPropertyDetailedDto(property));
 };
 
 export const remove = async (req: Request, res: Response) => {

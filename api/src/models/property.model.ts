@@ -38,5 +38,7 @@ export function initProperty(
     as: 'properties',
   });
 
+  Property.belongsTo(User, {  foreignKey: 'realtorId', as: 'realtor' });
+
   return Property;
 }

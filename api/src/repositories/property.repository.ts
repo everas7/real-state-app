@@ -1,5 +1,5 @@
 import { Property } from '../interfaces/property.interface';
-import db from '../models';
+import db, { User } from '../models';
 import { Fn, Literal, Where } from 'sequelize/types/lib/utils';
 import { WhereAttributeHash, AndOperator, OrOperator } from 'sequelize/types';
 import { PropertyCreationAttributes } from '../models/property.model';
@@ -26,7 +26,9 @@ export const findAllWhere = async (where: WhereType): Promise<Property[]> => {
 };
 
 export const findById = async (id: number): Promise<Property | undefined> => {
-  return db.Property.findByPk(id).then((m) =>
+  return db.Property.findByPk(id, {
+    include: 'realtor'
+  }).then((m) =>
     m?.get({
       plain: true,
     })
@@ -47,7 +49,7 @@ export const update = async (
 ): Promise<Property> => {
   return db.Property.update(property, {
     where: {
-      id: property.id,
+      id,
     },
   }).then(() => findById(id) as Promise<Property>);
 };

@@ -1,6 +1,6 @@
 export interface GeoLocation {
-  type: 'POINT';
-  coordinates: number[];
+  latitude: number;
+  longitude: number;
 }
 
 export interface PropertyForList {
@@ -33,6 +33,9 @@ export interface Property {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface PropertyForm
+  extends Omit<Property, 'id' | 'realtor' | 'createdAt' | 'updatedAt'> {}
 
 export type Role = 'CLIENT' | 'REALTOR' | 'ADMIN';
 

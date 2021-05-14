@@ -9,6 +9,8 @@ import { Property } from '../../models/property';
 import { Properties } from '../../services/propertiesApi';
 import Map from '../../../../components/Map/Map';
 import styles from './PropertyDetailPage.module.scss';
+import Button from '../../../../components/Button/Button';
+import { history } from '../../../../index';
 
 export default function PropertyDetailPage() {
   const [property, setProperty] = useState<Property>();
@@ -23,32 +25,62 @@ export default function PropertyDetailPage() {
 
   if (property) {
     coordinate = {
-      lat: property?.geolocation.coordinates[0],
-      lng: property?.geolocation.coordinates[1],
+      lat: property?.geolocation.latitude,
+      lng: property?.geolocation.longitude,
     };
   }
 
+  function changeAvailability() {
+    const propertyValues = property!;
+    const propertyForm = {
+      name: propertyValues.name,
+      description: propertyValues.description,
+      floorAreaSize: propertyValues.floorAreaSize,
+      price: propertyValues.price,
+      rooms: propertyValues.rooms,
+      available: !propertyValues.available,
+      geolocation: propertyValues.geolocation,
+      address: propertyValues.address,
+      realtorId: propertyValues.realtorId,
+    }
+    Properties.update(+id, propertyForm).then((res) => {
+      setProperty(res);
+    });
+  }
+  if(!property) return <div>Loading Aparment...</div>;
   return (
     <>
       <Breadcrumb items={[{ name: 'Appartments', path: '/' }, { name: id }]} />
-      <Row
-        className={cx('flex-shrink-0', styles['property-detail-page__content'])}
-      >
-        <Col md="6">
-          <PropertyCorousel />
-        </Col>
-        <Col md="6">
-          {(property && <PropertyDetails property={property} />) || ''}
-        </Col>
-      </Row>
-      <Row className={cx('flex-grow-1', styles['property-detail-page__map'])}>
-        <Col md="12">
-          {(property && coordinate && (
-            <Map defaultCenter={coordinate} markers={[coordinate]} />
-          )) ||
-            ''}
-        </Col>
-      </Row>
+      <Col className={cx(styles['property-detail-page__content'])}>
+        <Row className={cx('')}>
+          <Col md="6">
+            <Row>
+              <PropertyCorousel />
+            </Row>
+            <Row
+              className={cx(styles['property-detail-page__map'], 'flex-grow-1')}
+            >
+              {(property && coordinate && (
+                <Map defaultCenter={coordinate} markers={[coordinate]} />
+              )) ||
+                ''}
+            </Row>
+          </Col>
+          <Col md="6" className="flex-grow-1">
+            <div className={styles['property-detail-page__controls']}>
+              <Button onClick={() => history.push(`/apartments/${id}/edit`)}>
+                Edit Apartment
+              </Button>
+              <Button variant="success" onClick={changeAvailability}>
+                {property.available ? 'Set as Rented' : 'Set as Available'}
+              </Button>
+              <Button variant="danger">Delete</Button>
+            </div>
+
+            {(property && <PropertyDetails property={property} />) || ''}
+          </Col>
+        </Row>
+      </Col>
     </>
   );
 }
