@@ -11,6 +11,7 @@ interface Props {
   floorAreaSize: number;
   price: number;
   available: boolean;
+  onClick?(): void;
 }
 
 export default function PropertyCard({
@@ -20,9 +21,10 @@ export default function PropertyCard({
   floorAreaSize,
   price,
   available,
+  onClick,
 }: Props): React.ReactElement<Props> {
   return (
-    <Card className={styles['property-card']}>
+    <Card className={styles['property-card']} onClick={onClick}>
       <Card.Img variant="top" src={Constants.PROPERTY_PLACEHOLDER} />
       <Card.Body>
         <Card.Title>${price.toLocaleString()}</Card.Title>

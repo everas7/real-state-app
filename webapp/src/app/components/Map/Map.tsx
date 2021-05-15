@@ -4,18 +4,31 @@ import GoogleMapReact, { Props as GoogleMapReactProps } from 'google-map-react';
 import { MapMarker } from '../MapMarker/MapMarker';
 import styles from './Map.module.scss';
 
+export interface IMarker {
+  id?: number;
+  lat: number;
+  lng: number;
+}
+
 interface Props extends GoogleMapReactProps {
-  markers: {
-    lat: number;
-    lng: number;
-  }[];
+  markers: IMarker[];
   className?: string;
+  popupComponent?: React.FunctionComponent<any>;
+  popupInfo?: IMarker;
+  onMarkerClick?(id: number): void;
+  onMarkerMouseIn?(id: number): void;
+  onMarkerMouseOut?(): void;
 }
 
 export function Map({
   defaultCenter,
   markers,
   className,
+  popupComponent: Popup,
+  popupInfo,
+  onMarkerClick,
+  onMarkerMouseIn,
+  onMarkerMouseOut,
   ...props
 }: Props): React.ReactElement<Props> {
   return (
@@ -28,13 +41,23 @@ export function Map({
         defaultZoom={15}
         {...props}
       >
-        {markers.map((marker, i) => (
+        {markers.map((marker) => (
           <MapMarker
-            key={`${JSON.stringify(marker)}  ${i}`}
+            key={`${JSON.stringify(marker)}`}
             lat={marker.lat}
             lng={marker.lng}
+            onClick={() => onMarkerClick && onMarkerClick(marker.id!)}
+            onMouseOver={() => onMarkerMouseIn && onMarkerMouseIn(marker.id!)}
+            onMouseOut={() => onMarkerMouseOut && onMarkerMouseOut()}
           />
         ))}
+        {popupInfo && Popup && (
+          <Popup
+            onClick={() => onMarkerClick && onMarkerClick(popupInfo.id!)}
+            lat={popupInfo.lat}
+            lng={popupInfo.lng}
+          />
+        )}
       </GoogleMapReact>
     </div>
   );

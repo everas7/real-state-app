@@ -5,7 +5,7 @@ import { PropertyForList } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import PropertyFilters from '../../components/PropertyFilters/PropertyFilters';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
-import { Button, Map } from '../../../../app/components';
+import { Button, Map, IMarker } from '../../../../app/components';
 import { history } from '../../../../index';
 import styles from './PropertyListPage.module.scss';
 
@@ -23,6 +23,7 @@ export default function PropertyListPage() {
   };
 
   const coordinates = properties.map((p) => ({
+    id: p.id,
     lat: p.geolocation.latitude,
     lng: p.geolocation.longitude,
   }));
@@ -32,6 +33,43 @@ export default function PropertyListPage() {
       setProperties(res);
     });
   }
+  const [popupCoordinates, setPopupCoordinates] =
+    useState<undefined | IMarker>();
+
+  function handleMarkerClick(id: number) {
+    history.push(`/apartments/${id}`);
+  }
+
+  function handleMarkerMouseIn(id: number) {
+    const coord = coordinates.find((c) => c.id === id)!;
+    setPopupCoordinates({
+      id: coord.id!,
+      lat: coord.lat,
+      lng: coord.lng,
+    });
+  }
+
+  function handleMarkerMouseOut() {
+    setPopupCoordinates(undefined);
+  }
+
+  const Popup = () => {
+    if (!popupCoordinates) return null;
+    let propertyInfo = properties.find((p) => p.id === popupCoordinates.id);
+    propertyInfo = propertyInfo!;
+    return (
+      <div className={styles['property-list-page__map-property']}>
+        <PropertyCard
+          title={propertyInfo.name}
+          rooms={propertyInfo.rooms}
+          price={propertyInfo.price}
+          floorAreaSize={propertyInfo.floorAreaSize}
+          address={propertyInfo.address}
+          available={propertyInfo.available}
+        />
+      </div>
+    );
+  };
 
   return (
     <>
@@ -73,7 +111,15 @@ export default function PropertyListPage() {
       <Col md="5" className="overflow-hidden mh-100">
         <div style={{ height: '100%', width: '100%' }}>
           {(properties.length && (
-            <Map defaultCenter={defaultCenter} markers={coordinates} />
+            <Map
+              defaultCenter={defaultCenter}
+              markers={coordinates}
+              onMarkerClick={handleMarkerClick}
+              onMarkerMouseIn={handleMarkerMouseIn}
+              onMarkerMouseOut={handleMarkerMouseOut}
+              popupComponent={Popup}
+              popupInfo={popupCoordinates}
+            />
           )) ||
             ''}
         </div>
