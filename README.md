@@ -13,6 +13,9 @@ The project is composed by an API built on Node.js and a client webapp built wit
 
 API Structure
 - controllers
+- custom-typings
+- db
+- dtos
 - helpers
 - interfaces
 - middlewares
@@ -23,13 +26,22 @@ API Structure
 - validators
 
 WebApp Structure
-- assets
-- components
-- helpers
-- models
-- modules
-- routes
-- services
+- app
+   - assets
+   - components
+   - constants
+   - helpers
+   - models
+   - routes
+   - services
+   - store
+- features
+   - feature-a
+      - components
+      - pages
+      - services
+      - validators
+
 
 # Setting Up Project
 ## Environment Variables
