@@ -6,3 +6,4 @@ export * from './MapMarker/MapMarker';
 export * from './Navbar/Navbar';
 export * from './NotFound/NotFound';
 export * from './RangeInput/RangeInput';
+export * from './MaskInput/MaskInput';

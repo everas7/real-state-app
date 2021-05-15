@@ -4,7 +4,7 @@ import { Property, IPropertyForm } from '../../../../app/models/property';
 import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../app/constants';
 import { Field, FieldProps, FormikContextType } from 'formik';
-import { Input } from '../../../../app/components/Input/Input';
+import { MaskInput, Input } from '../../../../app/components';
 
 interface Values extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
 
@@ -41,12 +41,14 @@ export default function PropertyDetails({
             type="text"
             name="price"
             placeholder="$0000"
-            component={Input}
+            component={MaskInput}
+            thousandsSeparator={','}
+            mask="$0,000,0000"
             value={formik!.values.price}
             onChange={formik!.handleChange}
           />
         ) : (
-          `$${property.price}`
+          `$${property.price.toLocaleString()}`
         )}
       </div>
       <div className={styles['property-details__address']}>

@@ -6,7 +6,6 @@ import cx from 'classnames';
 import { IconType } from 'react-icons';
 
 interface Props extends FormControlProps, FieldProps {
-  inline?: boolean;
   icon?: IconType;
   placeholder?: string;
 }
