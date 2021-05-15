@@ -13,4 +13,5 @@ export const Properties = {
     request.put(`properties/${id}`, property),
   create: (property: IPropertyForm): Promise<Property> =>
     request.post(`properties`, property),
+  delete: (id: number): Promise<Property> => request.del(`properties/${id}`),
 };

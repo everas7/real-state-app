@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import cx from 'classnames';
 
@@ -14,6 +14,11 @@ import { history } from '../../../../index';
 export default function PropertyDetailPage() {
   const [property, setProperty] = useState<Property>();
   const { id } = useParams<{ id: string }>();
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     Properties.get(parseInt(id, 10)).then((res) => {
@@ -46,6 +51,14 @@ export default function PropertyDetailPage() {
       setProperty(res);
     });
   }
+
+  function handleDelete() {
+    Properties.delete(+id).then(() => {
+      handleClose();
+      history.push('/');
+    });
+  }
+
   if (!property) return <div>Loading Aparment...</div>;
   return (
     <>
@@ -73,13 +86,34 @@ export default function PropertyDetailPage() {
               <Button variant="success" onClick={changeAvailability}>
                 {property.available ? 'Set as Rented' : 'Set as Available'}
               </Button>
-              <Button variant="danger">Delete</Button>
+              <Button variant="danger" onClick={handleShow}>
+                Delete
+              </Button>
             </div>
 
             {(property && <PropertyDetails property={property} />) || ''}
           </Col>
         </Row>
       </Col>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered={true}
+      >
+        <Modal.Header>
+          <Modal.Title>Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this apartment?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="light" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
