@@ -3,7 +3,7 @@ import { Navbar as BootstrapNavbar } from 'react-bootstrap';
 
 import styles from './Navbar.module.scss';
 
-export default function Navbar() {
+export function Navbar() {
   return (
     <BootstrapNavbar className={styles.navbar}>
       <BootstrapNavbar.Brand className={styles.navbar__brand}>

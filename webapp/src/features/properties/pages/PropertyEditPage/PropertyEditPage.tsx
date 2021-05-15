@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
-import Breadcrumb from '../../../../components/Breadcrumb/Breadcrumb';
-import { Property } from '../../models/property';
+import {Breadcrumb} from '../../../../app/components';
+import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
 
@@ -14,7 +15,7 @@ export default function PropertyEditPage() {
     Properties.get(parseInt(id)).then((res) => {
       setProperty(res);
     });
-  }, []);
+  }, [id]);
 
   const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
     Properties.update(+id, {

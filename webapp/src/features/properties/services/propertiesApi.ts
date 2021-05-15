@@ -1,14 +1,9 @@
-import { request } from '../../../services/axios';
+import { request } from '../../../app/services/axios';
 import {
   Property,
   PropertyForList,
   IPropertyForm,
-  IPropertyFilters,
-} from '../models/property';
-
-const filtersP = new URLSearchParams({
-  price: '',
-});
+} from '../../../app/models/property';
 
 export const Properties = {
   list: (params: URLSearchParams | null = null): Promise<PropertyForList[]> =>

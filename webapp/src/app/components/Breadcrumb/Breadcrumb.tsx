@@ -10,7 +10,7 @@ interface Props {
   }[];
 }
 
-export default function Breadcrumb({
+export function Breadcrumb({
   items,
 }: Props): React.ReactElement<Props> {
   return (

@@ -6,7 +6,7 @@ import {
 
 interface Props extends BoostrapButtonProps {}
 
-export default function Button({
+export function Button({
   children,
   as: Component = BoostrapButton,
   ...props

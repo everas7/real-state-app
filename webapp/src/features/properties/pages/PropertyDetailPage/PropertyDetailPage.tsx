@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import cx from 'classnames';
+
 import PropertyCorousel from '../../components/PropertyCorousel/PropertyCorousel';
 import PropertyDetails from '../../components/PropertyDetails/PropertyDetails';
-import Breadcrumb from '../../../../components/Breadcrumb/Breadcrumb';
-import { Property } from '../../models/property';
+import {Breadcrumb, Map, Button} from '../../../../app/components';
+import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
-import Map from '../../../../components/Map/Map';
 import styles from './PropertyDetailPage.module.scss';
-import Button from '../../../../components/Button/Button';
 import { history } from '../../../../index';
 
 export default function PropertyDetailPage() {
@@ -20,7 +19,7 @@ export default function PropertyDetailPage() {
     Properties.get(parseInt(id)).then((res) => {
       setProperty(res);
     });
-  }, []);
+  }, [id]);
   let coordinate;
 
   if (property) {

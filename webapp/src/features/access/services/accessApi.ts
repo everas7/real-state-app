@@ -1,6 +1,6 @@
-import { request } from '../../../services/axios';
-import { LoginForm, LoginResponse } from '../models/login';
-import { SignupForm, SignupResponse } from '../models/signup';
+import { request } from '../../../app/services/axios';
+import { LoginForm, LoginResponse } from '../../../app/models/login';
+import { SignupForm, SignupResponse } from '../../../app/models/signup';
 
 export const Access = {
   login: (form: LoginForm): Promise<LoginResponse> =>

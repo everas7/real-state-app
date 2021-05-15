@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { history } from '../index';
+import { history } from '../../index';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 

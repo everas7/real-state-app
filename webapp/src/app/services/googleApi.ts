@@ -1,4 +1,4 @@
-import { GeoLocation } from '../features/properties/models/property';
+import { GeoLocation } from '../models/property';
 
 export const getGeolocationByAddress = (
   address: string

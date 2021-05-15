@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { AccessPage } from './features/access';
 import { PropertyListPage, PropertyDetailPage, PropertyEditPage } from './features/properties';
-import * as authHelper from './helpers/authHelper';
-import { PrivateRoute } from './routes/PrivateRoute';
-import { NotFound } from './components/NotFound/NotFound';
-import { useAppDispatch, useAppSelector } from './store/hooks';
+import * as authHelper from './app/helpers/authHelper';
+import { PrivateRoute } from './app/routes/PrivateRoute';
+import { NotFound } from './app/components/NotFound/NotFound';
+import { useAppDispatch, useAppSelector } from './app/store/hooks';
 import {
   selectIsAuthenticated,
   setAuthenticated,
 } from './features/access/services/accessSlice';
-import { Col, Container, Row } from 'react-bootstrap';
-import Navbar from './components/Navbar/Navbar';
+import { Container, Row } from 'react-bootstrap';
+import {Navbar} from './app/components';
 
 export default function Routes() {
   const dispatch = useAppDispatch();
@@ -22,11 +22,12 @@ export default function Routes() {
 
   useEffect(() => {
     const token = authHelper.getToken();
+    console.log('EFF')
     if (token) {
       dispatch(setAuthenticated(true));
     }
     setLoadingApp(false);
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const googleMapScript = document.createElement('script');

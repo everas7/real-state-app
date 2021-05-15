@@ -1,12 +1,12 @@
 import React, { ChangeEvent } from 'react';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
-import { Property, GeoLocation, IPropertyForm } from '../../models/property';
+import { Property, GeoLocation, IPropertyForm } from '../../../../app/models/property';
 import styles from './PropertyDetails.module.scss';
-import * as Constants from '../../../../constants';
+import * as Constants from '../../../../app/constants';
 import { Field, Form, Formik, FormikContextType, useField } from 'formik';
-import { Input } from '../../../../components/Input/Input';
+import { Input } from '../../../../app/components/Input/Input';
 import { propertySchema } from '../../validators/propertyValidator';
-import { getGeolocationByAddress } from '../../../../services/googleApi';
+import { getGeolocationByAddress } from '../../../../app/services/googleApi';
 
 interface Values
   extends Omit<IPropertyForm, 'realtorId' | 'available'> {}

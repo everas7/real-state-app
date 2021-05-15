@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 import cx from 'classnames';
-import * as Constants from '../../../../constants';
+import * as Constants from '../../../../app/constants';
 import styles from './PropertyCorousel.module.scss';
 
 export default function PropertyCorousel() {

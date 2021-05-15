@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import cx from 'classnames';
 import _ from 'lodash';
 
 import './Signup.scss';
-import { Input } from '../../../../components/Input/Input';
-import Button from '../../../../components/Button/Button';
+import { Input, Button } from '../../../../app/components';
 import { ButtonGroup } from 'react-bootstrap';
-import { SignupForm } from '../../models/signup';
+import { SignupForm } from '../../../../app/models/signup';
 import { Access } from '../../services/accessApi';
-import { useAppDispatch } from '../../../../store/hooks';
+import { useAppDispatch } from '../../../../app/store/hooks';
 import { login } from '../../services/accessSlice';
 import { signupSchema } from '../../validators/accessValidator';
 
@@ -89,7 +88,10 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
                 placeholder="Password"
                 component={Input}
               />
-              <Button type="submit" disabled={isSubmitting || !_.isEmpty(errors)}>
+              <Button
+                type="submit"
+                disabled={isSubmitting || !_.isEmpty(errors)}
+              >
                 SIGN UP
               </Button>
             </Form>

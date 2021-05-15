@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Button from '../../../../components/Button/Button';
-import RangeInput from '../../../../components/RangeInput/RangeInput';
-import styles from './PropertyFilters.module.scss';
 import _ from 'lodash';
+
+import { Button, RangeInput } from '../../../../app/components';
+import styles from './PropertyFilters.module.scss';
 
 export interface PropertyFiltersValues {
   price: {

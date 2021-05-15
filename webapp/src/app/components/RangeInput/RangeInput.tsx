@@ -13,7 +13,7 @@ interface Props extends InputRangeProps {
   maxLabelPrefix?: string;
 }
 
-export default function RangeInput({
+export function RangeInput({
   label,
   allowSameValues = true,
   labelSuffix = '',

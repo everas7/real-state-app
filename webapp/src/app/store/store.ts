@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import accessReducer from '../features/access/services/accessSlice';
+import accessReducer from '../../features/access/services/accessSlice';
 
 export const store = configureStore({
   reducer: {

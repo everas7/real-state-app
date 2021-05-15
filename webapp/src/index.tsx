@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { store } from './store/store';
+import { store } from './app/store/store';
 
 export const history = createBrowserHistory();
 

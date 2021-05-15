@@ -1,10 +1,10 @@
 import { Access } from './accessApi';
 import { history } from '../../../index';
-import { LoginForm } from '../models/login';
+import { LoginForm } from '../../../app/models/login';
 
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../../store/store';
-import { SignupForm } from '../models/signup';
+import { RootState, AppThunk } from '../../../app/store/store';
+import { SignupForm } from '../../../app/models/signup';
 
 export interface AccessState {
   isAuthenticated: boolean;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
-import { Property } from '../../models/property';
+
+import { Property } from '../../../../app/models/property';
 import styles from './PropertyDetails.module.scss';
-import * as Constants from '../../../../constants';
+import * as Constants from '../../../../app/constants';
 
 interface Props {
   property: Property;

@@ -1,26 +1,27 @@
 import React, { useEffect } from 'react';
 import cx from 'classnames';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import PropertyCorousel from '../PropertyCorousel/PropertyCorousel';
-import PropertyDetails from '../PropertyDetails/PropertyDetails';
-import Map from '../../../../components/Map/Map';
-import { GeoLocation, IPropertyForm, Property } from '../../models/property';
-import styles from './PropertyForm.module.scss';
+import googleMapReact from 'google-map-react';
 import {
-  Formik,
   FormikHelpers,
-  useField,
-  FormikValues,
   FormikProvider,
   useFormik,
   useFormikContext,
 } from 'formik';
+
+import styles from './PropertyForm.module.scss';
+import { Map } from '../../../../app/components';
+import {
+  IPropertyForm,
+  Property,
+} from '../../../../app/models/property';
 import {
   getAddressByGeolocation,
   getGeolocationByAddress,
-} from '../../../../services/googleApi';
+} from '../../../../app/services/googleApi';
 import { history } from '../../../../index';
-import googleMapReact from 'google-map-react';
+import PropertyCorousel from '../PropertyCorousel/PropertyCorousel';
+import PropertyDetails from '../PropertyDetails/PropertyDetails';
 
 interface Values extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
 
@@ -36,7 +37,7 @@ const ManageAddressChange = () => {
     getGeolocationByAddress(value)?.then((res) => {
       getFieldHelpers('geolocation').setValue(res);
     });
-  }, [value]);
+  }, [value, getFieldHelpers]);
   return null;
 };
 

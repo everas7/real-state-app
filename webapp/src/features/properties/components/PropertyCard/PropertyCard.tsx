@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import styles from './PropertyCard.module.scss';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
-import * as Constants from '../../../../constants';
+import * as Constants from '../../../../app/constants';
 
 interface Props {
   title: string;

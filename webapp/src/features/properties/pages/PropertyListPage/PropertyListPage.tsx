@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { PropertyForList } from '../../models/property';
-import { Properties } from '../../services/propertiesApi';
-import PropertyCard from '../../components/PropertyCard/PropertyCard';
-import PropertyFilters from '../../components/PropertyFilters/PropertyFilters';
-import Map from '../../../../components/Map/Map';
 import { Row, Col, Form } from 'react-bootstrap';
+
+import { PropertyForList } from '../../../../app/models/property';
+import { Properties } from '../../services/propertiesApi';
+import PropertyFilters from '../../components/PropertyFilters/PropertyFilters';
+import PropertyCard from '../../components/PropertyCard/PropertyCard';
+import { Map } from '../../../../app/components';
 import { history } from '../../../../index';
 import styles from './PropertyListPage.module.scss';
 
@@ -40,13 +41,14 @@ export default function PropertyListPage() {
       <Col md="5" className={styles['property-list-page__list']}>
         Apartments
         <Row>
-          {properties.map((property) => (
+          {properties.map((property, i) => (
             <Col
               xl="6"
               lg="12"
               md="12"
               sm="12"
               onClick={() => history.push(`/apartments/${property.id}`)}
+              key={`property_card-${i}`}
             >
               <PropertyCard
                 title={property.name}

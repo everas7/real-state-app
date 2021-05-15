@@ -12,7 +12,7 @@ interface Props extends GoogleMapReactProps {
   className?: string;
 }
 
-export default function Map({
+export function Map({
   defaultCenter,
   markers,
   className,
@@ -28,8 +28,8 @@ export default function Map({
         defaultZoom={15}
         {...props}
       >
-        {markers.map((marker) => (
-          <MapMarker lat={marker.lat} lng={marker.lng} />
+        {markers.map((marker, i) => (
+          <MapMarker key={`${JSON.stringify(marker)}  ${i}`} lat={marker.lat} lng={marker.lng} />
         ))}
       </GoogleMapReact>
     </div>

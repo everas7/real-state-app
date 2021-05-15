@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React from 'react';
+import { Formik, Form, Field } from 'formik';
 import _ from 'lodash';
 
 import './Login.scss';
-import { Input } from '../../../../components/Input/Input';
-import Button from '../../../../components/Button/Button';
+import { Input, Button } from '../../../../app/components';
 import { login, selectAuthenticationError } from '../../services/accessSlice';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { loginSchema } from '../../validators/accessValidator';
 
 interface Props {
