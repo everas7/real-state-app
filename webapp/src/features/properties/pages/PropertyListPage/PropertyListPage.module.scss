@@ -1,0 +1,9 @@
+.property-list-page {
+  &__list {
+    overflow-y: auto;
+    max-height: 100% !important;
+  }
+  &__list::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -51,3 +51,12 @@ export interface User {
 export interface Realtor extends User {
   role: 'CLIENT';
 }
+
+
+export interface IPropertyFilters {
+  minPrice?: number;
+  maxPrice?: number;
+  minFloorAreaSize?: number;
+  maxFloorAreaSize?: number;
+  rooms?: number[];
+}

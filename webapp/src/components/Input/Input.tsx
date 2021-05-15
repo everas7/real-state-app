@@ -27,11 +27,11 @@ export const Input: React.FC<Props> = ({
         <Form.Control
           {...field}
           {...props}
-          isInvalid={form.touched[field.name] && !!form.errors[field.name]}
+          isInvalid={form?.touched[field.name] && !!form?.errors[field.name]}
         ></Form.Control>
       </div>
       <Form.Control.Feedback type="invalid">
-        {form.errors[field.name]}
+        {form?.errors[field.name]}
       </Form.Control.Feedback>
     </Form.Group>
   );
