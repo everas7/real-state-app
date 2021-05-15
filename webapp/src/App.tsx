@@ -10,6 +10,7 @@ import {
 } from './features/properties';
 import * as authHelper from './app/helpers/authHelper';
 import { PrivateRoute } from './app/routes/PrivateRoute';
+import { AuthorizedRoute } from './app/routes/AuthorizedRoute';
 import { NotFound } from './app/components/NotFound/NotFound';
 import { useAppDispatch, useAppSelector } from './app/store/hooks';
 import {
@@ -35,6 +36,9 @@ export default function Routes() {
       dispatch(setAuthenticated(true));
     }
     if (user) {
+      setLoadingApp(false);
+    }
+    if (!token) {
       setLoadingApp(false);
     }
   }, [dispatch, user]);
@@ -66,10 +70,12 @@ export default function Routes() {
               component={PropertyListPage}
               exact={true}
             />
-            <PrivateRoute
+            <AuthorizedRoute
               path={['/apartments/create']}
               isLoggedIn={isAuthenticated}
               component={PropertyCreatePage}
+              user={user!}
+              rolesAllowed={['REALTOR', 'ADMIN']}
               exact={true}
             />
             <PrivateRoute
@@ -78,10 +84,12 @@ export default function Routes() {
               component={PropertyDetailPage}
               exact={true}
             />
-            <PrivateRoute
+            <AuthorizedRoute
               path={['/apartments/:id/edit']}
               isLoggedIn={isAuthenticated}
               component={PropertyEditPage}
+              user={user!}
+              rolesAllowed={['REALTOR', 'ADMIN']}
               exact={true}
             />
             <Route path="/(.+)" component={NotFound} />
