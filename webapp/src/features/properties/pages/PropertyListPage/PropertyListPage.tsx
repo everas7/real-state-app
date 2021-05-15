@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 import { PropertyForList } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';

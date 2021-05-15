@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import PropertyCorousel from '../../components/PropertyCorousel/PropertyCorousel';
 import PropertyDetails from '../../components/PropertyDetails/PropertyDetails';
-import {Breadcrumb, Map, Button} from '../../../../app/components';
+import { Breadcrumb, Map, Button } from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import styles from './PropertyDetailPage.module.scss';
@@ -16,7 +16,7 @@ export default function PropertyDetailPage() {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    Properties.get(parseInt(id)).then((res) => {
+    Properties.get(parseInt(id, 10)).then((res) => {
       setProperty(res);
     });
   }, [id]);
@@ -41,12 +41,12 @@ export default function PropertyDetailPage() {
       geolocation: propertyValues.geolocation,
       address: propertyValues.address,
       realtorId: propertyValues.realtorId,
-    }
+    };
     Properties.update(+id, propertyForm).then((res) => {
       setProperty(res);
     });
   }
-  if(!property) return <div>Loading Aparment...</div>;
+  if (!property) return <div>Loading Aparment...</div>;
   return (
     <>
       <Breadcrumb items={[{ name: 'Appartments', path: '/' }, { name: id }]} />

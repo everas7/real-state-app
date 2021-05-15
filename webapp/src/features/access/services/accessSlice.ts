@@ -2,9 +2,8 @@ import { Access } from './accessApi';
 import { history } from '../../../index';
 import { LoginForm } from '../../../app/models/login';
 
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../../app/store/store';
-import { SignupForm } from '../../../app/models/signup';
 
 export interface AccessState {
   isAuthenticated: boolean;
@@ -37,22 +36,21 @@ export const selectIsAuthenticated = (state: RootState) =>
 export const selectAuthenticationError = (state: RootState) =>
   state.access.authenticationError;
 
-export const login = (loginForm: LoginForm): AppThunk => (
-  dispatch,
-  getState
-) => {
-  Access.login(loginForm)
-    .then((res) => {
-      if (res.accessToken) {
-        localStorage.setItem('jwt', res.accessToken);
-        dispatch(setAuthenticated(true));
-        dispatch(setAuthenticationError(false));
-        history.push('/');
-      }
-    })
-    .catch(() => {
-      dispatch(setAuthenticationError(true));
-    });
-};
+export const login =
+  (loginForm: LoginForm): AppThunk =>
+  (dispatch, getState) => {
+    Access.login(loginForm)
+      .then((res) => {
+        if (res.accessToken) {
+          localStorage.setItem('jwt', res.accessToken);
+          dispatch(setAuthenticated(true));
+          dispatch(setAuthenticationError(false));
+          history.push('/');
+        }
+      })
+      .catch(() => {
+        dispatch(setAuthenticationError(true));
+      });
+  };
 
 export default accessSlice.reducer;

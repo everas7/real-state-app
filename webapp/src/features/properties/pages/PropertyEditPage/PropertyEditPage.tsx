@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
-import {Breadcrumb} from '../../../../app/components';
+import { Breadcrumb } from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
@@ -12,7 +12,7 @@ export default function PropertyEditPage() {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    Properties.get(parseInt(id)).then((res) => {
+    Properties.get(parseInt(id, 10)).then((res) => {
       setProperty(res);
     });
   }, [id]);
@@ -39,10 +39,7 @@ export default function PropertyEditPage() {
           { name: 'Edit' },
         ]}
       />
-      <PropertyForm
-        property={property}
-        onSubmit={onSubmitClickHandler}
-      />
+      <PropertyForm property={property} onSubmit={onSubmitClickHandler} />
     </>
   );
 }

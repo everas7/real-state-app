@@ -10,14 +10,12 @@ interface Props {
   }[];
 }
 
-export function Breadcrumb({
-  items,
-}: Props): React.ReactElement<Props> {
+export function Breadcrumb({ items }: Props): React.ReactElement<Props> {
   return (
     <BsBreadcrumb>
       {items.map((item, i) =>
         i === items.length - 1 ? (
-          <BsBreadcrumb.Item key={`breadcrumb-item ${i}`} active>
+          <BsBreadcrumb.Item key={`breadcrumb-item ${i}`} active={true}>
             {item.name}
           </BsBreadcrumb.Item>
         ) : (

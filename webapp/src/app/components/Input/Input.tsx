@@ -27,7 +27,7 @@ export const Input: React.FC<Props> = ({
           {...field}
           {...props}
           isInvalid={form?.touched[field.name] && !!form?.errors[field.name]}
-        ></Form.Control>
+        />
       </div>
       <Form.Control.Feedback type="invalid">
         {form?.errors[field.name]}

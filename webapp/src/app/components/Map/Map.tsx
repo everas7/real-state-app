@@ -29,7 +29,11 @@ export function Map({
         {...props}
       >
         {markers.map((marker, i) => (
-          <MapMarker key={`${JSON.stringify(marker)}  ${i}`} lat={marker.lat} lng={marker.lng} />
+          <MapMarker
+            key={`${JSON.stringify(marker)}  ${i}`}
+            lat={marker.lat}
+            lng={marker.lng}
+          />
         ))}
       </GoogleMapReact>
     </div>

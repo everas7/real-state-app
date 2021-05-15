@@ -24,8 +24,12 @@ export default function PropertyCard({
       <Card.Img variant="top" src={Constants.PROPERTY_PLACEHOLDER} />
       <Card.Body>
         <Card.Title>${price.toLocaleString()}</Card.Title>
-        <Card.Title className={styles['property-card__title']}>{title}</Card.Title>
-        <Card.Text className={styles['property-card__address']}>{address}</Card.Text>
+        <Card.Title className={styles['property-card__title']}>
+          {title}
+        </Card.Title>
+        <Card.Text className={styles['property-card__address']}>
+          {address}
+        </Card.Text>
         <Card.Text>
           {rooms} <FaBed color={Constants.PRIMARY_COLOR} /> | {floorAreaSize} ft
           <sup>2</sup> <FaRulerCombined color={Constants.PRIMARY_COLOR} />

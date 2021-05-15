@@ -11,10 +11,7 @@ import {
 
 import styles from './PropertyForm.module.scss';
 import { Map } from '../../../../app/components';
-import {
-  IPropertyForm,
-  Property,
-} from '../../../../app/models/property';
+import { IPropertyForm, Property } from '../../../../app/models/property';
 import {
   getAddressByGeolocation,
   getGeolocationByAddress,
@@ -107,7 +104,11 @@ export default function PropertyForm({
                   Cancel
                 </Button>
               </div>
-              <PropertyDetails property={property} edit formik={formik} />
+              <PropertyDetails
+                property={property}
+                edit={true}
+                formik={formik}
+              />
               <ManageAddressChange />
             </Form>
           </FormikProvider>

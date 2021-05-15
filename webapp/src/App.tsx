@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { AccessPage } from './features/access';
-import { PropertyListPage, PropertyDetailPage, PropertyEditPage } from './features/properties';
+import {
+  PropertyListPage,
+  PropertyDetailPage,
+  PropertyEditPage,
+} from './features/properties';
 import * as authHelper from './app/helpers/authHelper';
 import { PrivateRoute } from './app/routes/PrivateRoute';
 import { NotFound } from './app/components/NotFound/NotFound';
@@ -12,7 +16,7 @@ import {
   setAuthenticated,
 } from './features/access/services/accessSlice';
 import { Container, Row } from 'react-bootstrap';
-import {Navbar} from './app/components';
+import { Navbar } from './app/components';
 
 export default function Routes() {
   const dispatch = useAppDispatch();
@@ -22,7 +26,6 @@ export default function Routes() {
 
   useEffect(() => {
     const token = authHelper.getToken();
-    console.log('EFF')
     if (token) {
       dispatch(setAuthenticated(true));
     }
@@ -37,50 +40,48 @@ export default function Routes() {
   }, []);
 
   if (loadingApp) return <div>Loading app, please wait...</div>;
+
+  function renderAccessPage() {
+    return !isAuthenticated ? <AccessPage /> : <Redirect to="/" />;
+  }
+
+  function renderRoutes() {
+    return (
+      <Container className="d-flex flex-column vh-100 overflow-hidden">
+        <Row className="flex-shrink-0">
+          <Navbar />
+        </Row>
+        <Row className="flex-grow-1 overflow-hidden">
+          <Switch>
+            <PrivateRoute
+              path={['/', '/apartments']}
+              isLoggedIn={isAuthenticated}
+              component={PropertyListPage}
+              exact={true}
+            />
+            <PrivateRoute
+              path={['/apartments/:id']}
+              isLoggedIn={isAuthenticated}
+              component={PropertyDetailPage}
+              exact={true}
+            />
+            <PrivateRoute
+              path={['/apartments/:id/edit']}
+              isLoggedIn={isAuthenticated}
+              component={PropertyEditPage}
+              exact={true}
+            />
+            <Route path="/(.+)" component={NotFound} />
+          </Switch>
+        </Row>
+      </Container>
+    );
+  }
+
   return (
     <Switch>
-      <Route
-        path="/access"
-        component={() =>
-          !isAuthenticated ? <AccessPage /> : <Redirect to="/" />
-        }
-        exact
-      />
-      <Route
-        path="/*"
-        render={() => (
-          <>
-            <Container className="d-flex flex-column vh-100 overflow-hidden">
-              <Row className="flex-shrink-0">
-                <Navbar />
-              </Row>
-              <Row className="flex-grow-1 overflow-hidden">
-                <Switch>
-                  <PrivateRoute
-                    path={['/', '/apartments']}
-                    isLoggedIn={isAuthenticated}
-                    component={PropertyListPage}
-                    exact
-                  />
-                  <PrivateRoute
-                    path={['/apartments/:id']}
-                    isLoggedIn={isAuthenticated}
-                    component={PropertyDetailPage}
-                    exact
-                  />
-                  <PrivateRoute
-                    path={['/apartments/:id/edit']}
-                    isLoggedIn={isAuthenticated}
-                    component={PropertyEditPage}
-                    exact
-                  />
-                  <Route path="/(.+)" component={NotFound} />
-                </Switch>
-              </Row>
-            </Container>
-          </>
-        )}
-      />
+      <Route path="/access" component={renderAccessPage} exact={true} />
+      <Route path="/*" render={renderRoutes} />
     </Switch>
   );
 }

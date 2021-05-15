@@ -20,7 +20,7 @@ export function RangeInput({
   labelPrefix = '',
   minLabelSuffix = '',
   minLabelPrefix = '',
-  maxLabelSuffix =  '',
+  maxLabelSuffix = '',
   maxLabelPrefix = '',
   ...props
 }: Props): React.ReactElement<Props> {

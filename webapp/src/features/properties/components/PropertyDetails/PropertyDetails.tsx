@@ -1,9 +1,6 @@
 import React from 'react';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
-import {
-  Property,
-  IPropertyForm,
-} from '../../../../app/models/property';
+import { Property, IPropertyForm } from '../../../../app/models/property';
 import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../app/constants';
 import { Field, FieldProps, FormikContextType } from 'formik';
@@ -114,7 +111,11 @@ export default function PropertyDetails({
             onChange={formik!.handleChange}
           >
             {(props: FieldProps) => (
-              <Input {...props} placeholder="Description of the apartment" as="textarea" />
+              <Input
+                {...props}
+                placeholder="Description of the apartment"
+                as="textarea"
+              />
             )}
           </Field>
         ) : (

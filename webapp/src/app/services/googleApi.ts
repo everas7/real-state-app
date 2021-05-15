@@ -4,13 +4,13 @@ export const getGeolocationByAddress = (
   address: string
 ): Promise<GeoLocation | undefined> => {
   if (window.google?.maps) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       new window.google.maps.Geocoder().geocode(
         { address },
-        function (
+        (
           results: google.maps.GeocoderResult[],
           status: google.maps.GeocoderStatus
-        ) {
+        ) => {
           if (status === window.google.maps.GeocoderStatus.OK) {
             resolve({
               latitude: results[0].geometry.location.lat(),
@@ -28,7 +28,7 @@ export const getAddressByGeolocation = (
   geolocation: GeoLocation
 ): Promise<string | undefined> => {
   if (window.google?.maps) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       new window.google.maps.Geocoder().geocode(
         {
           location: {
@@ -36,10 +36,10 @@ export const getAddressByGeolocation = (
             lng: geolocation.longitude,
           },
         },
-        function (
+        (
           results: google.maps.GeocoderResult[],
           status: google.maps.GeocoderStatus
-        ) {
+        ) => {
           if (status === window.google.maps.GeocoderStatus.OK) {
             resolve(results[0].formatted_address);
           }

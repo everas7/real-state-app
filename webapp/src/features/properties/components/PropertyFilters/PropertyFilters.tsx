@@ -52,7 +52,7 @@ export default function PropertyFilters({
 
   function handleApplyFilter(filtersValues: PropertyFiltersValues) {
     const filtersToSend: PropertyFiltersValues = _.cloneDeep(filtersValues);
-    let params = new URLSearchParams();
+    const params = new URLSearchParams();
     params.append('filters[minPrice]', String(filters.price.min));
     if (filtersToSend.price!.max !== defaultFilters.price.max) {
       params.append('filters[maxPrice]', String(filters.price.max));

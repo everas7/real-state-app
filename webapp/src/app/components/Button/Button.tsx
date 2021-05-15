@@ -4,12 +4,10 @@ import {
   ButtonProps as BoostrapButtonProps,
 } from 'react-bootstrap';
 
-interface Props extends BoostrapButtonProps {}
-
 export function Button({
   children,
   as: Component = BoostrapButton,
   ...props
-}: Props): React.ReactElement<Props> {
+}: BoostrapButtonProps): React.ReactElement<BoostrapButtonProps> {
   return <Component {...props}>{children}</Component>;
 }
