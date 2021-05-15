@@ -1,4 +1,8 @@
 .input {
   margin-bottom: 20px;
   text-align: start;
+
+  &__invalid-feedback {
+    font-size:14px !important;
+  }
 }

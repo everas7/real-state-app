@@ -27,10 +27,13 @@ export const Input: React.FC<Props> = ({
           {...props}
           isInvalid={form?.touched[field.name] && !!form?.errors[field.name]}
         />
+        <Form.Control.Feedback
+          className={cx(styles['input__invalid-feedback'])}
+          type="invalid"
+        >
+          {form?.errors[field.name]}
+        </Form.Control.Feedback>
       </div>
-      <Form.Control.Feedback type="invalid">
-        {form?.errors[field.name]}
-      </Form.Control.Feedback>
     </Form.Group>
   );
 };

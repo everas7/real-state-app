@@ -47,10 +47,10 @@ export function MaskInput({
           {...props}
           value={String(value)}
         />
+        <Form.Control.Feedback type="invalid">
+          {form?.errors[field.name]}
+        </Form.Control.Feedback>
       </div>
-      <Form.Control.Feedback type="invalid">
-        {form?.errors[field.name]}
-      </Form.Control.Feedback>
     </Form.Group>
   );
 }

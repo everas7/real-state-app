@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
+import cx from 'classnames';
 import { Property, IPropertyForm } from '../../../../app/models/property';
 import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../app/constants';
@@ -20,7 +21,7 @@ export default function PropertyDetails({
   formik,
 }: Props): React.ReactElement<Props> {
   return (
-    <div className={styles['property-details']}>
+    <div className={cx(styles['property-details'])}>
       <div className={styles['property-details__name']}>
         {edit ? (
           <Field
@@ -76,6 +77,7 @@ export default function PropertyDetails({
               value={formik!.values.rooms}
               onChange={formik!.handleChange}
               icon={<FaBed color={Constants.PRIMARY_COLOR} />}
+              min="0"
             />
           ) : (
             <>
@@ -95,6 +97,7 @@ export default function PropertyDetails({
               value={formik!.values.floorAreaSize}
               onChange={formik!.handleChange}
               icon={<FaRulerCombined color={Constants.PRIMARY_COLOR} />}
+              min="0"
             />
           ) : (
             <>

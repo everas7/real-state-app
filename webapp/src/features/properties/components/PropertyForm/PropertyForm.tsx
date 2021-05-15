@@ -8,6 +8,7 @@ import {
   useFormik,
   useFormikContext,
 } from 'formik';
+import _ from 'lodash';
 
 import styles from './PropertyForm.module.scss';
 import { Map } from '../../../../app/components';
@@ -19,6 +20,7 @@ import {
 import { history } from '../../../../index';
 import PropertyCorousel from '../PropertyCorousel/PropertyCorousel';
 import PropertyDetails from '../PropertyDetails/PropertyDetails';
+import { propertySchema } from '../../validators/propertyValidator';
 
 interface Values extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
 
@@ -57,7 +59,7 @@ export default function PropertyForm({
       floorAreaSize: property.floorAreaSize,
       geolocation: property.geolocation,
     },
-    validate: () => ({}),
+    validationSchema: propertySchema,
     onSubmit,
   });
 
@@ -100,7 +102,10 @@ export default function PropertyForm({
           <FormikProvider value={formik}>
             <Form>
               <div className={styles['property-form-page__controls']}>
-                <Button onClick={() => formik.submitForm()}>
+                <Button
+                  disabled={!_.isEmpty((formik as any).errors)}
+                  onClick={() => formik.submitForm()}
+                >
                   {property.id ? 'Save Changes' : 'Create Apartment'}
                 </Button>
                 <Button
