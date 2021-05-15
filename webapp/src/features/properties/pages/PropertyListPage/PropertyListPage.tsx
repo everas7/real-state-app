@@ -5,7 +5,7 @@ import { PropertyForList } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import PropertyFilters from '../../components/PropertyFilters/PropertyFilters';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
-import { Map } from '../../../../app/components';
+import { Button, Map } from '../../../../app/components';
 import { history } from '../../../../index';
 import styles from './PropertyListPage.module.scss';
 
@@ -39,7 +39,15 @@ export default function PropertyListPage() {
         <PropertyFilters onApplyFilter={onFilterProperties} />
       </Col>
       <Col md="5" className={styles['property-list-page__list']}>
-        Apartments
+        <div className={styles['property-list-page__header']}>
+          <div className={styles['property-list-page__header-title']}>
+            Apartments
+          </div>
+          <Button onClick={() => history.push('/apartments/create')}>
+            Add Apartment
+          </Button>
+        </div>
+
         <Row>
           {properties.map((property, i) => (
             <Col

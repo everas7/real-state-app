@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 
 import { toSignupResponseDto } from '../dtos/auth.dto';
 import { User } from '../interfaces/user.interface';
+import * as userService from '../services/user.service';
+import { toUserDto } from '../dtos/user.dto';
 
 export const signup = async (req: Request, res: Response) => {
   res.status(httpStatus.OK).json({

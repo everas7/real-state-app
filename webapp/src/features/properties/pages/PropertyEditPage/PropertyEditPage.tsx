@@ -20,7 +20,7 @@ export default function PropertyEditPage() {
   const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
     Properties.update(+id, {
       ...values,
-      price: Number(values.price.replace(/\D+/g, '')),
+      price: Number(String(values.price).replace(/\D+/g, '')),
       available: property!.available,
       realtorId: property!.realtorId,
     }).then(() => {

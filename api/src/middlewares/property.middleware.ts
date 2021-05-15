@@ -11,7 +11,7 @@ export const validateIsRealtorOrAdmin = async (
   next: NextFunction
 ) => {
   const user = await userServices.getById((req.user as User)?.id);
-  console.log(user);
+
   if (user) {
     req.user = user;
     if (user.role === 'ADMIN') {

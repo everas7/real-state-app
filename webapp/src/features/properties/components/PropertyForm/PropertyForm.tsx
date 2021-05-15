@@ -23,19 +23,24 @@ import PropertyDetails from '../PropertyDetails/PropertyDetails';
 interface Values extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
 
 interface Props {
-  property: Property;
+  property: IPropertyForm;
   onSubmit(values: Values, formikHelpers: FormikHelpers<Values>): void;
 }
 
+const defaultCoordinates = {
+  lat: 40.73061,
+  lng: -73.935242,
+};
+
 const ManageAddressChange = () => {
-  const { getFieldProps, getFieldHelpers } = useFormikContext();
+  const { getFieldProps, getFieldHelpers, values } = useFormikContext();
   const value = getFieldProps('address').value;
   useEffect(() => {
     getGeolocationByAddress(value)?.then((res) => {
       getFieldHelpers('geolocation').setValue(res);
     });
   }, [value, getFieldHelpers]);
-  return null;
+  return <div>{JSON.stringify(values)}</div>;
 };
 
 export default function PropertyForm({
@@ -56,10 +61,13 @@ export default function PropertyForm({
     onSubmit,
   });
 
-  const coordinate = {
-    lat: formik.getFieldProps('geolocation').value.latitude,
-    lng: formik.getFieldProps('geolocation').value.longitude,
-  };
+  const geolocationFieldValue = formik.getFieldProps('geolocation').value;
+  const coordinates = geolocationFieldValue
+    ? {
+        lat: geolocationFieldValue.latitude,
+        lng: geolocationFieldValue.longitude,
+      }
+    : defaultCoordinates;
 
   function handleMapClick(e: googleMapReact.ClickEventValue) {
     const newGeoLocation = {
@@ -82,9 +90,9 @@ export default function PropertyForm({
           <Row className={cx(styles['property-form-page__map'], 'flex-grow-1')}>
             <Map
               onClick={handleMapClick}
-              defaultCenter={coordinate}
-              center={coordinate}
-              markers={[coordinate]}
+              defaultCenter={coordinates}
+              center={coordinates}
+              markers={[coordinates]}
             />
           </Row>
         </Col>
@@ -93,19 +101,19 @@ export default function PropertyForm({
             <Form>
               <div className={styles['property-form-page__controls']}>
                 <Button onClick={() => formik.submitForm()}>
-                  Save Changes
+                  {property.id ? 'Save Changes' : 'Create Apartment'}
                 </Button>
                 <Button
                   variant="light"
                   onClick={() => {
-                    history.push(`/apartments/${property.id}`);
+                    history.push(`/apartments/${property.id || ''}`);
                   }}
                 >
                   Cancel
                 </Button>
               </div>
               <PropertyDetails
-                property={property}
+                property={property as Property}
                 edit={true}
                 formik={formik}
               />

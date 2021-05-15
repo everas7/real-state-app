@@ -22,5 +22,3 @@ authRouter.post(
   passport.authenticate('login', { session: false }),
   authController.login,
 );
-
-

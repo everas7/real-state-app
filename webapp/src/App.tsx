@@ -6,14 +6,17 @@ import {
   PropertyListPage,
   PropertyDetailPage,
   PropertyEditPage,
+  PropertyCreatePage,
 } from './features/properties';
 import * as authHelper from './app/helpers/authHelper';
 import { PrivateRoute } from './app/routes/PrivateRoute';
 import { NotFound } from './app/components/NotFound/NotFound';
 import { useAppDispatch, useAppSelector } from './app/store/hooks';
 import {
+  selectAuthenticatedUser,
   selectIsAuthenticated,
   setAuthenticated,
+  setCurrentUser,
 } from './features/access/services/accessSlice';
 import { Container, Row } from 'react-bootstrap';
 import { Navbar } from './app/components';
@@ -21,16 +24,20 @@ import { Navbar } from './app/components';
 export default function Routes() {
   const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const user = useAppSelector(selectAuthenticatedUser);
 
   const [loadingApp, setLoadingApp] = useState(true);
 
   useEffect(() => {
     const token = authHelper.getToken();
-    if (token) {
+    if (token && !isAuthenticated) {
+      dispatch(setCurrentUser());
       dispatch(setAuthenticated(true));
     }
-    setLoadingApp(false);
-  }, [dispatch]);
+    if (user) {
+      setLoadingApp(false);
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     const googleMapScript = document.createElement('script');
@@ -57,6 +64,12 @@ export default function Routes() {
               path={['/', '/apartments']}
               isLoggedIn={isAuthenticated}
               component={PropertyListPage}
+              exact={true}
+            />
+            <PrivateRoute
+              path={['/apartments/create']}
+              isLoggedIn={isAuthenticated}
+              component={PropertyCreatePage}
               exact={true}
             />
             <PrivateRoute

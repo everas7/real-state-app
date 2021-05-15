@@ -44,7 +44,6 @@ export const update = async (req: Request, res: Response) => {
       ],
     },
   });
-  console.log(property, 'KLk')
   res.status(httpStatus.OK).send(toPropertyDetailedDto(property));
 };
 

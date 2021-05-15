@@ -11,4 +11,6 @@ export const Properties = {
   get: (id: number): Promise<Property> => request.get(`properties/${id}`),
   update: (id: number, property: IPropertyForm): Promise<Property> =>
     request.put(`properties/${id}`, property),
+  create: (property: IPropertyForm): Promise<Property> =>
+    request.post(`properties`, property),
 };

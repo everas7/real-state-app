@@ -1,3 +1,5 @@
+import { Realtor } from './user';
+
 export interface GeoLocation {
   latitude: number;
   longitude: number;
@@ -35,21 +37,13 @@ export interface Property {
 }
 
 export interface IPropertyForm
-  extends Omit<Property, 'id' | 'realtor' | 'createdAt' | 'updatedAt'> {}
-
-export type Role = 'CLIENT' | 'REALTOR' | 'ADMIN';
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  role: Role;
-  createdAt?: string;
-  updatedAt?: string;
-}
-export interface Realtor extends User {
-  role: 'CLIENT';
+  extends Omit<
+    Property,
+    'id' | 'realtor' | 'createdAt' | 'updatedAt' | 'geolocation'
+  > {
+  id?: number;
+  realtor?: Realtor;
+  geolocation: GeoLocation | null;
 }
 
 export interface IPropertyFilters {
