@@ -8,6 +8,7 @@ import { IconType } from 'react-icons';
 interface Props extends FormControlProps, FieldProps {
   inline?: boolean;
   icon?: IconType;
+  placeholder?: string;
 }
 
 export const Input: React.FC<Props> = ({
@@ -19,9 +20,7 @@ export const Input: React.FC<Props> = ({
   ...props
 }) => {
   return (
-    <Form.Group
-      className={cx(styles.input, className)}
-    >
+    <Form.Group className={cx(styles.input, className)}>
       <div className={icon && 'inner-addon left-addon'}>
         <span className="glyphicon">{icon}</span>
         <Form.Control

@@ -1,15 +1,15 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
-import { Property, GeoLocation, IPropertyForm } from '../../../../app/models/property';
+import {
+  Property,
+  IPropertyForm,
+} from '../../../../app/models/property';
 import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../app/constants';
-import { Field, Form, Formik, FormikContextType, useField } from 'formik';
+import { Field, FieldProps, FormikContextType } from 'formik';
 import { Input } from '../../../../app/components/Input/Input';
-import { propertySchema } from '../../validators/propertyValidator';
-import { getGeolocationByAddress } from '../../../../app/services/googleApi';
 
-interface Values
-  extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
+interface Values extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
 
 interface Props {
   property: Property;
@@ -110,13 +110,13 @@ export default function PropertyDetails({
         {edit ? (
           <Field
             name="description"
-            placeholder="Description of the apartment"
             value={formik!.values.description}
             onChange={formik!.handleChange}
-            component={(props: any) => (
-              <Input as="textarea" {...props} rows={3} />
+          >
+            {(props: FieldProps) => (
+              <Input {...props} placeholder="Description of the apartment" as="textarea" />
             )}
-          />
+          </Field>
         ) : (
           <div>{property.description}</div>
         )}
