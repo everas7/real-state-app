@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../../../../components/Button/Button';
 import RangeInput from '../../../../components/RangeInput/RangeInput';
 import styles from './PropertyFilters.module.scss';
+import _ from 'lodash';
 
 export interface PropertyFiltersValues {
   price: {
@@ -16,23 +17,25 @@ export interface PropertyFiltersValues {
 }
 
 interface Props {
-  onApplyFilter: (value: PropertyFiltersValues) => void;
+  onApplyFilter: (value: URLSearchParams) => void;
 }
+
+const defaultFilters = {
+  price: {
+    min: 0,
+    max: 20000,
+  },
+  floorAreaSize: {
+    min: 0,
+    max: 7000,
+  },
+  rooms: new Set<number>(),
+};
 
 export default function PropertyFilters({
   onApplyFilter,
 }: Props): React.ReactElement<Props> {
-  const [filters, setFilters] = useState({
-    price: {
-      min: 0,
-      max: 20000,
-    },
-    floorAreaSize: {
-      min: 0,
-      max: 200,
-    },
-    rooms: new Set<number>(),
-  });
+  const [filters, setFilters] = useState<PropertyFiltersValues>(defaultFilters);
 
   function handleRoomsFilterChange(value: number) {
     const rooms = new Set(filters.rooms);
@@ -47,38 +50,79 @@ export default function PropertyFilters({
     });
   }
 
+  function handleApplyFilter(filtersValues: PropertyFiltersValues) {
+    const filtersToSend: PropertyFiltersValues = _.cloneDeep(filtersValues);
+    let params = new URLSearchParams();
+    params.append('filters[minPrice]', String(filters.price.min));
+    if (filtersToSend.price!.max !== defaultFilters.price.max) {
+      params.append('filters[maxPrice]', String(filters.price.max));
+    }
+    params.append(
+      'filters[minFloorAreaSize]',
+      String(filters.floorAreaSize.min)
+    );
+    if (filtersToSend.floorAreaSize!.max !== defaultFilters.floorAreaSize.max) {
+      params.append(
+        'filters[maxFloorAreaSize]',
+        String(filters.floorAreaSize.max)
+      );
+    }
+    Array.from(filters.rooms).forEach((room) => {
+      params.append('filters[rooms][]', String(room));
+    });
+    onApplyFilter(params);
+  }
+
+  function handleReset() {
+    setFilters(defaultFilters);
+    handleApplyFilter(defaultFilters);
+  }
+
   return (
     <div className={styles['property-filters']}>
       <div className={styles['property-filters__controls']}>
-        <Button onClick={() => onApplyFilter(filters)}> Apply </Button>
-        <Button variant="light"> Reset </Button>
+        <Button onClick={() => handleApplyFilter(filters)}> Apply </Button>
+        <Button variant="light" onClick={handleReset}>
+          Reset
+        </Button>
       </div>
 
       <RangeInput
         label="Price"
         value={filters.price}
-        minValue={0}
-        maxValue={2000}
+        minValue={defaultFilters.price.min}
+        maxValue={defaultFilters.price.max}
         onChange={(value) =>
           setFilters({
             ...filters,
             price: value as any,
           })
         }
-        labelPrefix="$"
+        minLabelPrefix="$"
+        maxLabelPrefix="$"
+        maxLabelSuffix={`${
+          filters.floorAreaSize.max === defaultFilters.floorAreaSize.max
+            ? '+'
+            : ''
+        }`}
       />
       <RangeInput
         label="Size"
         value={filters.floorAreaSize}
-        minValue={0}
-        maxValue={200}
+        minValue={defaultFilters.floorAreaSize.min}
+        maxValue={defaultFilters.floorAreaSize.max}
         onChange={(value) =>
           setFilters({
             ...filters,
             floorAreaSize: value as any,
           })
         }
-        labelSuffix=" ft²"
+        minLabelSuffix=" ft²"
+        maxLabelSuffix={`${
+          filters.floorAreaSize.max === defaultFilters.floorAreaSize.max
+            ? '+'
+            : ''
+        } ft²`}
       />
       <div className={styles['property-filters__rooms']}>
         <div className={styles['property-filters__rooms-label']}>Rooms</div>

@@ -46,7 +46,14 @@ export const getAll = async (
     ...(filters.rooms
       ? {
           rooms: {
-            [Op.or]: filters.rooms,
+            [Op.or]: {
+              [Op.or]: filters.rooms,
+              ...(filters.rooms.some((r) => +r === 4)
+                ? {
+                    [Op.gte]: 4,
+                  }
+                : {}),
+            },
           },
         }
       : {}),

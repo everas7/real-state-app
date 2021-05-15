@@ -7,6 +7,10 @@ interface Props extends InputRangeProps {
   label?: string;
   labelSuffix?: string;
   labelPrefix?: string;
+  minLabelSuffix?: string;
+  minLabelPrefix?: string;
+  maxLabelSuffix?: string;
+  maxLabelPrefix?: string;
 }
 
 export default function RangeInput({
@@ -14,6 +18,10 @@ export default function RangeInput({
   allowSameValues = true,
   labelSuffix = '',
   labelPrefix = '',
+  minLabelSuffix = '',
+  minLabelPrefix = '',
+  maxLabelSuffix =  '',
+  maxLabelPrefix = '',
   ...props
 }: Props): React.ReactElement<Props> {
   return (
@@ -24,11 +32,11 @@ export default function RangeInput({
           <div className={styles['range-input__label-values']}>
             {(props.value as Range).min !== undefined ? (
               <span>
-                {labelPrefix}
+                {minLabelPrefix}
                 {(props.value as Range).min.toLocaleString()}
-                {labelSuffix} - {labelPrefix}
+                {minLabelSuffix} - {maxLabelPrefix}
                 {(props.value as Range).max.toLocaleString()}
-                {labelSuffix}
+                {maxLabelSuffix}
               </span>
             ) : (
               `${{ labelPrefix }}${props.value.toLocaleString()}${{

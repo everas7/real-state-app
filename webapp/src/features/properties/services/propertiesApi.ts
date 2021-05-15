@@ -6,9 +6,16 @@ import {
   IPropertyFilters,
 } from '../models/property';
 
+const filtersP = new URLSearchParams({
+  price: '',
+});
+
 export const Properties = {
-  list: (filters: IPropertyFilters | null = null): Promise<PropertyForList[]> =>
-    request.get('properties'),
+  list: (params: URLSearchParams | null = null): Promise<PropertyForList[]> =>
+    request.get(
+      'properties',
+      params
+    ),
   get: (id: number): Promise<Property> => request.get(`properties/${id}`),
   update: (id: number, property: IPropertyForm): Promise<Property> =>
     request.put(`properties/${id}`, property),

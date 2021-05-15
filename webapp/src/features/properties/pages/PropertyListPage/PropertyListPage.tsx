@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PropertyForList } from '../../models/property';
 import { Properties } from '../../services/propertiesApi';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
-import PropertyFilters, {
-  PropertyFiltersValues,
-} from '../../components/PropertyFilters/PropertyFilters';
+import PropertyFilters from '../../components/PropertyFilters/PropertyFilters';
 import Map from '../../../../components/Map/Map';
 import { Row, Col, Form } from 'react-bootstrap';
 import { history } from '../../../../index';
@@ -28,14 +26,8 @@ export default function PropertyListPage() {
     lng: p.geolocation.longitude,
   }));
 
-  function onFilterProperties(filters: PropertyFiltersValues) {
-    Properties.list({
-      minPrice: filters.price.min,
-      maxPrice: filters.price.max,
-      minFloorAreaSize: filters.floorAreaSize.min,
-      maxFloorAreaSize: filters.floorAreaSize.max,
-      ...(filters.rooms.size ? { rooms: Array.from(filters.rooms) } : {}),
-    }).then((res) => {
+  function onFilterProperties(filters: URLSearchParams) {
+    Properties.list(filters).then((res) => {
       setProperties(res);
     });
   }
