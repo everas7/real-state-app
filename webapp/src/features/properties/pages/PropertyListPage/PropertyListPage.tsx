@@ -64,6 +64,7 @@ export default function PropertyListPage() {
                 price={property.price}
                 floorAreaSize={property.floorAreaSize}
                 address={property.address}
+                available={property.available}
               />
             </Col>
           ))}

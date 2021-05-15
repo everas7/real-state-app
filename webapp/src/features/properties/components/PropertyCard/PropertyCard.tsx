@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Badge } from 'react-bootstrap';
 import styles from './PropertyCard.module.scss';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
 import * as Constants from '../../../../app/constants';
@@ -10,6 +10,7 @@ interface Props {
   address: string;
   floorAreaSize: number;
   price: number;
+  available: boolean;
 }
 
 export default function PropertyCard({
@@ -18,6 +19,7 @@ export default function PropertyCard({
   address,
   floorAreaSize,
   price,
+  available,
 }: Props): React.ReactElement<Props> {
   return (
     <Card className={styles['property-card']}>
@@ -30,10 +32,16 @@ export default function PropertyCard({
         <Card.Text className={styles['property-card__address']}>
           {address}
         </Card.Text>
-        <Card.Text>
-          {rooms} <FaBed color={Constants.PRIMARY_COLOR} /> | {floorAreaSize} ft
-          <sup>2</sup> <FaRulerCombined color={Constants.PRIMARY_COLOR} />
-        </Card.Text>
+        <div className={styles['property-card__footer']}>
+          <Card.Text className={styles['property-card__dimensions']}>
+            {rooms} <FaBed color={Constants.PRIMARY_COLOR} /> | {floorAreaSize}{' '}
+            ft
+            <sup>2</sup> <FaRulerCombined color={Constants.PRIMARY_COLOR} />
+          </Card.Text>
+          <Badge variant={available ? 'warning' : 'success'}>
+            {available ? 'Available' : 'Rented'}
+          </Badge>
+        </div>
       </Card.Body>
     </Card>
   );

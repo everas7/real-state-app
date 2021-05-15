@@ -25,4 +25,17 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
   }
+
+  &__footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__dimensions {
+    line-height: 40px;
+    margin-bottom: 5px;
+
+  }
 }
