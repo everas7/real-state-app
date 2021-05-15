@@ -33,14 +33,14 @@ const defaultCoordinates = {
 };
 
 const ManageAddressChange = () => {
-  const { getFieldProps, getFieldHelpers, values } = useFormikContext();
+  const { getFieldProps, getFieldHelpers } = useFormikContext();
   const value = getFieldProps('address').value;
   useEffect(() => {
     getGeolocationByAddress(value)?.then((res) => {
       getFieldHelpers('geolocation').setValue(res);
     });
   }, [value, getFieldHelpers]);
-  return <div>{JSON.stringify(values)}</div>;
+  return null;
 };
 
 export default function PropertyForm({
