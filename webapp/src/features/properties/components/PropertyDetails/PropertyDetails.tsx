@@ -35,7 +35,7 @@ export default function PropertyDetails({
     if (user?.role === 'ADMIN') {
       const params = new URLSearchParams();
       params.append('filters[role]', 'REALTOR');
-      Users.get(params).then((res) => {
+      Users.list(params).then((res) => {
         setUserOptions(res);
       });
     }

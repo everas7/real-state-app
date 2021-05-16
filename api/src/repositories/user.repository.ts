@@ -5,7 +5,6 @@ import { Fn, Literal, Where } from 'sequelize/types/lib/utils';
 import { WhereAttributeHash, AndOperator, OrOperator } from 'sequelize/types';
 import { Property } from '../interfaces/property.interface';
 
-
 type WhereType =
   | Fn
   | Literal
@@ -14,19 +13,17 @@ type WhereType =
   | AndOperator<Property>
   | OrOperator<Property>
   | undefined;
-  
+
 export const findAll = async (): Promise<User[]> => {
   return db.User.findAll().then((ul) =>
     ul.map((ul) => ul.get({ plain: true }))
   );
 };
-  
+
 export const findAllWhere = async (where: WhereType): Promise<User[]> => {
   return db.User.findAll({
     where,
-  }).then((ul) =>
-    ul.map((ul) => ul.get({ plain: true }))
-  );
+  }).then((ul) => ul.map((ul) => ul.get({ plain: true })));
 };
 
 export const findById = async (id: number): Promise<User | undefined> => {
@@ -49,6 +46,27 @@ export const findByEmail = async (email: string): Promise<User | undefined> => {
   );
 };
 
-export const create = async (user: UserCreationAttributes): Promise<User | undefined> => {
-  return db.User.create(user).then((u) => findById(u.getDataValue('id')));
+export const create = async (user: UserCreationAttributes): Promise<User> => {
+  return db.User.create(user).then(
+    (u) => findById(u.getDataValue('id')) as Promise<User>
+  );
+};
+
+export const update = async (
+  id: number,
+  user: UserCreationAttributes
+): Promise<User> => {
+  return db.User.update(user, {
+    where: {
+      id,
+    },
+  }).then(() => findById(id) as Promise<User>);
+};
+
+export const remove = async (id: number): Promise<number> => {
+  return db.User.destroy({
+    where: {
+      id,
+    },
+  });
 };

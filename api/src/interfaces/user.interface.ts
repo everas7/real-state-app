@@ -14,4 +14,7 @@ export interface UserFilters {
   role?: Role;
 }
 
+export interface UserForm
+  extends Omit<User, 'id' | 'createdAt' | 'updatedAt'> {}
+
 export interface UserDto extends Omit<User, 'password'> {}

@@ -1,5 +1,5 @@
 import * as userRepository from '../repositories/user.repository';
-import { User, UserFilters } from '../interfaces/user.interface';
+import { User, UserFilters, UserForm } from '../interfaces/user.interface';
 
 export const getUserByEmail = async (
   email: string
@@ -21,4 +21,17 @@ export const getAll = async (filters: UserFilters): Promise<User[]> => {
       : {}),
   };
   return userRepository.findAllWhere(where);
+};
+
+
+export const add = async (user: UserForm): Promise<User> => {
+  return userRepository.create(user);
+};
+
+export const update = async (id: number, user: UserForm): Promise<User> => {
+  return userRepository.update(id, user);
+};
+
+export const remove = async (id: number): Promise<number> => {
+  return userRepository.remove(id);
 };

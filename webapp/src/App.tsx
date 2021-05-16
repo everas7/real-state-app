@@ -8,6 +8,7 @@ import {
   PropertyEditPage,
   PropertyCreatePage,
 } from './features/properties';
+import { UserListPage, UserDetailPage, UserFormPage } from './features/users';
 import * as authHelper from './app/helpers/authHelper';
 import { PrivateRoute } from './app/routes/PrivateRoute';
 import { AuthorizedRoute } from './app/routes/AuthorizedRoute';
@@ -58,9 +59,7 @@ export default function Routes() {
   function renderRoutes() {
     return (
       <Container className="d-flex flex-column vh-100 overflow-hidden">
-        <Row className="flex-shrink-0">
-          <Navbar />
-        </Row>
+        <Row className="flex-shrink-0">{isAuthenticated && <Navbar />}</Row>
         <Row className="flex-grow-1 overflow-hidden">
           <Switch>
             <PrivateRoute
@@ -91,6 +90,39 @@ export default function Routes() {
               rolesAllowed={['REALTOR', 'ADMIN']}
               exact={true}
             />
+            <AuthorizedRoute
+              path={['/users']}
+              isLoggedIn={isAuthenticated}
+              component={UserListPage}
+              user={user!}
+              rolesAllowed={['ADMIN']}
+              exact={true}
+            />
+            <AuthorizedRoute
+              path={['/users/create']}
+              isLoggedIn={isAuthenticated}
+              component={UserFormPage}
+              user={user!}
+              rolesAllowed={['ADMIN']}
+              exact={true}
+            />
+            <AuthorizedRoute
+              path={['/users/:id']}
+              isLoggedIn={isAuthenticated}
+              component={UserDetailPage}
+              user={user!}
+              rolesAllowed={['ADMIN']}
+              exact={true}
+            />
+            <AuthorizedRoute
+              path={['/users/:id/edit']}
+              isLoggedIn={isAuthenticated}
+              component={UserFormPage}
+              user={user!}
+              rolesAllowed={['ADMIN']}
+              exact={true}
+            />
+
             <Route path="/(.+)" component={NotFound} />
           </Switch>
         </Row>

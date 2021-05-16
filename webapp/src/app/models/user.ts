@@ -12,3 +12,9 @@ export interface User {
 export interface Realtor extends User {
   role: 'CLIENT';
 }
+
+export interface IUserForm
+  extends Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'password'> {
+  id?: number;
+  password?: string;
+}

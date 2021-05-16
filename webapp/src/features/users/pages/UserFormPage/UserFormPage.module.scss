@@ -1,0 +1,13 @@
+.user-form-page {
+  &__content {
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  &__controls {
+    margin-bottom: 15px;
+    button:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}

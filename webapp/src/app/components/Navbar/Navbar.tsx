@@ -1,9 +1,12 @@
 import React from 'react';
-import { Navbar as BootstrapNavbar } from 'react-bootstrap';
+import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 import {
   logout,
   selectAuthenticatedUser,
 } from '../../../features/access/services/accessSlice';
+import { AuthorizedComponent } from '../../hoc/AuthorizedComponent';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import styles from './Navbar.module.scss';
@@ -18,6 +21,16 @@ export function Navbar() {
         Real State
       </BootstrapNavbar.Brand>
       <BootstrapNavbar.Toggle />
+      <Nav className="mr-auto">
+        <Nav.Link as={Link} to="/">
+          Apartments
+        </Nav.Link>
+        <AuthorizedComponent rolesAllowed={['ADMIN']}>
+          <Nav.Link as={Link} to="/users">
+            Users
+          </Nav.Link>
+        </AuthorizedComponent>
+      </Nav>
       <BootstrapNavbar.Collapse className="justify-content-end">
         <BootstrapNavbar.Text>
           Signed in as: <a href="">{`${user?.name} `}</a>

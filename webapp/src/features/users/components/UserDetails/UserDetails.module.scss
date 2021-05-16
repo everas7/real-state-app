@@ -1,0 +1,23 @@
+.user-details {
+
+  &__label {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  &__name {
+    font-size: 20px;
+  }
+  &__email {
+    font-size: 20px;
+    margin-top: 25px;
+  }
+  &__password {
+    font-size: 20px;
+    margin-top: 25px;
+  }
+
+  &__role {
+    font-size: 20px;
+    margin-top: 25px;
+  }
+}

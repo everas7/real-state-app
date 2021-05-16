@@ -1,0 +1,22 @@
+.user-list-page {
+  &__list {
+    overflow-y: auto;
+    max-height: 100% !important;
+  }
+  &__list::-webkit-scrollbar {
+    display: none;
+  }
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    &-title {
+      font-size: 22px;
+      font-weight: 550;
+    }
+  }
+
+}

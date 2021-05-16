@@ -67,7 +67,7 @@ export default function PropertyDetailPage(): JSX.Element {
     });
   }
   if (error === 'Not Found') return <NotFound />;
-  if (!property) return <div>Loading Aparment...</div>;
+  if (!property) return <div>Loading Apartment...</div>;
   return (
     <>
       <Breadcrumb items={[{ name: 'Appartments', path: '/' }, { name: id }]} />
