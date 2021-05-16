@@ -29,7 +29,7 @@ export const accessSlice = createSlice({
     setAuthenticationError: (state, action: PayloadAction<boolean>) => {
       state.authenticationError = action.payload;
     },
-    setAuthenticatedUser: (state, action: PayloadAction<User>) => {
+    setAuthenticatedUser: (state, action: PayloadAction<User | null>) => {
       state.authenticatedUser = action.payload;
     },
   },
@@ -57,7 +57,6 @@ export const login =
       .then((res) => {
         if (res.accessToken) {
           localStorage.setItem('jwt', res.accessToken);
-          dispatch(setAuthenticated(true));
           dispatch(setCurrentUser());
           history.push('/');
         }
@@ -67,12 +66,17 @@ export const login =
       });
   };
 
-export const setCurrentUser = (): AppThunk => (dispatch, getState) => {
-  Users.me().then((res) => {
-    if (res) {
-      dispatch(setAuthenticatedUser(res));
-    }
-  });
+export const setCurrentUser = (): AppThunk => async (dispatch, getState) => {
+  const user = await Users.me();
+  dispatch(setAuthenticatedUser(user));
+  dispatch(setAuthenticated(true));
+};
+
+export const logout = (): AppThunk => (dispatch, getState) => {
+  localStorage.removeItem('jwt');
+  dispatch(setAuthenticatedUser(null));
+  dispatch(setAuthenticationError(false));
+  dispatch(setAuthenticated(false));
 };
 
 export default accessSlice.reducer;

@@ -33,7 +33,6 @@ export default function Routes() {
     const token = authHelper.getToken();
     if (token && !isAuthenticated) {
       dispatch(setCurrentUser());
-      dispatch(setAuthenticated(true));
     }
     if (user) {
       setLoadingApp(false);
@@ -41,7 +40,7 @@ export default function Routes() {
     if (!token) {
       setLoadingApp(false);
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, isAuthenticated]);
 
   useEffect(() => {
     const googleMapScript = document.createElement('script');

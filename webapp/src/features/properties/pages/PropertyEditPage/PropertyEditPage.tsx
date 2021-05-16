@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
-import { Breadcrumb } from '../../../../app/components';
+import { Breadcrumb, NotFound } from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
@@ -10,11 +10,18 @@ import { history } from '../../../../index';
 export default function PropertyEditPage() {
   const [property, setProperty] = useState<Property>();
   const { id } = useParams<{ id: string }>();
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    Properties.get(parseInt(id, 10)).then((res) => {
-      setProperty(res);
-    });
+    Properties.get(parseInt(id, 10))
+      .then((res) => {
+        setProperty(res);
+      })
+      .catch((err) => {
+        if (err.status === 403 || err.status === 404) {
+          setError('Not Found');
+        }
+      });
   }, [id]);
 
   const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
@@ -29,6 +36,7 @@ export default function PropertyEditPage() {
     });
   };
 
+  if (error === 'Not Found') return <NotFound />;
   if (!property) return <div>Loading appartment...</div>;
 
   return (

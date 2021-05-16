@@ -5,14 +5,16 @@ import cx from 'classnames';
 
 import PropertyCorousel from '../../components/PropertyCorousel/PropertyCorousel';
 import PropertyDetails from '../../components/PropertyDetails/PropertyDetails';
-import { Breadcrumb, Map, Button } from '../../../../app/components';
+import { Breadcrumb, Map, Button, NotFound } from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import styles from './PropertyDetailPage.module.scss';
 import { history } from '../../../../index';
+import { AuthorizedComponent } from '../../../../app/hoc/AuthorizedComponent';
 
-export default function PropertyDetailPage() {
+export default function PropertyDetailPage(): JSX.Element {
   const [property, setProperty] = useState<Property>();
+  const [error, setError] = useState('');
   const { id } = useParams<{ id: string }>();
 
   const [show, setShow] = useState(false);
@@ -21,9 +23,15 @@ export default function PropertyDetailPage() {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    Properties.get(parseInt(id, 10)).then((res) => {
-      setProperty(res);
-    });
+    Properties.get(parseInt(id, 10))
+      .then((res) => {
+        setProperty(res);
+      })
+      .catch((err) => {
+        if (err.status === 403 || err.status === 404) {
+          setError('Not Found');
+        }
+      });
   }, [id]);
   let coordinate;
 
@@ -58,7 +66,7 @@ export default function PropertyDetailPage() {
       history.push('/');
     });
   }
-
+  if (error === 'Not Found') return <NotFound />;
   if (!property) return <div>Loading Aparment...</div>;
   return (
     <>
@@ -79,18 +87,19 @@ export default function PropertyDetailPage() {
             </Row>
           </Col>
           <Col md="6" className="flex-grow-1">
-            <div className={styles['property-detail-page__controls']}>
-              <Button onClick={() => history.push(`/apartments/${id}/edit`)}>
-                Edit Apartment
-              </Button>
-              <Button variant="success" onClick={changeAvailability}>
-                {property.available ? 'Set as Rented' : 'Set as Available'}
-              </Button>
-              <Button variant="danger" onClick={handleShow}>
-                Delete
-              </Button>
-            </div>
-
+            <AuthorizedComponent rolesAllowed={['REALTOR', 'ADMIN']}>
+              <div className={styles['property-detail-page__controls']}>
+                <Button onClick={() => history.push(`/apartments/${id}/edit`)}>
+                  Edit Apartment
+                </Button>
+                <Button variant="success" onClick={changeAvailability}>
+                  {property.available ? 'Set as Rented' : 'Set as Available'}
+                </Button>
+                <Button variant="danger" onClick={handleShow}>
+                  Delete
+                </Button>
+              </div>
+            </AuthorizedComponent>
             {(property && <PropertyDetails property={property} />) || ''}
           </Col>
         </Row>

@@ -1,12 +1,16 @@
 import React from 'react';
 import { Navbar as BootstrapNavbar } from 'react-bootstrap';
-import { selectAuthenticatedUser } from '../../../features/access/services/accessSlice';
-import { useAppSelector } from '../../store/hooks';
+import {
+  logout,
+  selectAuthenticatedUser,
+} from '../../../features/access/services/accessSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import styles from './Navbar.module.scss';
 
 export function Navbar() {
   const user = useAppSelector(selectAuthenticatedUser);
+  const dispatch = useAppDispatch();
 
   return (
     <BootstrapNavbar className={styles.navbar}>
@@ -16,7 +20,10 @@ export function Navbar() {
       <BootstrapNavbar.Toggle />
       <BootstrapNavbar.Collapse className="justify-content-end">
         <BootstrapNavbar.Text>
-          Signed in as: <a href="#login">{user?.name}</a>
+          Signed in as: <a href="">{`${user?.name} `}</a>
+        </BootstrapNavbar.Text>
+        <BootstrapNavbar.Text onClick={() => dispatch(logout())}>
+          Logout
         </BootstrapNavbar.Text>
       </BootstrapNavbar.Collapse>
     </BootstrapNavbar>
