@@ -22,7 +22,10 @@ export function Navbar() {
         <BootstrapNavbar.Text>
           Signed in as: <a href="">{`${user?.name} `}</a>
         </BootstrapNavbar.Text>
-        <BootstrapNavbar.Text onClick={() => dispatch(logout())}>
+        <BootstrapNavbar.Text
+          className={styles.navbar__logout}
+          onClick={() => dispatch(logout())}
+        >
           Logout
         </BootstrapNavbar.Text>
       </BootstrapNavbar.Collapse>

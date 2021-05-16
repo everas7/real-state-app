@@ -6,4 +6,12 @@
   }
   color: #3eb49e;
 
+  &__logout::before {
+    content: "|";
+    margin-right: 10px;
+  }
+  &__logout {
+    cursor: pointer;
+    margin-left: 10px;
+  }
 }
