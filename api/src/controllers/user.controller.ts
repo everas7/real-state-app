@@ -3,10 +3,12 @@ import httpStatus from 'http-status';
 
 import * as userService from '../services/user.service';
 import { toUserDto } from '../dtos/user.dto';
-import { User } from '../interfaces/user.interface';
+import { User, UserFilters } from '../interfaces/user.interface';
 
 export const get = async (req: Request, res: Response) => {
-  const users = (await userService.getAll()).map((u) => toUserDto(u));
+  const users = (
+    await userService.getAll((req.query.filters as UserFilters) || {})
+  ).map((u) => toUserDto(u));
   res.status(httpStatus.OK).send(users);
 };
 

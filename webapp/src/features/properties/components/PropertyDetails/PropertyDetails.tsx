@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
 import cx from 'classnames';
 import { Property, IPropertyForm } from '../../../../app/models/property';
@@ -6,8 +6,16 @@ import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../app/constants';
 import { Field, FieldProps, FormikContextType } from 'formik';
 import { MaskInput, Input } from '../../../../app/components';
+import { AuthorizedComponent } from '../../../../app/hoc/AuthorizedComponent';
+import { Users } from '../../../../app/services/usersApi';
+import { User } from '../../../../app/models/user';
+import { useAppSelector } from '../../../../app/store/hooks';
+import { selectAuthenticatedUser } from '../../../access/services/accessSlice';
 
-interface Values extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
+interface Values
+  extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor'> {
+  realtorId: number | null;
+}
 
 interface Props {
   property: Property;
@@ -20,6 +28,18 @@ export default function PropertyDetails({
   edit = false,
   formik,
 }: Props): React.ReactElement<Props> {
+  const [userOptions, setUserOptions] = useState<User[]>([]);
+  const user = useAppSelector(selectAuthenticatedUser);
+
+  useEffect(() => {
+    if (user?.role === 'ADMIN') {
+      const params = new URLSearchParams();
+      params.append('filters[role]', 'REALTOR');
+      Users.get(params).then((res) => {
+        setUserOptions(res);
+      });
+    }
+  }, [user]);
   return (
     <div className={cx(styles['property-details'])}>
       <div className={styles['property-details__name']}>
@@ -129,8 +149,32 @@ export default function PropertyDetails({
       </div>
       <div className={styles['property-details__realtor']}>
         Contact Information
-        <div>{property.realtor.name}</div>
-        <div>{property.realtor.email}</div>
+        <AuthorizedComponent
+          rolesAllowed={['ADMIN']}
+          customValidation={() => edit}
+        >
+          {edit ? (
+            <Field
+              name="realtorId"
+              value={formik!.values.realtorId}
+              onChange={formik!.handleChange}
+            >
+              {(props: FieldProps) => (
+                <Input {...props} placeholder="Realtor" as="select">
+                  {userOptions.map((u, i) => (
+                    <option key={i} value={u.id}>
+                      {u.name} - {u.email}
+                    </option>
+                  ))}
+                </Input>
+              )}
+            </Field>
+          ) : null}
+          <>
+            <div>{property.realtor.name}</div>
+            <div>{property.realtor.email}</div>
+          </>
+        </AuthorizedComponent>
       </div>
     </div>
   );

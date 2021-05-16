@@ -10,4 +10,8 @@ export interface User {
   updatedAt?: string;
 }
 
+export interface UserFilters {
+  role?: Role;
+}
+
 export interface UserDto extends Omit<User, 'password'> {}

@@ -29,7 +29,7 @@ export default function PropertyEditPage() {
       ...values,
       price: Number(String(values.price).replace(/\D+/g, '')),
       available: property!.available,
-      realtorId: property!.realtorId,
+      realtorId: values.realtorId || property!.realtorId,
     }).then(() => {
       setSubmitting(false);
       history.push(`/apartments/${id}`);

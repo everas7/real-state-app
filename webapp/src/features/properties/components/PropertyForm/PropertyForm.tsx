@@ -21,8 +21,12 @@ import { history } from '../../../../index';
 import PropertyCorousel from '../PropertyCorousel/PropertyCorousel';
 import PropertyDetails from '../PropertyDetails/PropertyDetails';
 import { propertySchema } from '../../validators/propertyValidator';
+import { User } from '../../../../app/models/user';
 
-interface Values extends Omit<IPropertyForm, 'realtorId' | 'available'> {}
+interface Values
+  extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor'> {
+    realtorId: number | null;
+}
 
 interface Props {
   property: IPropertyForm;
@@ -49,7 +53,7 @@ export default function PropertyForm({
   property,
   onSubmit,
 }: Props): React.ReactElement<Props> {
-  const formik = useFormik({
+  const formik = useFormik<Values>({
     initialValues: {
       name: property.name,
       price: property.price,
@@ -58,6 +62,7 @@ export default function PropertyForm({
       rooms: property.rooms,
       floorAreaSize: property.floorAreaSize,
       geolocation: property.geolocation,
+      realtorId: property.realtorId || null,
     },
     validationSchema: propertySchema,
     onSubmit,

@@ -8,7 +8,7 @@ import { User } from '../interfaces/user.interface';
 import { PropertyFilters } from '../interfaces/property.interface';
 
 export const get = async (req: Request, res: Response) => {
-  const properties = (await propertyService.getAll(req.user as User, req.query.filters  as PropertyFilters || {})).map((u) =>
+  const properties = (await propertyService.getAll(req.user as User, req.query.filters as PropertyFilters || {})).map((u) =>
     toPropertyDto(u)
   );
   res.status(httpStatus.OK).send(properties);
