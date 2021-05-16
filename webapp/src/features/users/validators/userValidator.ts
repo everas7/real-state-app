@@ -12,7 +12,15 @@ export const userCreateSchema = yup.object().shape({
     .min(8, 'Password must be at least 8 characters')
     .matches(/[a-zA-Z]/, { message: 'Password must have at least one letter' })
     .matches(/\d/, { message: 'Password must have at least one number' }),
-  role: yup.string().required(),
+  role: yup
+    .string()
+    .required('Role is required')
+    .test(
+      'valid-role',
+      'Selected value is not a valid role',
+      (value, context) =>
+        value === 'CLIENT' || value === 'ADMIN' || value === 'REALTOR'
+    ),
 });
 
 export const userUpdateSchema = yup.object().shape({
@@ -26,5 +34,13 @@ export const userUpdateSchema = yup.object().shape({
     .min(8, 'Password must be at least 8 characters')
     .matches(/[a-zA-Z]/, { message: 'Password must have at least one letter' })
     .matches(/\d/, { message: 'Password must have at least one number' }),
-  role: yup.string().required(),
+  role: yup
+    .string()
+    .required('Role is required')
+    .test(
+      'valid-role',
+      'Selected value is not a valid role',
+      (value, context) =>
+        value === 'CLIENT' || value === 'ADMIN' || value === 'REALTOR'
+    ),
 });

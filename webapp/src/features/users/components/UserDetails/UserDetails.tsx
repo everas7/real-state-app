@@ -20,12 +20,12 @@ export default function UserDetails({
   return (
     <div className={cx(styles['user-details'])}>
       <div className={styles['user-details__name']}>
-        <div className={styles['user-details__label']}>Name</div>
+        <div className={styles['user-details__label']}>Full Name</div>
         {edit ? (
           <Field
             type="text"
             name="name"
-            placeholder="John Doe"
+            placeholder="Full Name"
             component={Input}
           />
         ) : (
@@ -38,7 +38,7 @@ export default function UserDetails({
           <Field
             type="text"
             name="email"
-            placeholder="jdoe@gmail.com"
+            placeholder="email@test.com"
             component={Input}
           />
         ) : (
@@ -50,9 +50,9 @@ export default function UserDetails({
           <>
             <div className={styles['user-details__label']}>Password</div>
             <Field
-              type="text"
+              type="password"
               name="password"
-              placeholder="Password"
+              placeholder="*****"
               component={Input}
             />
           </>
@@ -62,8 +62,9 @@ export default function UserDetails({
         <div className={styles['user-details__label']}>Role</div>
         {edit ? (
           <Field name="role">
-            {(props: FieldProps) => (
+          {(props: FieldProps) => (
               <Input {...props} as="select">
+                <option>Select a Role...</option>
                 <option>CLIENT</option>
                 <option>REALTOR</option>
                 <option>ADMIN</option>

@@ -34,20 +34,9 @@ export const add = async (req: Request, res: Response) => {
 };
 
 export const update = async (req: Request, res: Response) => {
-  const userToUpdate = await userService.getById(parseInt(req.params.id, 10));
-  if (!userToUpdate) {
-    throw {
-      status: 404,
-      message: 'User not found',
-    };
-  }
-  const user = await userService.update(userToUpdate?.id, {
-    ...userToUpdate,
-    ...req.body,
-  });
+  const user = await userService.update(parseInt(req.params.id, 10), req.body);
   res.status(httpStatus.OK).send(toUserDto(user));
 };
-
 
 export const remove = async (req: Request, res: Response) => {
   await userService.remove(parseInt(req.params.id, 10));

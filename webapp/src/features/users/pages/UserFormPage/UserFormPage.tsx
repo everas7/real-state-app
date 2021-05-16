@@ -22,15 +22,17 @@ export default function UserFormPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    Users.get(parseInt(id, 10))
-      .then((res) => {
-        setUser(res);
-      })
-      .catch((err) => {
-        if (err.status === 403 || err.status === 404) {
-          setError('Not Found');
-        }
-      });
+    if (id) {
+      Users.get(parseInt(id, 10))
+        .then((res) => {
+          setUser(res);
+        })
+        .catch((err) => {
+          if (err.status === 403 || err.status === 404) {
+            setError('Not Found');
+          }
+        });
+    }
   }, [id]);
 
   const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
