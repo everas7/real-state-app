@@ -20,8 +20,8 @@ export const Input: React.FC<Props> = ({
 }) => {
   return (
     <Form.Group className={cx(styles.input, className)}>
-      <div className={icon && 'inner-addon left-addon'}>
-        <span className="glyphicon">{icon}</span>
+      <div className={cx({ 'inner-addon left-addon': !!icon })}>
+        <span className="inputicon">{icon}</span>
         <Form.Control
           {...field}
           {...props}

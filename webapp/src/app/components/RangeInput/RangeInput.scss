@@ -1,11 +1,13 @@
+@import '../../assets/styles/variables';
 @import 'react-input-range/lib/css/index.css';
+
 .input-range__slider {
-  background-color: #157dff;
-  border-color: #157dff;
+  background-color: $primary;
+  border-color: $primary;
 }
 
 .input-range__track--active {
-  background-color: #157dff;
+  background-color: $primary;
 }
 
 .input-range__label {

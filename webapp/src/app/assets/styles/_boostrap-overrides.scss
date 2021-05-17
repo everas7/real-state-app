@@ -1,0 +1,113 @@
+@import './variables';
+
+.btn-primary {
+  @include button-variant(
+    $primary,
+    $primary,
+    #ffffff,
+    darken($primary, 5%),
+    darken($primary, 5%),
+    #ffffff,
+    $primary,
+    $primary,
+    #ffffff,
+    lighten($primary, 5%),
+    lighten($primary, 5%),
+    #ffffff
+  );
+}
+
+.btn-outline-primary {
+  @include button-outline-variant(
+    $primary,
+    #ffffff,
+    $primary,
+    $primary,
+    #ffffff
+  );
+}
+
+
+/* Card */
+
+.card {
+  background: #fff;
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+
+/* Input Icon */
+
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .inputicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.left-addon .inputicon {
+  left: 0px;
+}
+.right-addon .inputicon {
+  right: 0px;
+}
+
+.left-addon input {
+  padding-left: 30px;
+}
+
+.right-addon input {
+  padding-right: 30px;
+}
+
+
+/* Badge */
+
+.badge-danger {
+  background-color: #b94a48;
+}
+
+.badge-error:hover {
+  background-color: #953b39;
+}
+
+.badge-warning {
+  background-color: #f89406;
+}
+
+.badge-warning:hover {
+  background-color: #c67605;
+}
+
+.badge-success {
+  background-color: #468847;
+}
+
+.badge-success:hover {
+  background-color: #356635;
+}
+
+.badge-info {
+  background-color: #3a87ad;
+}
+
+.badge-info:hover {
+  background-color: #2d6987;
+}
+
+.badge-inverse {
+  background-color: #333333;
+}
+
+.badge-inverse:hover {
+  background-color: #1a1a1a;
+}
