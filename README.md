@@ -46,6 +46,34 @@ WebApp Structure
 # Setting Up Project
 ## Environment Variables
 
+### API
+Copy the .env.example file:
+```
+cp .env.example .env
+```
+
+Modify variables on .env as needed. For example:
+```
+PORT=7000
+DB_USERNAME= root
+DB_PASSWORD= DB_P@$$w0rd
+DB_DATABASE= demo_ar_db
+DB_HOST= localhost
+DB_PORT= 3306
+```
+
+
+### Webapp
+Copy the .env.example file:
+```
+cp .env.example .env
+```
+
+Modify variables on .env as needed. For example:
+```
+REACT_APP_API_URL=http://localhost:7000/api
+REACT_APP_GOOGLE_API_KEY=yourkey
+```
 
 # Installing Dependencies
 
@@ -59,6 +87,20 @@ Web App
 cd web-app
 npm install
 ```
+
+# Setup DB
+
+Run migrations
+
+```
+npm run migrate
+```
+Run seeders
+```
+npm run seed
+```
+
+
 
 # Running Project
 

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { logout } from '../../features/access/services/accessSlice';
 import { Store } from '../store/store';
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:7000/api';
 
 axios.interceptors.request.use(
   (config) => {

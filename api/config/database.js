@@ -1,10 +1,10 @@
 module.exports = {
   development: {
-    username: 'root',
-    password: 'DB_P@$$w0rd',
-    database: 'demo_ar_db',
-    host: 'localhost',
-    port: 3306,
+    username: process.env.DB_USERNAME || 'root',
+    password: process.env.DB_PASSWORD || 'DB_P@$$w0rd',
+    database: process.env.DB_DATABASE || 'demo_ar_db',
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 3306,
     dialect: 'mysql',
   },
   test: {
