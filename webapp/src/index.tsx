@@ -3,18 +3,24 @@ import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './app/store/store';
+import { setupAxiosResponseInterceptor } from './app/services/axios';
 
 export const history = createBrowserHistory();
+
+setupAxiosResponseInterceptor(store);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router history={history}>
+        <ToastContainer />
         <App />
       </Router>
     </Provider>

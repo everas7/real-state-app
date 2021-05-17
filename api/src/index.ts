@@ -30,6 +30,11 @@ const debugLog: debug.IDebugger = debug('app');
 
 app.use(helmet());
 app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Expose-Headers', 'Authentication-Error');
+  next();
+});
+
 app.use(express.json());
 
 // Automatically log all HTTP requests handled by Express.js

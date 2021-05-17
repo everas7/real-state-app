@@ -91,7 +91,7 @@ export const authenticateJwt = (
     if (err) return next(err);
     if (!user) {
       res.setHeader('Authentication-Error', 'Invalid token');
-      res.send(httpStatus.UNAUTHORIZED);
+      res.sendStatus(httpStatus.UNAUTHORIZED);
     }
     req.user = user;
     next();

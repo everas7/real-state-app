@@ -1,3 +1,3 @@
 export function getToken() {
-  return window.localStorage.getItem('jwt');
+  return localStorage.getItem('jwt');
 }

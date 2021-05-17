@@ -74,9 +74,9 @@ export const setCurrentUser = (): AppThunk => async (dispatch, getState) => {
 
 export const logout = (): AppThunk => (dispatch, getState) => {
   localStorage.removeItem('jwt');
-  dispatch(setAuthenticatedUser(null));
   dispatch(setAuthenticationError(false));
   dispatch(setAuthenticated(false));
+  dispatch(setAuthenticatedUser(null));
 };
 
 export default accessSlice.reducer;

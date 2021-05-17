@@ -1,11 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
-import { history } from '../../index';
+import { toast } from 'react-toastify';
+import { logout } from '../../features/access/services/accessSlice';
+import { Store } from '../store/store';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use(
   (config) => {
-    const token = window.localStorage.getItem('jwt');
+    const token = localStorage.getItem('jwt');
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
@@ -13,26 +15,30 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+export const setupAxiosResponseInterceptor = (store: Store) => {
+  axios.interceptors.response.use(undefined, (error) => {
+    if (error.message === 'Network Error' && !error.response) {
+      toast.error(
+        'Network Error. Please try again or check your internet connection!'
+      );
+    } else {
+      const { status, data, config, headers } = error.response;
+      if (
+        status === 401 &&
+        headers['authentication-error']?.includes('Invalid token')
+      ) {
+        toast.info('Your session has expired, please login again');
+        store.dispatch(logout());
+      }
 
-axios.interceptors.response.use(undefined, (error) => {
-  if (error.message === 'Network Error' && !error.response) {
-    // TODO: Maybe a toast with network error
-  }
-  const { status, data, config, headers } = error.response;
+      if (status === 500) {
+        toast.error('Server Error - Contact system administrator');
+      }
+    }
 
-  if (
-    status === 401 &&
-    headers['Authentication-Error']?.includes('Invalid token')
-  ) {
-    localStorage.removeItem('jwt');
-    history.push('/');
-    // TODO: Maybe a toast saying session expired
-  }
-  if (status === 500) {
-    // TODO: handle 500
-  }
-  throw error.response;
-});
+    throw error.response;
+  });
+};
 
 const responseBody = (response: AxiosResponse) => response.data;
 
