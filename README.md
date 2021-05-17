@@ -60,6 +60,7 @@ DB_PASSWORD= DB_P@$$w0rd
 DB_DATABASE= demo_ar_db
 DB_HOST= localhost
 DB_PORT= 3306
+JWT_SECRET= top_secret_key_for_jwt_auth
 ```
 
 

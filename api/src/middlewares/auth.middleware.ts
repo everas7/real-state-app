@@ -53,7 +53,7 @@ export const setupPassport = () => {
   passport.use(
     new passportJwt.Strategy(
       {
-        secretOrKey: 'TOP_SECRET',
+        secretOrKey: process.env.JWT_SECRET,
         jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
       },
       async (token, done) => {

@@ -13,7 +13,7 @@ export const signup = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   const body = { id: (req.user as User).id, email: (req.user as User).email };
-  const accessToken = jwt.sign({ user: body }, 'TOP_SECRET');
+  const accessToken = jwt.sign({ user: body }, String(process.env.JWT_SECRET));
 
   res.status(httpStatus.OK).json({
     accessToken,
