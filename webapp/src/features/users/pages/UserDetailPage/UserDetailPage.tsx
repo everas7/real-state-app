@@ -68,7 +68,15 @@ export default function UserDetailPage(): JSX.Element {
         <Modal.Header>
           <Modal.Title>Delete</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this user?</Modal.Body>
+        <Modal.Body>
+          Are you sure you want to delete this user?
+          {user.role === 'REALTOR' && (
+            <div>
+              Performing this action would result on deleting all apartments
+              associated with this realtor
+            </div>
+          )}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="light" onClick={handleClose}>
             Cancel

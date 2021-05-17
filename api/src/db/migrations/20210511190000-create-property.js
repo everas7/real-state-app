@@ -19,7 +19,15 @@ module.exports = {
         allowNull: false,
       },
       address: { type: Sequelize.STRING, allowNull: true },
-      realtorId: { type: Sequelize.INTEGER, allowNull: false },
+      realtorId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

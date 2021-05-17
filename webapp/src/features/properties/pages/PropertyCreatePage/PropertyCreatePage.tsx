@@ -30,7 +30,7 @@ export default function PropertyCreatePage() {
     Properties.create({
       ...values,
       price: Number(values.price.replace(/\D+/g, '')),
-      realtorId: values.realtor || user!.id,
+      realtorId: values.realtorId || user!.id,
       available: true,
     }).then((res) => {
       setSubmitting(false);
