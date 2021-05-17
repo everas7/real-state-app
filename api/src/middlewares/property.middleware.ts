@@ -71,7 +71,6 @@ export const validateIsOwnerOrAdmin = async (
     .send({ message: 'User does not have permission to perform this action' });
 };
 
-
 export const validateUserCanAccessProperty = async (
   req: Request,
   res: Response,
@@ -101,4 +100,3 @@ export const validateUserCanAccessProperty = async (
     .status(httpStatus.FORBIDDEN)
     .send({ message: 'User does not have permission to perform this action' });
 };
-

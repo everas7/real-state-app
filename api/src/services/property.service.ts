@@ -11,15 +11,17 @@ export const getAll = async (
   user: User,
   filters: PropertyFilters
 ): Promise<Property[]> => {
-  let where = ({
-    CLIENT: {
-      available: true,
-    },
-    REALTOR: {
-      realtorId: user.id,
-    },
-    ADMIN: {},
-  } as { [key in Role]: {} })[user.role];
+  let where = (
+    {
+      CLIENT: {
+        available: true,
+      },
+      REALTOR: {
+        realtorId: user.id,
+      },
+      ADMIN: {},
+    } as { [key in Role]: {} }
+  )[user.role];
 
   where = {
     ...where,

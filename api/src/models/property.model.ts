@@ -3,7 +3,7 @@ import Sequelize, { ModelDefined, Optional } from 'sequelize';
 import { Property } from '../interfaces/property.interface';
 import { User } from '.';
 
-export interface PropertyCreationAttributes extends Optional<Property, 'id'> {}
+export type PropertyCreationAttributes = Optional<Property, 'id'>;
 
 export function initProperty(
   sequalize: Sequelize.Sequelize
@@ -27,10 +27,8 @@ export function initProperty(
     address: { type: Sequelize.STRING, allowNull: true },
     realtorId: { type: Sequelize.INTEGER, allowNull: false },
   };
-  const Property: ModelDefined<
-    Property,
-    PropertyCreationAttributes
-  > = sequalize.define('Property', attributes, { tableName: 'properties' });
+  const Property: ModelDefined<Property, PropertyCreationAttributes> =
+    sequalize.define('Property', attributes, { tableName: 'properties' });
 
   User.hasMany(Property, {
     sourceKey: 'id',
@@ -38,7 +36,7 @@ export function initProperty(
     as: 'properties',
   });
 
-  Property.belongsTo(User, {  foreignKey: 'realtorId', as: 'realtor' });
+  Property.belongsTo(User, { foreignKey: 'realtorId', as: 'realtor' });
 
   return Property;
 }

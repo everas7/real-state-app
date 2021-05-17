@@ -30,10 +30,12 @@ router.get('/', (req: express.Request, res: express.Response) => {
 
 routes.forEach((route) => {
   router.use(
-    ...([
-      route.path,
-      route.authenticate ? authenticateJwt : null,
-      route.route,
-    ] as RequestHandler[]).filter((r) => r)
+    ...(
+      [
+        route.path,
+        route.authenticate ? authenticateJwt : null,
+        route.route,
+      ] as RequestHandler[]
+    ).filter((r) => r)
   );
 });

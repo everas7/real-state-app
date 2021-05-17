@@ -2,7 +2,7 @@ import Sequelize, { ModelDefined, Optional } from 'sequelize';
 
 import { User } from '../interfaces/user.interface';
 
-export interface UserCreationAttributes extends Optional<User, 'id'> {}
+export type UserCreationAttributes = Optional<User, 'id'>;
 
 export function initUser(
   sequalize: Sequelize.Sequelize

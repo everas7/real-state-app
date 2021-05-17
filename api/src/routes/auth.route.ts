@@ -13,12 +13,12 @@ authRouter.post(
   validate(authValidator.signup),
   validateSameEmailDoesntExist,
   passport.authenticate('signup', { session: false }),
-  authController.signup,
+  authController.signup
 );
 
 authRouter.post(
   '/login',
   validate(authValidator.login),
   passport.authenticate('login', { session: false }),
-  authController.login,
+  authController.login
 );

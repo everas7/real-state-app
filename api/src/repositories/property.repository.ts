@@ -4,12 +4,6 @@ import { Fn, Literal, Where } from 'sequelize/types/lib/utils';
 import { WhereAttributeHash, AndOperator, OrOperator } from 'sequelize/types';
 import { PropertyCreationAttributes } from '../models/property.model';
 
-export const findAll = async (): Promise<Property[]> => {
-  return db.Property.findAll().then((ul) =>
-    ul.map((ul) => ul.get({ plain: true }))
-  );
-};
-
 type WhereType =
   | Fn
   | Literal
@@ -19,6 +13,12 @@ type WhereType =
   | OrOperator<Property>
   | undefined;
 
+export const findAll = async (): Promise<Property[]> => {
+  return db.Property.findAll().then((ul) =>
+    ul.map((ul) => ul.get({ plain: true }))
+  );
+};
+
 export const findAllWhere = async (where: WhereType): Promise<Property[]> => {
   return db.Property.findAll({
     where,
@@ -27,7 +27,7 @@ export const findAllWhere = async (where: WhereType): Promise<Property[]> => {
 
 export const findById = async (id: number): Promise<Property | undefined> => {
   return db.Property.findByPk(id, {
-    include: 'realtor'
+    include: 'realtor',
   }).then((m) =>
     m?.get({
       plain: true,

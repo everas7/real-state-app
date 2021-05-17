@@ -1,4 +1,8 @@
-import { Property, PropertyDto, PropertyDetailedDto } from '../interfaces/property.interface';
+import {
+  Property,
+  PropertyDto,
+  PropertyDetailedDto,
+} from '../interfaces/property.interface';
 import { User } from '../interfaces/user.interface';
 import { toUserDto } from './user.dto';
 
@@ -22,7 +26,10 @@ export const toPropertyDto = (property: Property): PropertyDto => {
   };
 };
 
-export const toPropertyDetailedDto = (property: Property, realtor?: User): PropertyDetailedDto => {
+export const toPropertyDetailedDto = (
+  property: Property,
+  realtor?: User
+): PropertyDetailedDto => {
   return {
     id: property.id,
     name: property.name,

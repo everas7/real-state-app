@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import * as propertyService from '../services/property.service';
@@ -8,15 +8,20 @@ import { User } from '../interfaces/user.interface';
 import { PropertyFilters } from '../interfaces/property.interface';
 
 export const get = async (req: Request, res: Response) => {
-  const properties = (await propertyService.getAll(req.user as User, req.query.filters as PropertyFilters || {})).map((u) =>
-    toPropertyDto(u)
-  );
+  const properties = (
+    await propertyService.getAll(
+      req.user as User,
+      (req.query.filters as PropertyFilters) || {}
+    )
+  ).map((u) => toPropertyDto(u));
   res.status(httpStatus.OK).send(properties);
 };
 
 export const getById = async (req: Request, res: Response) => {
   const realtor = await userService.getById(req.property!.realtorId);
-  res.status(httpStatus.OK).send(toPropertyDetailedDto(req.property!, realtor!));
+  res
+    .status(httpStatus.OK)
+    .send(toPropertyDetailedDto(req.property!, realtor!));
 };
 
 export const add = async (req: Request, res: Response) => {

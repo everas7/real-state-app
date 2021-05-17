@@ -1,4 +1,4 @@
-import { UserDto, User } from "./user.interface";
+import { UserDto, User } from './user.interface';
 
 export interface GeoLocation {
   type: 'POINT';
@@ -9,7 +9,6 @@ export interface GeoLocationDto {
   latitude: number;
   longitude: number;
 }
-
 
 export interface Property {
   id: number;
@@ -27,15 +26,14 @@ export interface Property {
   updatedAt?: string;
 }
 
-export interface PropertyDto extends Omit<Property, 'geolocation'|'realtor'>{
+export interface PropertyDto extends Omit<Property, 'geolocation' | 'realtor'> {
   geolocation: GeoLocationDto;
 }
 export interface PropertyDetailedDto extends PropertyDto {
   realtor: UserDto;
 }
 
-export interface PropertyForm
-  extends Omit<Property, 'id' | 'createdAt' | 'updatedAt'> {}
+export type PropertyForm = Omit<Property, 'id' | 'createdAt' | 'updatedAt'>;
 
 export interface PropertyFilters {
   minPrice?: number;

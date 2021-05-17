@@ -9,7 +9,7 @@ module.exports = {
         role: 'CLIENT',
         password: await bcrypt.hash('klkconklk1', 10),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         name: 'Mary Realtor',
@@ -17,7 +17,7 @@ module.exports = {
         role: 'REALTOR',
         password: await bcrypt.hash('klkconklk1', 10),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         name: 'Ryan Realtor',
@@ -25,7 +25,7 @@ module.exports = {
         role: 'REALTOR',
         password: await bcrypt.hash('klkconklk1', 10),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         name: 'Peter Admin',
@@ -33,12 +33,12 @@ module.exports = {
         role: 'ADMIN',
         password: await bcrypt.hash('klkconklk1', 10),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
     ]);
   },
 
   down: async (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('users', null, {});
-  }
+  },
 };

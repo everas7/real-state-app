@@ -56,7 +56,7 @@ app.use(expressWinston.logger(loggerOptions));
 setupPassport();
 app.use(passport.initialize());
 
-app.use('/', router);
+app.use('/api', router);
 
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
   debugLog(err);

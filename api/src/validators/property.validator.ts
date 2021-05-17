@@ -8,15 +8,16 @@ export const create = {
     price: Joi.number().required(),
     rooms: Joi.number().required(),
     available: Joi.boolean().required(),
-    geolocation: Joi.object().keys({
-      latitude: Joi.number().required(),
-      longitude: Joi.number().required(),
-    }).required(),
+    geolocation: Joi.object()
+      .keys({
+        latitude: Joi.number().required(),
+        longitude: Joi.number().required(),
+      })
+      .required(),
     address: Joi.string().required(),
     realtorId: Joi.number().required(),
   }),
 };
-
 
 export const get = {
   query: Joi.object().keys({
@@ -38,10 +39,12 @@ export const update = {
     price: Joi.number().required(),
     rooms: Joi.number().required(),
     available: Joi.boolean().required(),
-    geolocation: Joi.object().keys({
-      latitude: Joi.number().required(),
-      longitude: Joi.number().required(),
-    }).required(),
+    geolocation: Joi.object()
+      .keys({
+        latitude: Joi.number().required(),
+        longitude: Joi.number().required(),
+      })
+      .required(),
     address: Joi.string().required(),
     realtorId: Joi.number().required(),
   }),
