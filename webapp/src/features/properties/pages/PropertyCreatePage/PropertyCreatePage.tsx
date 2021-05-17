@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
 import { Breadcrumb } from '../../../../app/components';
-import { IPropertyForm, Property } from '../../../../app/models/property';
+import { IPropertyForm } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
 import { useAppSelector } from '../../../../app/store/hooks';
@@ -13,7 +12,7 @@ import { Realtor } from '../../../../app/models/user';
 export default function PropertyCreatePage() {
   const user = useAppSelector(selectAuthenticatedUser);
 
-  const [property, setProperty] = useState<IPropertyForm>({
+  const [property] = useState<IPropertyForm>({
     name: '',
     price: 0,
     address: '',

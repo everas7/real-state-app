@@ -17,7 +17,6 @@ import { useAppDispatch, useAppSelector } from './app/store/hooks';
 import {
   selectAuthenticatedUser,
   selectIsAuthenticated,
-  setAuthenticated,
   setCurrentUser,
 } from './features/access/services/accessSlice';
 import { Container, Row } from 'react-bootstrap';
@@ -35,20 +34,10 @@ export default function Routes() {
     if (token && !isAuthenticated) {
       dispatch(setCurrentUser());
     }
-    if (user) {
-      setLoadingApp(false);
-    }
-    if (!token) {
+    if (user || !token) {
       setLoadingApp(false);
     }
   }, [dispatch, user, isAuthenticated]);
-
-  useEffect(() => {
-    const googleMapScript = document.createElement('script');
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
-    googleMapScript.async = true;
-    window.document.body.appendChild(googleMapScript);
-  }, []);
 
   if (loadingApp) return <div>Loading app, please wait...</div>;
 

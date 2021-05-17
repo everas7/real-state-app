@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Row, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import cx from 'classnames';
@@ -17,10 +17,10 @@ export default function PropertyDetailPage(): JSX.Element {
   const [error, setError] = useState('');
   const { id } = useParams<{ id: string }>();
 
-  const [show, setShow] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
+  const handleShowDeleteModal = () => setShowDeleteModal(true);
 
   useEffect(() => {
     Properties.get(parseInt(id, 10))
@@ -62,7 +62,7 @@ export default function PropertyDetailPage(): JSX.Element {
 
   function handleDelete() {
     Properties.delete(+id).then(() => {
-      handleClose();
+      handleCloseDeleteModal();
       history.push('/');
     });
   }
@@ -95,7 +95,7 @@ export default function PropertyDetailPage(): JSX.Element {
                 <Button variant="success" onClick={changeAvailability}>
                   {property.available ? 'Set as Rented' : 'Set as Available'}
                 </Button>
-                <Button variant="danger" onClick={handleShow}>
+                <Button variant="danger" onClick={handleShowDeleteModal}>
                   Delete
                 </Button>
               </div>
@@ -105,8 +105,8 @@ export default function PropertyDetailPage(): JSX.Element {
         </Row>
       </Col>
       <Modal
-        show={show}
-        onHide={handleClose}
+        show={showDeleteModal}
+        onHide={handleCloseDeleteModal}
         aria-labelledby="contained-modal-title-vcenter"
         centered={true}
       >
@@ -115,7 +115,7 @@ export default function PropertyDetailPage(): JSX.Element {
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this apartment?</Modal.Body>
         <Modal.Footer>
-          <Button variant="light" onClick={handleClose}>
+          <Button variant="light" onClick={handleCloseDeleteModal}>
             Cancel
           </Button>
           <Button variant="danger" onClick={handleDelete}>

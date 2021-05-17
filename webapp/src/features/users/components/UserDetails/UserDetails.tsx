@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { FaBed, FaRulerCombined } from 'react-icons/fa';
+import React from 'react';
 import cx from 'classnames';
+import { Field, FieldProps } from 'formik';
+
 import styles from './UserDetails.module.scss';
-import * as Constants from '../../../../app/constants';
-import { Field, FieldProps, FormikContextType } from 'formik';
-import { MaskInput, Input } from '../../../../app/components';
+import { Input } from '../../../../app/components';
 import { User } from '../../../../app/models/user';
 import { mapRoleAsString } from '../../../../app/helpers/userHelper';
 
@@ -62,7 +61,7 @@ export default function UserDetails({
         <div className={styles['user-details__label']}>Role</div>
         {edit ? (
           <Field name="role">
-          {(props: FieldProps) => (
+            {(props: FieldProps) => (
               <Input {...props} as="select">
                 <option>Select a Role...</option>
                 <option>CLIENT</option>

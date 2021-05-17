@@ -4,22 +4,21 @@ import { useParams } from 'react-router-dom';
 import cx from 'classnames';
 
 import UserDetails from '../../components/UserDetails/UserDetails';
-import { Breadcrumb, Map, Button, NotFound } from '../../../../app/components';
+import { Breadcrumb, Button, NotFound } from '../../../../app/components';
 import { User } from '../../../../app/models/user';
 import { Users } from '../../../../app/services/usersApi';
 import styles from './UserDetailPage.module.scss';
 import { history } from '../../../../index';
-import { AuthorizedComponent } from '../../../../app/hoc/AuthorizedComponent';
 
 export default function UserDetailPage(): JSX.Element {
   const [user, setUser] = useState<User>();
   const [error, setError] = useState('');
   const { id } = useParams<{ id: string }>();
 
-  const [show, setShow] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
+  const handleShowDeleteModal = () => setShowDeleteModal(true);
 
   useEffect(() => {
     Users.get(parseInt(id, 10))
@@ -35,7 +34,7 @@ export default function UserDetailPage(): JSX.Element {
 
   function handleDelete() {
     Users.delete(+id).then(() => {
-      handleClose();
+      handleCloseDeleteModal();
       history.push('/users');
     });
   }
@@ -51,7 +50,7 @@ export default function UserDetailPage(): JSX.Element {
               <Button onClick={() => history.push(`/users/${id}/edit`)}>
                 Edit User
               </Button>
-              <Button variant="danger" onClick={handleShow}>
+              <Button variant="danger" onClick={handleShowDeleteModal}>
                 Delete
               </Button>
             </div>
@@ -60,8 +59,8 @@ export default function UserDetailPage(): JSX.Element {
         </Row>
       </Col>
       <Modal
-        show={show}
-        onHide={handleClose}
+        show={showDeleteModal}
+        onHide={handleCloseDeleteModal}
         aria-labelledby="contained-modal-title-vcenter"
         centered={true}
       >
@@ -78,7 +77,7 @@ export default function UserDetailPage(): JSX.Element {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="light" onClick={handleClose}>
+          <Button variant="light" onClick={handleCloseDeleteModal}>
             Cancel
           </Button>
           <Button variant="danger" onClick={handleDelete}>

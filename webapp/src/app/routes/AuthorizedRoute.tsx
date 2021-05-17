@@ -25,11 +25,11 @@ export const AuthorizedRoute: React.FC<IProps> = ({
   let isAllowed = isLoggedIn;
 
   if (!isAllowed) {
-    return <Route {...rest} render={(props) => <Redirect to="/access" />} />;
+    return <Route {...rest} render={() => <Redirect to="/access" />} />;
   } else if (rolesAllowed) {
     isAllowed = isAllowed && rolesAllowed.includes(user.role);
     if (!isAllowed) {
-      return <Route {...rest} render={(props) => <NotFound />} />;
+      return <Route {...rest} render={() => <NotFound />} />;
     }
   }
 

@@ -22,7 +22,7 @@ export const setupAxiosResponseInterceptor = (store: Store) => {
         'Network Error. Please try again or check your internet connection!'
       );
     } else {
-      const { status, data, config, headers } = error.response;
+      const { status, headers } = error.response;
       if (
         status === 401 &&
         headers['authentication-error']?.includes('Invalid token')

@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+
 import GoogleMapReact, { Props as GoogleMapReactProps } from 'google-map-react';
 import { MapMarker } from '../MapMarker/MapMarker';
 import styles from './Map.module.scss';
@@ -41,9 +42,9 @@ export function Map({
         defaultZoom={15}
         {...props}
       >
-        {markers.map((marker) => (
+        {markers.map((marker, i) => (
           <MapMarker
-            key={`${JSON.stringify(marker)}`}
+            key={`${JSON.stringify(marker)}-${i}`}
             lat={marker.lat}
             lng={marker.lng}
             onClick={() => onMarkerClick && onMarkerClick(marker.id!)}

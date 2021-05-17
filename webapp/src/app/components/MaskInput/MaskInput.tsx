@@ -34,7 +34,7 @@ export function MaskInput({
   return (
     <Form.Group className={cx(styles['mask-input'], className)}>
       <div className={icon && 'inner-addon left-addon'}>
-        <span className="glyphicon">{icon}</span>
+        <span className="inputicon">{icon}</span>
         <Form.Control
           isInvalid={form?.touched[field.name] && !!form?.errors[field.name]}
           as={IMaskInput}

@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  RouteProps,
-  Redirect,
-  Route,
-  RouteComponentProps,
-} from 'react-router-dom';
+import { RouteProps } from 'react-router-dom';
+
 import { selectAuthenticatedUser } from '../../features/access/services/accessSlice';
-import { NotFound } from '../components';
 import { User } from '../models/user';
 import { useAppSelector } from '../store/hooks';
 

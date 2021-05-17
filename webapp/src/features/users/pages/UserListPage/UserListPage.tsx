@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Table } from 'react-bootstrap';
+import { Col, Table } from 'react-bootstrap';
 
 import { User } from '../../../../app/models/user';
 import { Users } from '../../../../app/services/usersApi';
-import { Button, Map, IMarker } from '../../../../app/components';
+import { Button } from '../../../../app/components';
 import { history } from '../../../../index';
 import styles from './UserListPage.module.scss';
 import { AuthorizedComponent } from '../../../../app/hoc/AuthorizedComponent';

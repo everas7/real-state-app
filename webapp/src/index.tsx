@@ -5,12 +5,19 @@ import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Loader } from '@googlemaps/js-api-loader';
 
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './app/store/store';
 import { setupAxiosResponseInterceptor } from './app/services/axios';
+
+const loader = new Loader({
+  apiKey: String(process.env.REACT_APP_GOOGLE_API_KEY),
+});
+
+loader.load();
 
 export const history = createBrowserHistory();
 

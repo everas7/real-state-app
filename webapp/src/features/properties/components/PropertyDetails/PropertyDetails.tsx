@@ -12,7 +12,7 @@ import { User } from '../../../../app/models/user';
 import { useAppSelector } from '../../../../app/store/hooks';
 import { selectAuthenticatedUser } from '../../../access/services/accessSlice';
 
-interface Values
+export interface PropertyFormValues
   extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor'> {
   realtorId: number | null;
 }
@@ -20,7 +20,7 @@ interface Values
 interface Props {
   property: Property;
   edit?: boolean;
-  formik?: FormikContextType<Values>;
+  formik?: FormikContextType<PropertyFormValues>;
 }
 
 export default function PropertyDetails({

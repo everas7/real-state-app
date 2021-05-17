@@ -17,7 +17,7 @@ export function Navbar() {
 
   return (
     <BootstrapNavbar className={styles.navbar}>
-      <BootstrapNavbar.Brand className={styles.navbar__brand}>
+      <BootstrapNavbar.Brand className={styles.navbar__brand} as={Link} to="/">
         Real State
       </BootstrapNavbar.Brand>
       <BootstrapNavbar.Toggle />
@@ -32,9 +32,7 @@ export function Navbar() {
         </AuthorizedComponent>
       </Nav>
       <BootstrapNavbar.Collapse className="justify-content-end">
-        <BootstrapNavbar.Text>
-          Signed in as: <a href="">{`${user?.name} `}</a>
-        </BootstrapNavbar.Text>
+        <BootstrapNavbar.Text>{`${user?.name} `}</BootstrapNavbar.Text>
         <BootstrapNavbar.Text
           className={styles.navbar__logout}
           onClick={() => dispatch(logout())}

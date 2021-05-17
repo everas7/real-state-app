@@ -19,18 +19,17 @@ import {
 } from '../../../../app/services/googleApi';
 import { history } from '../../../../index';
 import PropertyCorousel from '../PropertyCorousel/PropertyCorousel';
-import PropertyDetails from '../PropertyDetails/PropertyDetails';
+import PropertyDetails, {
+  PropertyFormValues,
+} from '../PropertyDetails/PropertyDetails';
 import { propertySchema } from '../../validators/propertyValidator';
-import { User } from '../../../../app/models/user';
-
-interface Values
-  extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor'> {
-  realtorId: number | null;
-}
 
 interface Props {
   property: IPropertyForm;
-  onSubmit(values: Values, formikHelpers: FormikHelpers<Values>): void;
+  onSubmit(
+    values: PropertyFormValues,
+    formikHelpers: FormikHelpers<PropertyFormValues>
+  ): void;
 }
 
 const defaultCoordinates = {
@@ -54,7 +53,7 @@ const ManageAddressChange = () => {
 
   useEffect(() => {
     debouncedGetGeolocation(value);
-  }, [value, getFieldHelpers]);
+  }, [value, getFieldHelpers, debouncedGetGeolocation]);
   return null;
 };
 
@@ -62,7 +61,7 @@ export default function PropertyForm({
   property,
   onSubmit,
 }: Props): React.ReactElement<Props> {
-  const formik = useFormik<Values>({
+  const formik = useFormik<PropertyFormValues>({
     initialValues: {
       name: property.name,
       price: property.price,
@@ -106,7 +105,7 @@ export default function PropertyForm({
           <Row className={cx(styles['property-form-page__map'], 'flex-grow-1')}>
             <Map
               onClick={handleMapClick}
-              defaultCenter={coordinates}
+              defaultCenter={defaultCoordinates}
               center={coordinates}
               markers={[coordinates]}
             />
