@@ -17,7 +17,7 @@ export function initUser(
     name: { type: Sequelize.STRING, allowNull: false },
     email: { type: Sequelize.STRING, allowNull: false },
     password: { type: Sequelize.STRING, allowNull: false },
-    role: { type: Sequelize.STRING, allowNull: false },
+    roleId: { type: Sequelize.STRING, allowNull: false },
   };
   const User: ModelDefined<User, UserCreationAttributes> = sequalize.define(
     'User',

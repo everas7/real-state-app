@@ -11,13 +11,14 @@ import { Access } from '../../services/accessApi';
 import { useAppDispatch } from '../../../../app/store/hooks';
 import { login } from '../../services/accessSlice';
 import { signupSchema } from '../../validators/accessValidator';
+import { Role } from '../../../../app/models/role';
 
 interface Props {
   onSwitch(): void;
 }
 
 export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
-  const [role, setRole] = useState<'CLIENT' | 'REALTOR'>('CLIENT');
+  const [role, setRole] = useState<Role.Client | Role.Realtor>(Role.Client);
   const dispatch = useAppDispatch();
 
   async function handleSignup(signupForm: SignupForm) {
@@ -40,19 +41,19 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
         <ButtonGroup>
           <Button
             variant={cx({
-              primary: role === 'CLIENT',
-              'outline-primary': role === 'REALTOR',
+              primary: role === Role.Client,
+              'outline-primary': role === Role.Realtor,
             })}
-            onClick={() => setRole('CLIENT')}
+            onClick={() => setRole(Role.Client)}
           >
             As a Client
           </Button>
           <Button
             variant={cx({
-              primary: role === 'REALTOR',
-              'outline-primary': role === 'CLIENT',
+              primary: role === Role.Realtor,
+              'outline-primary': role === Role.Client,
             })}
-            onClick={() => setRole('REALTOR')}
+            onClick={() => setRole(Role.Realtor)}
           >
             As a Realtor
           </Button>

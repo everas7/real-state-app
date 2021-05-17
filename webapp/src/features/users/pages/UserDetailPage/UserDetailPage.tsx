@@ -9,6 +9,7 @@ import { User } from '../../../../app/models/user';
 import { Users } from '../../../../app/services/usersApi';
 import styles from './UserDetailPage.module.scss';
 import { history } from '../../../../index';
+import { Role } from '../../../../app/models/role';
 
 export default function UserDetailPage(): JSX.Element {
   const [user, setUser] = useState<User>();
@@ -69,7 +70,7 @@ export default function UserDetailPage(): JSX.Element {
         </Modal.Header>
         <Modal.Body>
           Are you sure you want to delete this user?
-          {user.role === 'REALTOR' && (
+          {user.role === Role.Realtor && (
             <div>
               Performing this action would result on deleting all apartments
               associated with this realtor

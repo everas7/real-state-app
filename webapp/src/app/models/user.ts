@@ -1,4 +1,4 @@
-export type Role = 'CLIENT' | 'REALTOR' | 'ADMIN';
+import { Role } from './role';
 
 export interface User {
   id: number;
@@ -10,7 +10,7 @@ export interface User {
   updatedAt?: string;
 }
 export interface Realtor extends User {
-  role: 'CLIENT';
+  role: Role.Realtor;
 }
 
 export interface IUserForm

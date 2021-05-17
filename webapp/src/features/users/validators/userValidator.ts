@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { Role } from '../../../app/models/role';
 
 export const userCreateSchema = yup.object().shape({
   name: yup.string().required('Full name is required'),
@@ -13,13 +14,13 @@ export const userCreateSchema = yup.object().shape({
     .matches(/[a-zA-Z]/, { message: 'Password must have at least one letter' })
     .matches(/\d/, { message: 'Password must have at least one number' }),
   role: yup
-    .string()
+    .number()
     .required('Role is required')
     .test(
       'valid-role',
       'Selected value is not a valid role',
       (value, context) =>
-        value === 'CLIENT' || value === 'ADMIN' || value === 'REALTOR'
+        value === Role.Client || value === Role.Admin || value === Role.Realtor
     ),
 });
 
@@ -35,12 +36,12 @@ export const userUpdateSchema = yup.object().shape({
     .matches(/[a-zA-Z]/, { message: 'Password must have at least one letter' })
     .matches(/\d/, { message: 'Password must have at least one number' }),
   role: yup
-    .string()
+    .number()
     .required('Role is required')
     .test(
       'valid-role',
       'Selected value is not a valid role',
       (value, context) =>
-        value === 'CLIENT' || value === 'ADMIN' || value === 'REALTOR'
+        value === Role.Client || value === Role.Admin || value === Role.Realtor
     ),
 });

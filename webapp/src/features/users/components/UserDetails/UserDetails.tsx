@@ -6,6 +6,7 @@ import styles from './UserDetails.module.scss';
 import { Input } from '../../../../app/components';
 import { User } from '../../../../app/models/user';
 import { mapRoleAsString } from '../../../../app/helpers/userHelper';
+import { Role } from '../../../../app/models/role';
 
 interface Props {
   user: User;
@@ -64,9 +65,9 @@ export default function UserDetails({
             {(props: FieldProps) => (
               <Input {...props} as="select">
                 <option>Select a Role...</option>
-                <option>CLIENT</option>
-                <option>REALTOR</option>
-                <option>ADMIN</option>
+                <option value={Role.Client}>Client</option>
+                <option value={Role.Realtor}>Realtor</option>
+                <option value={Role.Admin}>Admin</option>
               </Input>
             )}
           </Field>

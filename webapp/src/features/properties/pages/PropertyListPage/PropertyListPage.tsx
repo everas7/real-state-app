@@ -8,7 +8,8 @@ import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import { Button, Map, IMarker } from '../../../../app/components';
 import { history } from '../../../../index';
 import styles from './PropertyListPage.module.scss';
-import { AuthorizedComponent } from '../../../../app/hoc/AuthorizedComponent';
+import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
+import { Permissions } from '../../../../app/authorization/permissions';
 
 export default function PropertyListPage() {
   const [properties, setProperties] = useState<PropertyForList[]>([]);
@@ -82,7 +83,9 @@ export default function PropertyListPage() {
           <div className={styles['property-list-page__header-title']}>
             Apartments
           </div>
-          <AuthorizedComponent rolesAllowed={['REALTOR', 'ADMIN']}>
+          <AuthorizedComponent
+            rolesAllowed={Permissions.Properties.List.AddButton}
+          >
             <Button onClick={() => history.push('/apartments/create')}>
               Add Apartment
             </Button>

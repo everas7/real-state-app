@@ -6,7 +6,8 @@ import {
   logout,
   selectAuthenticatedUser,
 } from '../../../features/access/services/accessSlice';
-import { AuthorizedComponent } from '../../hoc/AuthorizedComponent';
+import { AuthorizedComponent } from '../../authorization/AuthorizedComponent';
+import { Permissions } from '../../authorization/permissions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import styles from './Navbar.module.scss';
@@ -25,7 +26,7 @@ export function Navbar() {
         <Nav.Link as={Link} to="/">
           Apartments
         </Nav.Link>
-        <AuthorizedComponent rolesAllowed={['ADMIN']}>
+        <AuthorizedComponent rolesAllowed={Permissions.Users.List.PageAccess}>
           <Nav.Link as={Link} to="/users">
             Users
           </Nav.Link>

@@ -21,6 +21,7 @@ import {
 } from './features/access/services/accessSlice';
 import { Container, Row } from 'react-bootstrap';
 import { Navbar } from './app/components';
+import { Permissions } from './app/authorization/permissions';
 
 export default function Routes() {
   const dispatch = useAppDispatch();
@@ -51,10 +52,12 @@ export default function Routes() {
         <Row className="flex-shrink-0">{isAuthenticated && <Navbar />}</Row>
         <Row className="flex-grow-1 overflow-hidden">
           <Switch>
-            <PrivateRoute
+            <AuthorizedRoute
               path={['/', '/apartments']}
               isLoggedIn={isAuthenticated}
               component={PropertyListPage}
+              user={user!}
+              rolesAllowed={Permissions.Properties.List.PageAccess}
               exact={true}
             />
             <AuthorizedRoute
@@ -62,13 +65,15 @@ export default function Routes() {
               isLoggedIn={isAuthenticated}
               component={PropertyCreatePage}
               user={user!}
-              rolesAllowed={['REALTOR', 'ADMIN']}
+              rolesAllowed={Permissions.Properties.Create.PageAccess}
               exact={true}
             />
-            <PrivateRoute
+            <AuthorizedRoute
               path={['/apartments/:id']}
+              user={user!}
               isLoggedIn={isAuthenticated}
               component={PropertyDetailPage}
+              rolesAllowed={Permissions.Properties.Detail.PageAccess}
               exact={true}
             />
             <AuthorizedRoute
@@ -76,7 +81,7 @@ export default function Routes() {
               isLoggedIn={isAuthenticated}
               component={PropertyEditPage}
               user={user!}
-              rolesAllowed={['REALTOR', 'ADMIN']}
+              rolesAllowed={Permissions.Properties.Edit.PageAccess}
               exact={true}
             />
             <AuthorizedRoute
@@ -84,7 +89,7 @@ export default function Routes() {
               isLoggedIn={isAuthenticated}
               component={UserListPage}
               user={user!}
-              rolesAllowed={['ADMIN']}
+              rolesAllowed={Permissions.Users.List.PageAccess}
               exact={true}
             />
             <AuthorizedRoute
@@ -92,7 +97,7 @@ export default function Routes() {
               isLoggedIn={isAuthenticated}
               component={UserFormPage}
               user={user!}
-              rolesAllowed={['ADMIN']}
+              rolesAllowed={Permissions.Users.Create.PageAccess}
               exact={true}
             />
             <AuthorizedRoute
@@ -100,7 +105,7 @@ export default function Routes() {
               isLoggedIn={isAuthenticated}
               component={UserDetailPage}
               user={user!}
-              rolesAllowed={['ADMIN']}
+              rolesAllowed={Permissions.Users.Detail.PageAccess}
               exact={true}
             />
             <AuthorizedRoute
@@ -108,7 +113,7 @@ export default function Routes() {
               isLoggedIn={isAuthenticated}
               component={UserFormPage}
               user={user!}
-              rolesAllowed={['ADMIN']}
+              rolesAllowed={Permissions.Users.Edit.PageAccess}
               exact={true}
             />
 

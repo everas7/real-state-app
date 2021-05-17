@@ -4,8 +4,9 @@ import {
   PropertyFilters,
 } from '../interfaces/property.interface';
 import * as propertyRepository from '../repositories/property.repository';
-import { User, Role } from '../interfaces/user.interface';
+import { User } from '../interfaces/user.interface';
 import { Op } from 'sequelize';
+import { RoleEnum } from '../interfaces/role.interface';
 
 export const getAll = async (
   user: User,
@@ -13,15 +14,15 @@ export const getAll = async (
 ): Promise<Property[]> => {
   let where = (
     {
-      CLIENT: {
+      [RoleEnum.Client]: {
         available: true,
       },
-      REALTOR: {
+      [RoleEnum.Realtor]: {
         realtorId: user.id,
       },
-      ADMIN: {},
-    } as { [key in Role]: {} }
-  )[user.role];
+      [RoleEnum.Admin]: {},
+    } as { [key in RoleEnum]: {} }
+  )[user.roleId];
 
   where = {
     ...where,

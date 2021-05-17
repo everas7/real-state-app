@@ -1,19 +1,24 @@
-export type Role = 'CLIENT' | 'REALTOR' | 'ADMIN';
+import { RoleEnum } from './role.interface';
 
 export interface User {
   id: number;
   name: string;
   email: string;
   password: string;
-  role: Role;
+  roleId: RoleEnum;
   createdAt?: string;
   updatedAt?: string;
 }
 
 export interface UserFilters {
-  role?: Role;
+  role?: RoleEnum;
 }
 
-export type UserForm = Omit<User, 'id' | 'createdAt' | 'updatedAt'>;
+export interface UserForm
+  extends Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'roleId'> {
+  role: RoleEnum;
+}
 
-export type UserDto = Omit<User, 'password'>;
+export interface UserDto extends Omit<User, 'password' | 'roleId'> {
+  role: RoleEnum;
+}

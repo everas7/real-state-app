@@ -6,7 +6,7 @@ module.exports = {
       {
         name: 'John Client',
         email: 'jclient@test.com',
-        role: 'CLIENT',
+        roleId: 3,
         password: await bcrypt.hash('klkconklk1', 10),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -14,7 +14,7 @@ module.exports = {
       {
         name: 'Mary Realtor',
         email: 'mrealtor@test.com',
-        role: 'REALTOR',
+        roleId: 2,
         password: await bcrypt.hash('klkconklk1', 10),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -22,7 +22,7 @@ module.exports = {
       {
         name: 'Ryan Realtor',
         email: 'rrealtor@test.com',
-        role: 'REALTOR',
+        roleId: 2,
         password: await bcrypt.hash('klkconklk1', 10),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -30,7 +30,7 @@ module.exports = {
       {
         name: 'Peter Admin',
         email: 'padmin@test.com',
-        role: 'ADMIN',
+        roleId: 1,
         password: await bcrypt.hash('klkconklk1', 10),
         createdAt: new Date(),
         updatedAt: new Date(),

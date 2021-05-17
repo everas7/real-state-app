@@ -3,12 +3,15 @@ import { SignupForm, LoginForm } from '../interfaces/auth.interface';
 import * as userRepository from '../repositories/user.repository';
 import { User } from '../interfaces/user.interface';
 import httpStatus from 'http-status';
+import { fromSignupFormToUserCreationAttributes } from '../dtos/auth.dto';
 
 export const signup = async (
   signupForm: SignupForm
 ): Promise<User | undefined> => {
   signupForm.password = await bcrypt.hash(signupForm.password, 10);
-  return userRepository.create(signupForm);
+  return userRepository.create(
+    fromSignupFormToUserCreationAttributes(signupForm)
+  );
 };
 
 export const login = async (

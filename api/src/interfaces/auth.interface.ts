@@ -1,4 +1,7 @@
-export type RoleForSignup = 'CLIENT' | 'REALTOR';
+export enum RoleForSignup {
+  Realtor = 2,
+  Client = 3,
+}
 
 export interface SignupForm {
   name: string;

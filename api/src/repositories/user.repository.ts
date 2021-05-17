@@ -36,9 +36,10 @@ export const findById = async (id: number): Promise<User | undefined> => {
 
 export const findByEmail = async (email: string): Promise<User | undefined> => {
   return db.User.findOne({
-    where: {
-      email,
-    },
+    where: db.Sequelize.where(
+      db.Sequelize.fn('lower', db.Sequelize.col('email')),
+      db.Sequelize.fn('lower', email)
+    ),
   }).then((m) =>
     m?.get({
       plain: true,

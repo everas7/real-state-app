@@ -1,6 +1,7 @@
 import * as userRepository from '../repositories/user.repository';
 import { User, UserFilters, UserForm } from '../interfaces/user.interface';
 import bcrypt from 'bcrypt';
+import { fromUserFormToUserCreationAttributes } from '../dtos/user.dto';
 
 export const getUserByEmail = async (
   email: string
@@ -17,7 +18,7 @@ export const getAll = async (filters: UserFilters): Promise<User[]> => {
   where = {
     ...(filters.role
       ? {
-          role: filters.role,
+          roleId: filters.role,
         }
       : {}),
   };
@@ -26,7 +27,7 @@ export const getAll = async (filters: UserFilters): Promise<User[]> => {
 
 export const add = async (user: UserForm): Promise<User> => {
   user.password = await bcrypt.hash(user.password, 10);
-  return userRepository.create(user);
+  return userRepository.create(fromUserFormToUserCreationAttributes(user));
 };
 
 export const update = async (id: number, user: UserForm): Promise<User> => {
@@ -43,7 +44,7 @@ export const update = async (id: number, user: UserForm): Promise<User> => {
 
   return userRepository.update(id, {
     ...userToUpdate,
-    ...user,
+    ...fromUserFormToUserCreationAttributes(user),
   });
 };
 

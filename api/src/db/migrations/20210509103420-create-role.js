@@ -2,7 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable(
-      'users',
+      'roles',
       {
         id: {
           allowNull: false,
@@ -13,22 +13,6 @@ module.exports = {
         name: {
           allowNull: false,
           type: Sequelize.STRING,
-        },
-        email: {
-          allowNull: false,
-          type: Sequelize.STRING,
-        },
-        password: {
-          allowNull: false,
-          type: Sequelize.STRING,
-        },
-        roleId: {
-          allowNull: false,
-          type: Sequelize.INTEGER,
-          references: {
-            model: 'roles',
-            key: 'id',
-          },
         },
         createdAt: {
           allowNull: false,
@@ -41,15 +25,15 @@ module.exports = {
       },
       {
         uniqueKeys: {
-          user_email_index: {
+          role_name_index: {
             customIndex: true,
-            fields: ['email'],
+            fields: ['name'],
           },
         },
       }
     );
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('roles');
   },
 };

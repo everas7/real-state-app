@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import httpStatus from 'http-status';
 
 import * as userServices from '../services/user.service';
 import { User } from '../interfaces/user.interface';
-import httpStatus from 'http-status';
+import { RoleEnum } from '../interfaces/role.interface';
 
 export const setUserInRequest = async (
   req: Request,
@@ -22,7 +23,7 @@ export const validateIsAdmin = async (
   const user = await userServices.getById((req.user as User)?.id);
   if (user) {
     req.user = user;
-    if (user.role === 'ADMIN') {
+    if (user.roleId === RoleEnum.Admin) {
       next();
       return;
     }

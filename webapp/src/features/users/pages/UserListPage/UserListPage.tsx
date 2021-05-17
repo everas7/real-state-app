@@ -6,7 +6,7 @@ import { Users } from '../../../../app/services/usersApi';
 import { Button } from '../../../../app/components';
 import { history } from '../../../../index';
 import styles from './UserListPage.module.scss';
-import { AuthorizedComponent } from '../../../../app/hoc/AuthorizedComponent';
+import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
 import { mapRoleAsString } from '../../../../app/helpers/userHelper';
 
 export default function UserListPage() {
@@ -22,11 +22,9 @@ export default function UserListPage() {
       <Col md="12" className={styles['user-list-page__list']}>
         <div className={styles['user-list-page__header']}>
           <div className={styles['user-list-page__header-title']}>Users</div>
-          <AuthorizedComponent rolesAllowed={['ADMIN']}>
-            <Button onClick={() => history.push('/users/create')}>
-              Add User
-            </Button>
-          </AuthorizedComponent>
+          <Button onClick={() => history.push('/users/create')}>
+            Add User
+          </Button>
         </div>
 
         <Table striped={true} bordered={true} hover={true}>

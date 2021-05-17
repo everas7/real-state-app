@@ -6,11 +6,13 @@ import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../app/constants';
 import { Field, FieldProps, FormikContextType } from 'formik';
 import { MaskInput, Input } from '../../../../app/components';
-import { AuthorizedComponent } from '../../../../app/hoc/AuthorizedComponent';
+import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
 import { Users } from '../../../../app/services/usersApi';
 import { User } from '../../../../app/models/user';
 import { useAppSelector } from '../../../../app/store/hooks';
 import { selectAuthenticatedUser } from '../../../access/services/accessSlice';
+import { Role } from '../../../../app/models/role';
+import { Permissions } from '../../../../app/authorization/permissions';
 
 export interface PropertyFormValues
   extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor'> {
@@ -32,9 +34,9 @@ export default function PropertyDetails({
   const user = useAppSelector(selectAuthenticatedUser);
 
   useEffect(() => {
-    if (user?.role === 'ADMIN') {
+    if (user?.role === Role.Admin) {
       const params = new URLSearchParams();
-      params.append('filters[role]', 'REALTOR');
+      params.append('filters[role]', String(Role.Realtor));
       Users.list(params).then((res) => {
         setUserOptions(res);
       });
@@ -150,7 +152,7 @@ export default function PropertyDetails({
       <div className={styles['property-details__realtor']}>
         Contact Information
         <AuthorizedComponent
-          rolesAllowed={['ADMIN']}
+          rolesAllowed={Permissions.Properties.Create.RealtorField}
           customValidation={() => edit}
         >
           {edit ? (

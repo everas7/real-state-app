@@ -2,12 +2,13 @@ import React from 'react';
 import { RouteProps } from 'react-router-dom';
 
 import { selectAuthenticatedUser } from '../../features/access/services/accessSlice';
+import { Role } from '../models/role';
 import { User } from '../models/user';
 import { useAppSelector } from '../store/hooks';
 
 interface IProps extends RouteProps {
   children: React.ReactNode | React.ReactNode[];
-  rolesAllowed?: string[];
+  rolesAllowed?: Role[];
   customValidation?(user: User): boolean;
 }
 

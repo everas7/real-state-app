@@ -1,9 +1,9 @@
-import { Role } from '../models/user';
+import { Role } from '../models/role';
 
 export const mapRoleAsString = (role: Role) => {
   return {
-    CLIENT: 'Client',
-    REALTOR: 'Realtor',
-    ADMIN: 'Admin',
+    [Role.Client]: 'Client',
+    [Role.Realtor]: 'Realtor',
+    [Role.Admin]: 'Admin',
   }[role];
 };

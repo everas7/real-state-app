@@ -10,7 +10,8 @@ import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import styles from './PropertyDetailPage.module.scss';
 import { history } from '../../../../index';
-import { AuthorizedComponent } from '../../../../app/hoc/AuthorizedComponent';
+import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
+import { Permissions } from '../../../../app/authorization/permissions';
 
 export default function PropertyDetailPage(): JSX.Element {
   const [property, setProperty] = useState<Property>();
@@ -87,7 +88,9 @@ export default function PropertyDetailPage(): JSX.Element {
             </Row>
           </Col>
           <Col md="6" className="flex-grow-1">
-            <AuthorizedComponent rolesAllowed={['REALTOR', 'ADMIN']}>
+            <AuthorizedComponent
+              rolesAllowed={Permissions.Properties.Detail.ManageAction}
+            >
               <div className={styles['property-detail-page__controls']}>
                 <Button onClick={() => history.push(`/apartments/${id}/edit`)}>
                   Edit Apartment

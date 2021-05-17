@@ -1,10 +1,15 @@
 import Joi from 'joi';
 import { password } from './custom.validator';
+import { RoleEnum } from '../interfaces/role.interface';
 
 export const get = {
   query: Joi.object().keys({
     filters: Joi.object().keys({
-      role: Joi.string().valid('CLIENT', 'REALTOR', 'ADMIN'),
+      role: Joi.number().valid(
+        RoleEnum.Client,
+        RoleEnum.Realtor,
+        RoleEnum.Admin
+      ),
     }),
   }),
 };
@@ -14,7 +19,7 @@ export const patch = {
     name: Joi.string(),
     email: Joi.string().email(),
     password: Joi.string().custom(password),
-    role: Joi.string().valid('CLIENT', 'REALTOR'),
+    role: Joi.number().valid(RoleEnum.Client, RoleEnum.Realtor, RoleEnum.Admin),
   }),
 };
 
@@ -23,6 +28,8 @@ export const create = {
     name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().custom(password).required(),
-    role: Joi.string().valid('CLIENT', 'REALTOR').required(),
+    role: Joi.number()
+      .valid(RoleEnum.Client, RoleEnum.Realtor, RoleEnum.Admin)
+      .required(),
   }),
 };

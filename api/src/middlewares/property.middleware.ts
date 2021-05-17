@@ -4,6 +4,7 @@ import * as userServices from '../services/user.service';
 import * as propertyServices from '../services/property.service';
 import httpStatus from 'http-status';
 import { User } from '../interfaces/user.interface';
+import { RoleEnum } from '../interfaces/role.interface';
 
 export const validateIsRealtorOrAdmin = async (
   req: Request,
@@ -14,11 +15,11 @@ export const validateIsRealtorOrAdmin = async (
 
   if (user) {
     req.user = user;
-    if (user.role === 'ADMIN') {
+    if (user.roleId === RoleEnum.Admin) {
       next();
       return;
     }
-    if (user.role === 'REALTOR') {
+    if (user.roleId === RoleEnum.Realtor) {
       if (req.body.realtorId === user.id) {
         next();
         return;
@@ -55,11 +56,11 @@ export const validateIsOwnerOrAdmin = async (
   const user = await userServices.getById((req.user as User)?.id);
   if (user) {
     req.user = user;
-    if (user.role === 'ADMIN') {
+    if (user.roleId === RoleEnum.Admin) {
       next();
       return;
     }
-    if (user.role === 'REALTOR') {
+    if (user.roleId === RoleEnum.Realtor) {
       if (req.property?.realtorId === user.id) {
         next();
         return;
@@ -79,17 +80,17 @@ export const validateUserCanAccessProperty = async (
   const user = await userServices.getById((req.user as User)?.id);
   if (user) {
     req.user = user;
-    if (user.role === 'ADMIN') {
+    if (user.roleId === RoleEnum.Admin) {
       next();
       return;
     }
-    if (user.role === 'REALTOR') {
+    if (user.roleId === RoleEnum.Realtor) {
       if (req.property?.realtorId === user.id) {
         next();
         return;
       }
     }
-    if (user.role === 'CLIENT') {
+    if (user.roleId === RoleEnum.Client) {
       if (req.property?.available) {
         next();
         return;

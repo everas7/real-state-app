@@ -6,12 +6,13 @@ import {
   RouteComponentProps,
 } from 'react-router-dom';
 import { NotFound } from '../components';
+import { Role } from '../models/role';
 import { User } from '../models/user';
 
 interface IProps extends RouteProps {
   isLoggedIn: boolean;
   component: React.ComponentType<RouteComponentProps<any>>;
-  rolesAllowed?: string[];
+  rolesAllowed?: Role[];
   user: User;
 }
 
