@@ -25,7 +25,7 @@ import { User } from '../../../../app/models/user';
 
 interface Values
   extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor'> {
-    realtorId: number | null;
+  realtorId: number | null;
 }
 
 interface Props {
@@ -41,10 +41,19 @@ const defaultCoordinates = {
 const ManageAddressChange = () => {
   const { getFieldProps, getFieldHelpers } = useFormikContext();
   const value = getFieldProps('address').value;
-  useEffect(() => {
-    getGeolocationByAddress(value)?.then((res) => {
+
+  const getGeolocation = (address: string) =>
+    getGeolocationByAddress(address).then((res) => {
       getFieldHelpers('geolocation').setValue(res);
     });
+
+  const debouncedGetGeolocation = React.useCallback(
+    _.debounce(getGeolocation, 500),
+    []
+  );
+
+  useEffect(() => {
+    debouncedGetGeolocation(value);
   }, [value, getFieldHelpers]);
   return null;
 };
