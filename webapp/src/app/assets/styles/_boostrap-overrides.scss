@@ -13,7 +13,7 @@
 .btn-outline-primary {
   @include button-outline-variant(
     $primary,
-    $primary,
+    #fff,
     $primary,
     $primary,
   );
