@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
 import { Breadcrumb } from '../../../../app/components';
@@ -8,6 +8,8 @@ import { history } from '../../../../index';
 import { useAppSelector } from '../../../../app/store/hooks';
 import { selectAuthenticatedUser } from '../../../access/services/accessSlice';
 import { Realtor } from '../../../../app/models/user';
+import { Col, Row } from 'react-bootstrap';
+import styles from './PropertyCreatePage.module.scss';
 
 export default function PropertyCreatePage() {
   const user = useAppSelector(selectAuthenticatedUser);
@@ -43,10 +45,20 @@ export default function PropertyCreatePage() {
 
   return (
     <>
-      <Breadcrumb
-        items={[{ name: 'Appartments', path: '/' }, { name: 'Create' }]}
-      />
-      <PropertyForm property={property} onSubmit={onSubmitClickHandler} />
+      <Col>
+        <Row>
+          <Col>
+            <Breadcrumb
+              items={[{ name: 'Appartments', path: '/' }, { name: 'Create' }]}
+            />
+          </Col>
+        </Row>
+      </Col>
+      <Col md="12" className={styles['property-create-page__content']}>
+        <Row>
+          <PropertyForm property={property} onSubmit={onSubmitClickHandler} />
+        </Row>
+      </Col>
     </>
   );
 }

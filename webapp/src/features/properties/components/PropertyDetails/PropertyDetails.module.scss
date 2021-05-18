@@ -1,6 +1,6 @@
 .property-details {
   font-size: 14px;
-  height: 60%;
+  height: 65%;
   margin-top: 10px;
   margin-bottom: 30px;
 
@@ -21,11 +21,6 @@
 
   &__dimensions {
     font-size: 16px;
-    div {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
     &-text {
       margin-left: 5px;
     }

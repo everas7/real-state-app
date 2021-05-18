@@ -75,6 +75,7 @@ Modify variables on .env as needed. For example:
 REACT_APP_API_URL=http://localhost:7000/api
 REACT_APP_GOOGLE_API_KEY=yourkey
 ```
+Note: The port must be the one where the api is being served.
 
 # Installing Dependencies
 
