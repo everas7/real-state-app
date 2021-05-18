@@ -186,7 +186,11 @@ export default function PropertyDetails({
           ) : null}
           <>
             <div>{property.realtor.name}</div>
-            <div>{property.realtor.email}</div>
+            <div>
+              <a href={`mailto:${property.realtor.email}`}>
+                {property.realtor.email}
+              </a>
+            </div>
           </>
         </AuthorizedComponent>
       </div>
