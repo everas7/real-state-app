@@ -104,9 +104,7 @@ export default function PropertyFilters({
         minLabelPrefix="$"
         maxLabelPrefix="$"
         maxLabelSuffix={`${
-          filters.floorAreaSize.max === defaultFilters.floorAreaSize.max
-            ? '+'
-            : ''
+          filters.price.max === defaultFilters.price.max ? '+' : ''
         }`}
       />
       <RangeInput
