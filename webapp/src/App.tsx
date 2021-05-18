@@ -10,7 +10,6 @@ import {
 } from './features/properties';
 import { UserListPage, UserDetailPage, UserFormPage } from './features/users';
 import * as authHelper from './app/helpers/authHelper';
-import { PrivateRoute } from './app/routes/PrivateRoute';
 import { AuthorizedRoute } from './app/routes/AuthorizedRoute';
 import { NotFound } from './app/components/NotFound/NotFound';
 import { useAppDispatch, useAppSelector } from './app/store/hooks';

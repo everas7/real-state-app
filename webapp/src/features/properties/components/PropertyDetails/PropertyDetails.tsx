@@ -5,7 +5,7 @@ import { Property, IPropertyForm } from '../../../../app/models/property';
 import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../app/constants';
 import { Field, FieldProps, FormikContextType } from 'formik';
-import { MaskInput, Input } from '../../../../app/components';
+import { NumericInput, Input } from '../../../../app/components';
 import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
 import { Users } from '../../../../app/services/usersApi';
 import { User } from '../../../../app/models/user';
@@ -64,9 +64,7 @@ export default function PropertyDetails({
             type="text"
             name="price"
             placeholder="$0000"
-            component={MaskInput}
-            thousandsSeparator={','}
-            mask="$0,000,0000"
+            component={NumericInput}
             value={formik!.values.price}
             onChange={formik!.handleChange}
           />
@@ -92,14 +90,17 @@ export default function PropertyDetails({
         <div>
           {edit ? (
             <Field
-              type="number"
               name="rooms"
-              placeholder="0"
-              component={Input}
+              maskOptions={{
+                prefix: '',
+                suffix: ' rooms',
+                allowDecimal: false,
+              }}
+              placeholder="0 rooms"
+              component={NumericInput}
               value={formik!.values.rooms}
               onChange={formik!.handleChange}
               icon={<FaBed color={Constants.PRIMARY_COLOR} />}
-              min="0"
             />
           ) : (
             <>
@@ -112,14 +113,17 @@ export default function PropertyDetails({
         <div>
           {edit ? (
             <Field
-              type="number"
               name="floorAreaSize"
+              maskOptions={{
+                prefix: '',
+                suffix: ' ft²',
+                allowDecimal: false,
+              }}
               placeholder="0 ft²"
-              component={Input}
+              component={NumericInput}
               value={formik!.values.floorAreaSize}
               onChange={formik!.handleChange}
               icon={<FaRulerCombined color={Constants.PRIMARY_COLOR} />}
-              min="0"
             />
           ) : (
             <>

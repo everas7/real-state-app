@@ -27,7 +27,11 @@ export default function PropertyEditPage() {
   const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
     Properties.update(+id, {
       ...values,
-      price: Number(String(values.price).replace(/\D+/g, '')),
+      price: Number(String(values.price).replace(/[^0-9.]/g, '')),
+      floorAreaSize: Number(
+        String(values.floorAreaSize).replace(/[^0-9]/g, '')
+      ),
+      rooms: Number(String(values.rooms).replace(/[^0-9]/g, '')),
       available: property!.available,
       realtorId: values.realtorId || property!.realtorId,
     }).then(() => {

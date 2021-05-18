@@ -28,7 +28,11 @@ export default function PropertyCreatePage() {
   const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
     Properties.create({
       ...values,
-      price: Number(values.price.replace(/\D+/g, '')),
+      price: Number(String(values.price).replace(/[^0-9.]/g, '')),
+      floorAreaSize: Number(
+        String(values.floorAreaSize).replace(/[^0-9]/g, '')
+      ),
+      rooms: Number(String(values.rooms).replace(/[^0-9]/g, '')),
       realtorId: values.realtorId || user!.id,
       available: true,
     }).then((res) => {

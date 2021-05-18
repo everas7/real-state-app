@@ -6,7 +6,6 @@ import { Users } from '../../../../app/services/usersApi';
 import { Button } from '../../../../app/components';
 import { history } from '../../../../index';
 import styles from './UserListPage.module.scss';
-import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
 import { mapRoleAsString } from '../../../../app/helpers/userHelper';
 
 export default function UserListPage() {
