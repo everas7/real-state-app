@@ -7,6 +7,8 @@ import { Input, Button } from '../../../../app/components';
 import { login, selectAuthenticationError } from '../../services/accessSlice';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { loginSchema } from '../../validators/accessValidator';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+import * as Constants from '../../../../app/constants';
 
 interface Props {
   onSwitch(): void;
@@ -36,12 +38,14 @@ export default function Login({ onSwitch }: Props): React.ReactElement<Props> {
                 name="email"
                 placeholder="Email"
                 component={Input}
+                icon={<FaEnvelope color={Constants.PRIMARY_COLOR} />}
               />
               <Field
                 type="password"
                 name="password"
                 placeholder="Password"
                 component={Input}
+                icon={<FaLock color={Constants.PRIMARY_COLOR} />}
               />
               {authenticationError && (
                 <div className="login__form-invalid-text text-danger">

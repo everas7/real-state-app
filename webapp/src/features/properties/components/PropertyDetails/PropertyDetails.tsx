@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FaBed, FaRulerCombined } from 'react-icons/fa';
 import cx from 'classnames';
+import { Field, FieldProps, FormikContextType } from 'formik';
+
 import { Property, IPropertyForm } from '../../../../app/models/property';
 import styles from './PropertyDetails.module.scss';
 import * as Constants from '../../../../app/constants';
-import { Field, FieldProps, FormikContextType } from 'formik';
 import { NumericInput, Input } from '../../../../app/components';
 import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
 import { Users } from '../../../../app/services/usersApi';
@@ -131,7 +132,8 @@ export default function PropertyDetails({
             <div className={styles['property-details__dimensions-details']}>
               <FaRulerCombined color={Constants.PRIMARY_COLOR} />
               <span className={styles['property-details__dimensions-text']}>
-                <b> {property.floorAreaSize} </b> ft<sup>2</sup>
+                <b> {property.floorAreaSize.toLocaleString()} </b> ft
+                <sup>2</sup>
               </span>
             </div>
           )}{' '}

@@ -12,6 +12,8 @@ import { useAppDispatch } from '../../../../app/store/hooks';
 import { login } from '../../services/accessSlice';
 import { signupSchema } from '../../validators/accessValidator';
 import { Role } from '../../../../app/models/role';
+import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
+import * as Constants from '../../../../app/constants';
 
 interface Props {
   onSwitch(): void;
@@ -76,18 +78,21 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
                 name="name"
                 placeholder="Full Name"
                 component={Input}
+                icon={<FaUser color={Constants.PRIMARY_COLOR} />}
               />
               <Field
                 type="email"
                 name="email"
                 placeholder="Email"
                 component={Input}
+                icon={<FaEnvelope color={Constants.PRIMARY_COLOR} />}
               />
               <Field
                 type="password"
                 name="password"
                 placeholder="Password"
                 component={Input}
+                icon={<FaLock color={Constants.PRIMARY_COLOR} />}
               />
               <Button
                 type="submit"

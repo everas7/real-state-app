@@ -45,6 +45,10 @@
   pointer-events: none;
 }
 
+.inputicon {
+  line-height: 17px;
+}
+
 .left-addon .inputicon {
   left: 0px;
 }
@@ -116,4 +120,11 @@
 
 .badge-inverse:hover {
   background-color: #1a1a1a;
+}
+
+
+/* Table */
+
+.table-hover tbody tr:hover {
+  cursor: pointer;
 }
