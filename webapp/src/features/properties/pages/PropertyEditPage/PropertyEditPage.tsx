@@ -6,6 +6,8 @@ import { Breadcrumb, NotFound } from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
+import { Col, Row } from 'react-bootstrap';
+import styles from './PropertyEditPage.module.scss';
 
 export default function PropertyEditPage() {
   const [property, setProperty] = useState<Property>();
@@ -45,14 +47,24 @@ export default function PropertyEditPage() {
 
   return (
     <>
-      <Breadcrumb
-        items={[
-          { name: 'Appartments', path: '/' },
-          { name: id, path: `/apartments/${id}` },
-          { name: 'Edit' },
-        ]}
-      />
-      <PropertyForm property={property} onSubmit={onSubmitClickHandler} />
+      <Col>
+        <Row>
+          <Col>
+            <Breadcrumb
+              items={[
+                { name: 'Appartments', path: '/' },
+                { name: id, path: `/apartments/${id}` },
+                { name: 'Edit' },
+              ]}
+            />
+          </Col>
+        </Row>
+      </Col>
+      <Col md="12" className={styles['property-edit-page__content']}>
+        <Row>
+          <PropertyForm property={property} onSubmit={onSubmitClickHandler} />
+        </Row>
+      </Col>
     </>
   );
 }

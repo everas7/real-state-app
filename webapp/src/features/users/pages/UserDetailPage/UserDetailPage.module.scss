@@ -1,12 +1,13 @@
 .user-detail-page {
   &__content {
-    overflow-y: scroll;
     height: 100%;
   }
   &__controls {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     button:not(:last-child) {
       margin-right: 10px;
     }
+    display: flex;
+    flex-direction: row;
   }
 }

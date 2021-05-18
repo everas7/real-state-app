@@ -22,6 +22,7 @@ export const Permissions = {
     List: {
       PageAccess: [Role.Admin, Role.Realtor, Role.Client],
       AddButton: [Role.Admin, Role.Realtor],
+      Availability: [Role.Admin, Role.Realtor],
     },
     Detail: {
       PageAccess: [Role.Admin, Role.Realtor, Role.Client],

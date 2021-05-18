@@ -6,6 +6,9 @@
   &__list::-webkit-scrollbar {
     display: none;
   }
+  &__card-deck {
+    margin-right: 15px;
+  }
   &__header {
     display: flex;
     flex-direction: row;
@@ -20,8 +23,13 @@
   }
 
   &__map-property {
-    margin-top: 16px;
-    margin-left: 16px;
-    width: 200px;
+    margin-top: 30px;
+    margin-left: -95px;
+    width: 250px;
+  }
+  &__map-toggle-btn {
+    right: 30%;
+    flex-direction: row;
+    align-items: center;
   }
 }

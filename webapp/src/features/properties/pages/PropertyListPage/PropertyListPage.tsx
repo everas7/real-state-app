@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, CardDeck, Container } from 'react-bootstrap';
+import cx from 'classnames';
 
 import { PropertyForList } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import PropertyFilters from '../../components/PropertyFilters/PropertyFilters';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
-import { Button, Map, IMarker } from '../../../../app/components';
+import { Button, Map, IMarker, Navbar } from '../../../../app/components';
 import { history } from '../../../../index';
 import styles from './PropertyListPage.module.scss';
 import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
 import { Permissions } from '../../../../app/authorization/permissions';
+import { FaList, FaMap } from 'react-icons/fa';
 
 export default function PropertyListPage() {
   const [properties, setProperties] = useState<PropertyForList[]>([]);
@@ -26,6 +28,7 @@ export default function PropertyListPage() {
 
   const coordinates = properties.map((p) => ({
     id: p.id,
+    price: p.price,
     lat: p.geolocation.latitude,
     lng: p.geolocation.longitude,
   }));
@@ -68,68 +71,128 @@ export default function PropertyListPage() {
           floorAreaSize={propertyInfo.floorAreaSize}
           address={propertyInfo.address}
           available={propertyInfo.available}
+          column={true}
         />
       </div>
     );
   };
 
+  const [showFilters, setShowFilters] = useState(false);
+  const [showMap, setShowMap] = useState(false);
+
   return (
-    <>
-      <Col md="2" className="mh-100">
-        <PropertyFilters onApplyFilter={onFilterProperties} />
-      </Col>
-      <Col md="5" className={styles['property-list-page__list']}>
-        <div className={styles['property-list-page__header']}>
-          <div className={styles['property-list-page__header-title']}>
-            Apartments
-          </div>
+    <Container
+      fluid={true}
+      className="d-flex flex-column vh-100 overflow-hidden"
+    >
+      <Row>
+        <Navbar />
+      </Row>
+      <Row className="flex-grow-1 overflow-hidden">
+        <Col md="3" lg="2" xl="2" className="mh-100">
+          <Button
+            className="d-sm-block d-md-none w-100 mb-2"
+            onClick={() => setShowFilters(!showFilters)}
+            variant="light"
+          >
+            {showFilters ? 'Hide Filters' : 'Show Filters'}
+          </Button>
+          <PropertyFilters
+            className={cx(
+              {
+                collapse: !showFilters,
+              },
+              'd-md-block'
+            )}
+            onApplyFilter={onFilterProperties}
+          />
+        </Col>
+        <Col
+          md="9"
+          lg="7"
+          xl="5"
+          className={cx(
+            styles['property-list-page__list'],
+            {
+              collapse: showMap,
+            },
+            'd-lg-block'
+          )}
+        >
           <AuthorizedComponent
             rolesAllowed={Permissions.Properties.List.AddButton}
           >
-            <Button onClick={() => history.push('/apartments/create')}>
-              Add Apartment
-            </Button>
+            <div className={styles['property-list-page__header']}>
+              <div className={styles['property-list-page__header-title']}>
+                Apartments
+              </div>
+              <Button onClick={() => history.push('/apartments/create')}>
+                Add Apartment
+              </Button>
+            </div>
           </AuthorizedComponent>
-        </div>
 
-        <Row>
-          {properties.map((property, i) => (
-            <Col
-              xl="6"
-              lg="12"
-              md="12"
-              sm="12"
-              onClick={() => history.push(`/apartments/${property.id}`)}
-              key={`property_card-${i}`}
-            >
-              <PropertyCard
-                title={property.name}
-                rooms={property.rooms}
-                price={property.price}
-                floorAreaSize={property.floorAreaSize}
-                address={property.address}
-                available={property.available}
+          <CardDeck className={cx(styles['property-list-page__card-deck'])}>
+            <Row>
+              {properties.map((property, i) => (
+                <Col
+                  md="12"
+                  onClick={() => history.push(`/apartments/${property.id}`)}
+                  key={`property_card-${i}`}
+                >
+                  <PropertyCard
+                    title={property.name}
+                    rooms={property.rooms}
+                    price={property.price}
+                    floorAreaSize={property.floorAreaSize}
+                    address={property.address}
+                    available={property.available}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </CardDeck>
+        </Col>
+        <Col
+          md="9"
+          lg="3"
+          xl="5"
+          className={cx(
+            'overflow-hidden mh-100',
+            {
+              collapse: !showMap,
+            },
+            'd-lg-block'
+          )}
+        >
+          <div style={{ height: '100%', width: '100%' }}>
+            {(properties.length && (
+              <Map
+                defaultCenter={defaultCenter}
+                markers={coordinates}
+                onMarkerClick={handleMarkerClick}
+                onMarkerMouseIn={handleMarkerMouseIn}
+                onMarkerMouseOut={handleMarkerMouseOut}
+                popupComponent={Popup}
+                popupInfo={popupCoordinates}
               />
-            </Col>
-          ))}
-        </Row>
-      </Col>
-      <Col md="5" className="overflow-hidden mh-100">
-        <div style={{ height: '100%', width: '100%' }}>
-          {(properties.length && (
-            <Map
-              defaultCenter={defaultCenter}
-              markers={coordinates}
-              onMarkerClick={handleMarkerClick}
-              onMarkerMouseIn={handleMarkerMouseIn}
-              onMarkerMouseOut={handleMarkerMouseOut}
-              popupComponent={Popup}
-              popupInfo={popupCoordinates}
-            />
-          )) ||
-            ''}
-        </div>
-      </Col>
-    </>
+            )) ||
+              ''}
+          </div>
+        </Col>
+        <Button
+          float={true}
+          variant={'dark'}
+          className={cx(
+            'd-none d-md-block d-lg-none',
+            styles['property-list-page__map-toggle-btn']
+          )}
+          onClick={() => setShowMap(!showMap)}
+        >
+          <span className="mr-1">{showMap ? 'List' : 'Map'}</span>
+          {showMap ? <FaList /> : <FaMap />}
+        </Button>
+      </Row>
+    </Container>
   );
 }

@@ -1,17 +1,24 @@
-import { useEffect, useState } from 'react';
-import { Col, Row, Modal } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Col, Row, Modal, Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import cx from 'classnames';
 
 import PropertyCorousel from '../../components/PropertyCorousel/PropertyCorousel';
 import PropertyDetails from '../../components/PropertyDetails/PropertyDetails';
-import { Breadcrumb, Map, Button, NotFound } from '../../../../app/components';
+import {
+  Breadcrumb,
+  Map,
+  Button,
+  NotFound,
+  IconButton,
+} from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import styles from './PropertyDetailPage.module.scss';
 import { history } from '../../../../index';
 import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
 import { Permissions } from '../../../../app/authorization/permissions';
+import { FaEdit, FaToggleOn, FaToggleOff, FaTrashAlt } from 'react-icons/fa';
 
 export default function PropertyDetailPage(): JSX.Element {
   const [property, setProperty] = useState<Property>();
@@ -71,39 +78,60 @@ export default function PropertyDetailPage(): JSX.Element {
   if (!property) return <div>Loading Apartment...</div>;
   return (
     <>
-      <Breadcrumb items={[{ name: 'Appartments', path: '/' }, { name: id }]} />
-      <Col className={cx(styles['property-detail-page__content'])}>
-        <Row className={cx('')}>
-          <Col md="6">
-            <Row>
-              <PropertyCorousel />
-            </Row>
-            <Row
-              className={cx(styles['property-detail-page__map'], 'flex-grow-1')}
-            >
-              {(property && coordinate && (
-                <Map defaultCenter={coordinate} markers={[coordinate]} />
-              )) ||
-                ''}
-            </Row>
+      <Col>
+        <Row>
+          <Col>
+            <Breadcrumb
+              items={[{ name: 'Appartments', path: '/' }, { name: id }]}
+            />
           </Col>
-          <Col md="6" className="flex-grow-1">
+        </Row>
+      </Col>
+      <Col
+        md="12"
+        className={cx(styles['property-detail-page__content-container'])}
+      >
+        <Row className={cx(styles['property-detail-page__content'])}>
+          <Col md="6">
+            <PropertyCorousel />
             <AuthorizedComponent
               rolesAllowed={Permissions.Properties.Detail.ManageAction}
             >
               <div className={styles['property-detail-page__controls']}>
-                <Button onClick={() => history.push(`/apartments/${id}/edit`)}>
-                  Edit Apartment
-                </Button>
-                <Button variant="success" onClick={changeAvailability}>
+                <IconButton
+                  onClick={() => history.push(`/apartments/${id}/edit`)}
+                  icon={<FaEdit />}
+                >
+                  Edit
+                </IconButton>
+
+                <IconButton
+                  onClick={changeAvailability}
+                  icon={property.available ? <FaToggleOff /> : <FaToggleOn />}
+                >
                   {property.available ? 'Set as Rented' : 'Set as Available'}
-                </Button>
-                <Button variant="danger" onClick={handleShowDeleteModal}>
+                </IconButton>
+                <IconButton
+                  variant="danger"
+                  icon={<FaTrashAlt />}
+                  onClick={handleShowDeleteModal}
+                >
                   Delete
-                </Button>
+                </IconButton>
               </div>
             </AuthorizedComponent>
             {(property && <PropertyDetails property={property} />) || ''}
+          </Col>
+
+          <Col md="6">
+            {(property && coordinate && (
+              <Map
+                className={cx(styles['property-detail-page__content-map'])}
+                defaultCenter={coordinate}
+                markers={[coordinate]}
+              />
+            )) ||
+              ''}
           </Col>
         </Row>
       </Col>

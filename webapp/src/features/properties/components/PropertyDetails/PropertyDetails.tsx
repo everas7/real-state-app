@@ -103,11 +103,13 @@ export default function PropertyDetails({
               icon={<FaBed color={Constants.PRIMARY_COLOR} />}
             />
           ) : (
-            <>
+            <div className={styles['property-details__dimensions-details']}>
               <FaBed color={Constants.PRIMARY_COLOR} />
-              {property.rooms}
-              Rooms
-            </>
+              <span className={styles['property-details__dimensions-text']}>
+                <b>{property.rooms}</b>
+                {' Rooms'}
+              </span>
+            </div>
           )}{' '}
         </div>
         <div>
@@ -126,31 +128,37 @@ export default function PropertyDetails({
               icon={<FaRulerCombined color={Constants.PRIMARY_COLOR} />}
             />
           ) : (
-            <>
+            <div className={styles['property-details__dimensions-details']}>
               <FaRulerCombined color={Constants.PRIMARY_COLOR} />
-              {property.floorAreaSize} ft<sup>2</sup>
-            </>
+              <span className={styles['property-details__dimensions-text']}>
+                <b> {property.floorAreaSize} </b> ft<sup>2</sup>
+              </span>
+            </div>
           )}{' '}
         </div>
       </div>
       <div className={styles['property-details__description']}>
-        Description
         {edit ? (
-          <Field
-            name="description"
-            value={formik!.values.description}
-            onChange={formik!.handleChange}
-          >
-            {(props: FieldProps) => (
-              <Input
-                {...props}
-                placeholder="Description of the apartment"
-                as="textarea"
-              />
-            )}
-          </Field>
+          <>
+            Description
+            <Field
+              name="description"
+              value={formik!.values.description}
+              onChange={formik!.handleChange}
+            >
+              {(props: FieldProps) => (
+                <Input
+                  {...props}
+                  placeholder="Description of the apartment"
+                  as="textarea"
+                />
+              )}
+            </Field>
+          </>
         ) : (
-          <div>{property.description}</div>
+          <div className={styles['property-details__description-text']}>
+            {property.description}
+          </div>
         )}
       </div>
       <div className={styles['property-details__realtor']}>

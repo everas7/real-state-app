@@ -4,29 +4,20 @@
   @include button-variant(
     $primary,
     $primary,
-    #ffffff,
     darken($primary, 5%),
     darken($primary, 5%),
-    #ffffff,
     $primary,
     $primary,
-    #ffffff,
-    lighten($primary, 5%),
-    lighten($primary, 5%),
-    #ffffff
   );
 }
-
 .btn-outline-primary {
   @include button-outline-variant(
     $primary,
-    #ffffff,
     $primary,
     $primary,
-    #ffffff
+    $primary,
   );
 }
-
 
 /* Card */
 
@@ -99,6 +90,21 @@
 .badge-info {
   background-color: #3a87ad;
 }
+
+
+.badge-light {
+  background-color: #ffff;
+  padding-left: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 10px;
+
+  &:hover {
+    background-color: #343a40;
+    color: #ffff;
+  }
+}
+
 
 .badge-info:hover {
   background-color: #2d6987;

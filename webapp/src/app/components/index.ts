@@ -7,3 +7,4 @@ export * from './Navbar/Navbar';
 export * from './NotFound/NotFound';
 export * from './RangeInput/RangeInput';
 export * from './NumericInput/NumericInput';
+export * from './IconButton/IconButton';

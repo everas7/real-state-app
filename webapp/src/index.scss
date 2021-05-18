@@ -1,8 +1,26 @@
 @import '../node_modules/bootstrap/scss/bootstrap';
 @import './app/assets/styles/boostrap-overrides';
 
+@font-face {
+  font-family: 'MyFont';
+  src: local('MyFont'), url(./app/assets/fonts/Noto_Sans/NotoSans-Regular.ttf) format('truetype');
+}
+
+
+@font-face {
+  font-family: 'MyFont';
+  src: local('MyFont'), url(./app/assets/fonts/Noto_Sans/NotoSans-Bold.ttf) format('truetype');
+  font-weight: bold;
+}
+
 body,
 html,
 #root {
   height: 100%;
+  font-family: 'MyFont';
+}
+
+.px15 {
+  padding-left:15px;
+  padding-right:15px;
 }

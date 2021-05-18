@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import cx from 'classnames';
 import _ from 'lodash';
-import { Col } from 'react-bootstrap';
+import { Col, Row} from 'react-bootstrap';
 
 import styles from './UserFormPage.module.scss';
 import { Breadcrumb, Button, NotFound } from '../../../../app/components';
@@ -67,7 +67,13 @@ export default function UserFormPage() {
 
   return (
     <>
-      <Breadcrumb items={breadCrumbItems} />
+      <Col md="12">
+        <Row>
+          <Col>
+            <Breadcrumb items={breadCrumbItems} />
+          </Col>
+        </Row>
+      </Col>
       <Col md="8" className={cx(styles['user-form-page__content'])}>
         <Formik
           initialValues={{
@@ -94,7 +100,7 @@ export default function UserFormPage() {
                   Cancel
                 </Button>
               </div>
-              <UserDetails user={user!} edit={true} />
+              <UserDetails user={user!} edit={true} create={!user?.id} />
             </Form>
           )}
         </Formik>

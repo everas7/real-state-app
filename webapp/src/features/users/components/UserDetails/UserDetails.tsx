@@ -11,11 +11,13 @@ import { Role } from '../../../../app/models/role';
 interface Props {
   user: User;
   edit?: boolean;
+  create?: boolean;
 }
 
 export default function UserDetails({
   user,
   edit = false,
+  create = false,
 }: Props): React.ReactElement<Props> {
   return (
     <div className={cx(styles['user-details'])}>
@@ -48,7 +50,9 @@ export default function UserDetails({
       <div className={styles['user-details__password']}>
         {edit ? (
           <>
-            <div className={styles['user-details__label']}>Password</div>
+            <div className={styles['user-details__label']}>
+              Password<span> {!create ? '(Optional)' : ''}</span>
+            </div>
             <Field
               type="password"
               name="password"
@@ -75,6 +79,14 @@ export default function UserDetails({
           mapRoleAsString(user.role)
         )}
       </div>
+      {!edit && user?.createdAt ? (
+        <div className={styles['user-details__created-at']}>
+          <div className={styles['user-details__label']}>Created</div>
+          {new Date(user!.createdAt).toDateString()}
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 }

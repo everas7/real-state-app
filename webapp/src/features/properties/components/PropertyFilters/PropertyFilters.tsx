@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
+import cx from 'classnames';
 
 import { Button, RangeInput } from '../../../../app/components';
 import styles from './PropertyFilters.module.scss';
@@ -17,6 +18,7 @@ export interface PropertyFiltersValues {
 }
 
 interface Props {
+  className?: string;
   onApplyFilter: (value: URLSearchParams) => void;
 }
 
@@ -34,6 +36,7 @@ const defaultFilters = {
 
 export default function PropertyFilters({
   onApplyFilter,
+  className,
 }: Props): React.ReactElement<Props> {
   const [filters, setFilters] = useState<PropertyFiltersValues>(defaultFilters);
 
@@ -79,7 +82,7 @@ export default function PropertyFilters({
   }
 
   return (
-    <div className={styles['property-filters']}>
+    <div className={cx(styles['property-filters'], className)}>
       <div className={styles['property-filters__controls']}>
         <Button onClick={() => handleApplyFilter(filters)}> Apply </Button>
         <Button variant="light" onClick={handleReset}>

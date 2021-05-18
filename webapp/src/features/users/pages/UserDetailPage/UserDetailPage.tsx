@@ -4,12 +4,18 @@ import { useParams } from 'react-router-dom';
 import cx from 'classnames';
 
 import UserDetails from '../../components/UserDetails/UserDetails';
-import { Breadcrumb, Button, NotFound } from '../../../../app/components';
+import {
+  Breadcrumb,
+  Button,
+  NotFound,
+  IconButton,
+} from '../../../../app/components';
 import { User } from '../../../../app/models/user';
 import { Users } from '../../../../app/services/usersApi';
 import styles from './UserDetailPage.module.scss';
 import { history } from '../../../../index';
 import { Role } from '../../../../app/models/role';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 export default function UserDetailPage(): JSX.Element {
   const [user, setUser] = useState<User>();
@@ -43,19 +49,40 @@ export default function UserDetailPage(): JSX.Element {
   if (!user) return <div>Loading User...</div>;
   return (
     <>
-      <Breadcrumb items={[{ name: 'Users', path: '/users' }, { name: id }]} />
-      <Col className={cx(styles['user-detail-page__content'])}>
+      <Col>
+        <Row>
+          <Col>
+            <Breadcrumb
+              items={[{ name: 'Users', path: '/users' }, { name: id }]}
+            />
+          </Col>
+        </Row>
+      </Col>
+      <Col md="12" className={cx(styles['user-detail-page__content'])}>
         <Row className={cx('')}>
           <Col md="12">
             <div className={styles['user-detail-page__controls']}>
-              <Button onClick={() => history.push(`/users/${id}/edit`)}>
-                Edit User
-              </Button>
-              <Button variant="danger" onClick={handleShowDeleteModal}>
+              <IconButton
+                onClick={() => history.push(`/users/${id}/edit`)}
+                icon={<FaEdit />}
+              >
+                Edit
+              </IconButton>
+              <IconButton
+                variant="danger"
+                icon={<FaTrashAlt />}
+                onClick={handleShowDeleteModal}
+              >
                 Delete
-              </Button>
+              </IconButton>
             </div>
-            {(user && <UserDetails user={user} />) || ''}
+
+            {(user && (
+              <div className={styles['user-detail-page__details-container']}>
+                <UserDetails user={user} />
+              </div>
+            )) ||
+              ''}
           </Col>
         </Row>
       </Col>

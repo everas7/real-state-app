@@ -1,29 +1,35 @@
 .property-card {
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border: none;
   width: 100%;
 
+  &__price {
+    display: block;
+    font-size: 18px !important;
+    line-height: 18px !important;
+    font-weight: 700 !important;
+  }
+
   &__title {
-    height: 48px;
-    max-height: 48px;
     text-overflow: ellipsis;
     display: block;
     overflow: hidden;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
+    word-break: break-all !important;
+    font-size: 18px !important;
+    line-height: 24px !important;
+    font-weight: 400 !important;
   }
 
   &__address {
-    height: 48px;
-    max-height: 48px;
-    text-overflow: ellipsis;
     display: block;
     overflow: hidden;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
+    color: #717171 !important;
+    font-size: 14px;
+    line-height: 18px !important;
+    max-height: 18px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   &__footer {
@@ -31,11 +37,20 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    color: #717171 !important;
+    font-size: 14px;
+    line-height: 18px !important;
+    max-height: 22px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   &__dimensions {
     line-height: 40px;
     margin-bottom: 5px;
-
+    &-divider{
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 }

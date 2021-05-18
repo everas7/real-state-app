@@ -1,23 +1,33 @@
 .user-details {
-
+  padding-left: 0px;
   &__label {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
+
+    span {
+      font-weight: normal;
+      font-size: 16px;
+    }
   }
   &__name {
-    font-size: 20px;
+    font-size: 16px;
   }
   &__email {
-    font-size: 20px;
+    font-size: 16px;
     margin-top: 25px;
   }
   &__password {
-    font-size: 20px;
+    font-size: 16px;
     margin-top: 25px;
   }
 
   &__role {
-    font-size: 20px;
+    font-size: 16px;
+    margin-top: 25px;
+  }
+
+  &__created-at {
+    font-size: 16px;
     margin-top: 25px;
   }
 }

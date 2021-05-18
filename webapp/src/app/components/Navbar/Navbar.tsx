@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
+import { Navbar as BootstrapNavbar, Nav, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import {
@@ -17,30 +17,44 @@ export function Navbar() {
   const dispatch = useAppDispatch();
 
   return (
-    <BootstrapNavbar className={styles.navbar}>
-      <BootstrapNavbar.Brand className={styles.navbar__brand} as={Link} to="/">
-        Real State
-      </BootstrapNavbar.Brand>
-      <BootstrapNavbar.Toggle />
-      <Nav className="mr-auto">
-        <Nav.Link as={Link} to="/">
-          Apartments
-        </Nav.Link>
-        <AuthorizedComponent rolesAllowed={Permissions.Users.List.PageAccess}>
-          <Nav.Link as={Link} to="/users">
-            Users
-          </Nav.Link>
-        </AuthorizedComponent>
-      </Nav>
-      <BootstrapNavbar.Collapse className="justify-content-end">
-        <BootstrapNavbar.Text>{`${user?.name} `}</BootstrapNavbar.Text>
-        <BootstrapNavbar.Text
-          className={styles.navbar__logout}
-          onClick={() => dispatch(logout())}
+    <Col>
+      <BootstrapNavbar
+        className={styles.navbar}
+        collapseOnSelect={true}
+        expand="md"
+      >
+        <BootstrapNavbar.Brand
+          className={styles.navbar__brand}
+          as={Link}
+          to="/"
         >
-          Logout
-        </BootstrapNavbar.Text>
-      </BootstrapNavbar.Collapse>
-    </BootstrapNavbar>
+          Real State
+        </BootstrapNavbar.Brand>
+        <BootstrapNavbar.Toggle aria-controls="navbarScroll" />
+        <BootstrapNavbar.Collapse id="navbarScroll">
+          <Nav className="mr-auto">
+            <Nav.Link as={Link} to="/">
+              Apartments
+            </Nav.Link>
+            <AuthorizedComponent
+              rolesAllowed={Permissions.Users.List.PageAccess}
+            >
+              <Nav.Link as={Link} to="/users">
+                Users
+              </Nav.Link>
+            </AuthorizedComponent>
+          </Nav>
+          <Nav className="flex-row">
+            <BootstrapNavbar.Text>{`${user?.name} `}</BootstrapNavbar.Text>
+            <BootstrapNavbar.Text
+              className={styles.navbar__logout}
+              onClick={() => dispatch(logout())}
+            >
+              Logout
+            </BootstrapNavbar.Text>
+          </Nav>
+        </BootstrapNavbar.Collapse>
+      </BootstrapNavbar>
+    </Col>
   );
 }

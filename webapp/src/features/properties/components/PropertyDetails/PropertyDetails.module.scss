@@ -1,21 +1,35 @@
 .property-details {
   font-size: 14px;
+  height: 60%;
+  margin-top: 10px;
+  margin-bottom: 30px;
 
   &__name {
     font-size: 20px;
+    font-weight: 400;
   }
   &__price {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 600;
     margin-top: 5px;
   }
 
   &__address {
     margin-top: 15px;
+    font-size: 16px;
   }
 
   &__dimensions {
+    font-size: 16px;
     div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    &-text {
+      margin-left: 5px;
+    }
+    &-details {
       margin-top: 10px;
     }
   }
@@ -23,10 +37,12 @@
   &__description {
     font-size: 16px;
     font-weight: 600;
-    margin-top: 20px;
     div {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: normal;
+    }
+    &-text {
+      margin-top: 20px;
     }
   }
 

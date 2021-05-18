@@ -96,50 +96,44 @@ export default function PropertyForm({
   }
 
   return (
-    <Col className={cx(styles['property-form-page__content'])}>
-      <Row className={cx('')}>
-        <Col md="6">
-          <Row>
-            <PropertyCorousel />
-          </Row>
-          <Row className={cx(styles['property-form-page__map'], 'flex-grow-1')}>
-            <Map
-              onClick={handleMapClick}
-              defaultCenter={defaultCoordinates}
-              center={coordinates}
-              markers={[coordinates]}
-            />
-          </Row>
-        </Col>
-        <Col md="6" className="flex-grow-1">
-          <FormikProvider value={formik}>
-            <Form>
-              <div className={styles['property-form-page__controls']}>
-                <Button
-                  disabled={!_.isEmpty((formik as any).errors)}
-                  onClick={() => formik.submitForm()}
-                >
-                  {property.id ? 'Save Changes' : 'Create Apartment'}
-                </Button>
-                <Button
-                  variant="light"
-                  onClick={() => {
-                    history.push(`/apartments/${property.id || ''}`);
-                  }}
-                >
-                  Cancel
-                </Button>
-              </div>
-              <PropertyDetails
-                property={property as Property}
-                edit={true}
-                formik={formik}
-              />
-              <ManageAddressChange />
-            </Form>
-          </FormikProvider>
-        </Col>
-      </Row>
-    </Col>
+    <>
+      <Col md="6">
+        <PropertyCorousel />
+
+        <FormikProvider value={formik}>
+          <div className={styles['property-form__controls']}>
+            <Button
+              disabled={!_.isEmpty((formik as any).errors)}
+              onClick={() => formik.submitForm()}
+            >
+              {property.id ? 'Save Changes' : 'Create Apartment'}
+            </Button>
+            <Button
+              variant="light"
+              onClick={() => {
+                history.push(`/apartments/${property.id || ''}`);
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+          <PropertyDetails
+            property={property as Property}
+            edit={true}
+            formik={formik}
+          />
+          <ManageAddressChange />
+        </FormikProvider>
+      </Col>
+      <Col md="6">
+        <Map
+          className={cx(styles['property-form__map'])}
+          onClick={handleMapClick}
+          defaultCenter={defaultCoordinates}
+          center={coordinates}
+          markers={[coordinates]}
+        />
+      </Col>
+    </>
   );
 }

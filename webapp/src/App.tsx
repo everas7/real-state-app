@@ -47,79 +47,84 @@ export default function Routes() {
 
   function renderRoutes() {
     return (
-      <Container className="d-flex flex-column vh-100 overflow-hidden">
-        <Row className="flex-shrink-0">{isAuthenticated && <Navbar />}</Row>
-        <Row className="flex-grow-1 overflow-hidden">
-          <Switch>
-            <AuthorizedRoute
-              path={['/', '/apartments']}
-              isLoggedIn={isAuthenticated}
-              component={PropertyListPage}
-              user={user!}
-              rolesAllowed={Permissions.Properties.List.PageAccess}
-              exact={true}
-            />
-            <AuthorizedRoute
-              path={['/apartments/create']}
-              isLoggedIn={isAuthenticated}
-              component={PropertyCreatePage}
-              user={user!}
-              rolesAllowed={Permissions.Properties.Create.PageAccess}
-              exact={true}
-            />
-            <AuthorizedRoute
-              path={['/apartments/:id']}
-              user={user!}
-              isLoggedIn={isAuthenticated}
-              component={PropertyDetailPage}
-              rolesAllowed={Permissions.Properties.Detail.PageAccess}
-              exact={true}
-            />
-            <AuthorizedRoute
-              path={['/apartments/:id/edit']}
-              isLoggedIn={isAuthenticated}
-              component={PropertyEditPage}
-              user={user!}
-              rolesAllowed={Permissions.Properties.Edit.PageAccess}
-              exact={true}
-            />
-            <AuthorizedRoute
-              path={['/users']}
-              isLoggedIn={isAuthenticated}
-              component={UserListPage}
-              user={user!}
-              rolesAllowed={Permissions.Users.List.PageAccess}
-              exact={true}
-            />
-            <AuthorizedRoute
-              path={['/users/create']}
-              isLoggedIn={isAuthenticated}
-              component={UserFormPage}
-              user={user!}
-              rolesAllowed={Permissions.Users.Create.PageAccess}
-              exact={true}
-            />
-            <AuthorizedRoute
-              path={['/users/:id']}
-              isLoggedIn={isAuthenticated}
-              component={UserDetailPage}
-              user={user!}
-              rolesAllowed={Permissions.Users.Detail.PageAccess}
-              exact={true}
-            />
-            <AuthorizedRoute
-              path={['/users/:id/edit']}
-              isLoggedIn={isAuthenticated}
-              component={UserFormPage}
-              user={user!}
-              rolesAllowed={Permissions.Users.Edit.PageAccess}
-              exact={true}
-            />
-
-            <Route path="/(.+)" component={NotFound} />
-          </Switch>
-        </Row>
-      </Container>
+      <Switch>
+        {/* Without Main Layout */}
+        <AuthorizedRoute
+          path={['/', '/apartments']}
+          isLoggedIn={isAuthenticated}
+          component={PropertyListPage}
+          user={user!}
+          rolesAllowed={Permissions.Properties.List.PageAccess}
+          exact={true}
+        />
+        {/* With Main Layout */}
+        <Route>
+          <Container className="d-flex flex-column vh-100 overflow-hidden">
+            <Row className="flex-shrink-0">{isAuthenticated && <Navbar />}</Row>
+            <Row className="flex-grow-1 overflow-hidden">
+              <Switch>
+                <AuthorizedRoute
+                  path={['/apartments/create']}
+                  isLoggedIn={isAuthenticated}
+                  component={PropertyCreatePage}
+                  user={user!}
+                  rolesAllowed={Permissions.Properties.Create.PageAccess}
+                  exact={true}
+                />
+                <AuthorizedRoute
+                  path={['/apartments/:id']}
+                  user={user!}
+                  isLoggedIn={isAuthenticated}
+                  component={PropertyDetailPage}
+                  rolesAllowed={Permissions.Properties.Detail.PageAccess}
+                  exact={true}
+                />
+                <AuthorizedRoute
+                  path={['/apartments/:id/edit']}
+                  isLoggedIn={isAuthenticated}
+                  component={PropertyEditPage}
+                  user={user!}
+                  rolesAllowed={Permissions.Properties.Edit.PageAccess}
+                  exact={true}
+                />
+                <AuthorizedRoute
+                  path={['/users']}
+                  isLoggedIn={isAuthenticated}
+                  component={UserListPage}
+                  user={user!}
+                  rolesAllowed={Permissions.Users.List.PageAccess}
+                  exact={true}
+                />
+                <AuthorizedRoute
+                  path={['/users/create']}
+                  isLoggedIn={isAuthenticated}
+                  component={UserFormPage}
+                  user={user!}
+                  rolesAllowed={Permissions.Users.Create.PageAccess}
+                  exact={true}
+                />
+                <AuthorizedRoute
+                  path={['/users/:id']}
+                  isLoggedIn={isAuthenticated}
+                  component={UserDetailPage}
+                  user={user!}
+                  rolesAllowed={Permissions.Users.Detail.PageAccess}
+                  exact={true}
+                />
+                <AuthorizedRoute
+                  path={['/users/:id/edit']}
+                  isLoggedIn={isAuthenticated}
+                  component={UserFormPage}
+                  user={user!}
+                  rolesAllowed={Permissions.Users.Edit.PageAccess}
+                  exact={true}
+                />
+                <Route path="/(.+)" component={NotFound} />
+              </Switch>
+            </Row>
+          </Container>
+        </Route>
+      </Switch>
     );
   }
 

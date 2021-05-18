@@ -7,6 +7,7 @@ import styles from './Map.module.scss';
 
 export interface IMarker {
   id?: number;
+  price?: number;
   lat: number;
   lng: number;
 }
@@ -47,6 +48,7 @@ export function Map({
             key={`${JSON.stringify(marker)}-${i}`}
             lat={marker.lat}
             lng={marker.lng}
+            price={marker.price}
             onClick={() => onMarkerClick && onMarkerClick(marker.id!)}
             onMouseOver={() => onMarkerMouseIn && onMarkerMouseIn(marker.id!)}
             onMouseOut={() => onMarkerMouseOut && onMarkerMouseOut()}

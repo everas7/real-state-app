@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:all",
-    "lint": "eslint .",  
+    "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
     "debug": "^4.3.1",
     "dotenv": "^9.0.0",
@@ -31,6 +32,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "react-bootstrap": "^1.6.0",
     "sequelize": "^6.6.2",
     "winston": "^3.3.3"
   },
