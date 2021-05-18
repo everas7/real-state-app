@@ -18,7 +18,7 @@ export function initProperty(
       autoIncrement: true,
     },
     name: { type: Sequelize.STRING, allowNull: false },
-    description: { type: Sequelize.STRING, allowNull: true },
+    description: { type: Sequelize.STRING(500), allowNull: true },
     floorAreaSize: { type: Sequelize.INTEGER, allowNull: false },
     price: { type: Sequelize.DOUBLE, allowNull: false },
     rooms: { type: Sequelize.INTEGER, allowNull: false },
