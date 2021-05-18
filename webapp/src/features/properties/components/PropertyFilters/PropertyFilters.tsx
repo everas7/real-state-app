@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import { Button, RangeInput } from '../../../../app/components';
 import styles from './PropertyFilters.module.scss';
+import { Range } from 'react-input-range';
 
 export interface PropertyFiltersValues {
   price: {
@@ -56,21 +57,21 @@ export default function PropertyFilters({
   function handleApplyFilter(filtersValues: PropertyFiltersValues) {
     const filtersToSend: PropertyFiltersValues = _.cloneDeep(filtersValues);
     const params = new URLSearchParams();
-    params.append('filters[minPrice]', String(filters.price.min));
+    params.append('filters[minPrice]', String(filtersToSend.price.min));
     if (filtersToSend.price!.max !== defaultFilters.price.max) {
-      params.append('filters[maxPrice]', String(filters.price.max));
+      params.append('filters[maxPrice]', String(filtersToSend.price.max));
     }
     params.append(
       'filters[minFloorAreaSize]',
-      String(filters.floorAreaSize.min)
+      String(filtersToSend.floorAreaSize.min)
     );
     if (filtersToSend.floorAreaSize!.max !== defaultFilters.floorAreaSize.max) {
       params.append(
         'filters[maxFloorAreaSize]',
-        String(filters.floorAreaSize.max)
+        String(filtersToSend.floorAreaSize.max)
       );
     }
-    Array.from(filters.rooms).forEach((room) => {
+    Array.from(filtersToSend.rooms).forEach((room) => {
       params.append('filters[rooms][]', String(room));
     });
     onApplyFilter(params);
@@ -98,7 +99,10 @@ export default function PropertyFilters({
         onChange={(value) =>
           setFilters({
             ...filters,
-            price: value as any,
+            price: {
+              min: Math.max((value as Range).min, defaultFilters.price.min),
+              max: Math.min((value as Range).max, defaultFilters.price.max),
+            },
           })
         }
         minLabelPrefix="$"
@@ -115,7 +119,16 @@ export default function PropertyFilters({
         onChange={(value) =>
           setFilters({
             ...filters,
-            floorAreaSize: value as any,
+            floorAreaSize: {
+              min: Math.max(
+                (value as Range).min,
+                defaultFilters.floorAreaSize.min
+              ),
+              max: Math.min(
+                (value as Range).max,
+                defaultFilters.floorAreaSize.max
+              ),
+            },
           })
         }
         minLabelSuffix=" ft²"
