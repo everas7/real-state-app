@@ -2,18 +2,8 @@
   padding-left: 0;
   padding-right: 0;
   &__brand {
-    color: #3eb49e;
     font-weight: 600;
     font-size: 26px;
   }
-  color: #3eb49e;
 
-  &__logout::before {
-    content: "|";
-    margin-right: 10px;
-  }
-  &__logout {
-    cursor: pointer;
-    margin-left: 10px;
-  }
 }

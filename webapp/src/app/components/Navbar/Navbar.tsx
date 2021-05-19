@@ -49,18 +49,19 @@ export function Navbar() {
               </Nav.Link>
             </AuthorizedComponent>
           </Nav>
-          <Nav className="flex-row">
-            <NavDropdown title={`${user?.name} `} id="basic-nav-dropdown">
+          <Nav>
+            <NavDropdown
+              alignRight={true}
+              title={`${user?.name} `}
+              id="basic-nav-dropdown"
+            >
               <NavDropdown.Item as={Link} to="/profile/settings">
                 Settings
               </NavDropdown.Item>
+              <NavDropdown.Item onClick={() => dispatch(logout())}>
+                Logout
+              </NavDropdown.Item>
             </NavDropdown>
-            <BootstrapNavbar.Text
-              className={styles.navbar__logout}
-              onClick={() => dispatch(logout())}
-            >
-              Logout
-            </BootstrapNavbar.Text>
           </Nav>
         </BootstrapNavbar.Collapse>
       </BootstrapNavbar>
