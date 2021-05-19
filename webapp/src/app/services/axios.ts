@@ -41,19 +41,28 @@ export const setupAxiosResponseInterceptor = (store: Store) => {
   });
 };
 
+const sleep = (ms: number) => (response: AxiosResponse) =>
+  new Promise<AxiosResponse>((resolve) =>
+    setTimeout(() => resolve(response), ms)
+  );
+
 const responseBody = (response: AxiosResponse) => response.data;
 
 const request = {
   get: (url: string, params?: URLSearchParams) => {
-    return axios.get(url, { params }).then(responseBody);
+    return axios.get(url, { params }).then(sleep(1000)).then(responseBody);
   },
   getPaginated: (url: string, params?: URLSearchParams) => {
-    return axios.get(url, { params }).then((response) => ({
-      data: response.data,
-      pages: response.headers['total-pages'],
-    }));
+    return axios
+      .get(url, { params })
+      .then(sleep(1000))
+      .then((response) => ({
+        data: response.data,
+        pages: response.headers['total-pages'],
+      }));
   },
-  post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+  post: (url: string, body: {}) =>
+    axios.post(url, body).then(sleep(1000)).then(responseBody),
   put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
   patch: (url: string, body: {}) => axios.patch(url, body).then(responseBody),
   del: (url: string) => axios.delete(url).then(responseBody),

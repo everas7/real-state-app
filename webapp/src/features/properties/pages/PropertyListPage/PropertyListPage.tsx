@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, CardDeck, Container } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  CardDeck,
+  Container,
+  ProgressBar,
+  Spinner,
+} from 'react-bootstrap';
 import cx from 'classnames';
 import { FaList, FaMap } from 'react-icons/fa';
 import ReactPaginate from 'react-paginate';
 
-import { PropertyForList } from '../../../../app/models/property';
-import { Properties } from '../../services/propertiesApi';
 import PropertyFilters from '../../components/PropertyFilters/PropertyFilters';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import { Button, Map, IMarker, Navbar } from '../../../../app/components';
@@ -16,11 +21,21 @@ import { Permissions } from '../../../../app/authorization/permissions';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import {
   fetchProperties,
+  selectLoadingList,
   selectPage,
   selectProperties,
   selectTotalPages,
   setPage,
 } from '../../services/propertiesSlice';
+
+interface SelectProtected {
+  readonly listElement: HTMLElement | null;
+}
+
+const defaultCoordinates = {
+  lat: 40.73061,
+  lng: -73.935242,
+};
 
 export default function PropertyListPage() {
   const dispatch = useAppDispatch();
@@ -28,15 +43,18 @@ export default function PropertyListPage() {
   const properties = useAppSelector(selectProperties);
   const pageCount = useAppSelector(selectTotalPages);
   const page = useAppSelector(selectPage);
+  const loading = useAppSelector(selectLoadingList);
 
   useEffect(() => {
     dispatch(fetchProperties());
   }, []);
 
-  const defaultCenter = {
-    lat: properties[0]?.geolocation.latitude || 0,
-    lng: properties[0]?.geolocation.longitude || 0,
-  };
+  const center = properties[0]
+    ? {
+        lat: properties[0]?.geolocation.latitude || 0,
+        lng: properties[0]?.geolocation.longitude || 0,
+      }
+    : defaultCoordinates;
 
   const coordinates = properties.map((p) => ({
     id: p.id,
@@ -90,6 +108,11 @@ export default function PropertyListPage() {
   function handlePageClick({ selected }: { selected: number }) {
     dispatch(setPage(selected + 1));
     dispatch(fetchProperties());
+
+    const selectProtected: SelectProtected = {
+      listElement: document.getElementById('property-list'),
+    };
+    selectProtected.listElement!.scroll({ top: 0, behavior: 'smooth' });
   }
 
   return (
@@ -122,6 +145,7 @@ export default function PropertyListPage() {
           md="9"
           lg="7"
           xl="5"
+          id="property-list"
           className={cx(
             styles['property-list-page__list'],
             {
@@ -143,6 +167,11 @@ export default function PropertyListPage() {
             </div>
           </AuthorizedComponent>
 
+          {loading ? (
+            <ProgressBar className="mb-3" animated={true} now={100} />
+          ) : (
+            ''
+          )}
           <CardDeck className={cx(styles['property-list-page__card-deck'])}>
             <Row>
               {properties.map((property, i) => (
@@ -163,27 +192,31 @@ export default function PropertyListPage() {
               ))}
             </Row>
           </CardDeck>
-          <ReactPaginate
-            previousLabel={'<'}
-            nextLabel={'>'}
-            breakLabel={'...'}
-            pageCount={pageCount}
-            forcePage={page - 1}
-            initialPage={0}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            breakClassName={'page-item'}
-            breakLinkClassName={'page-link'}
-            containerClassName={'pagination'}
-            pageClassName={'page-item'}
-            pageLinkClassName={'page-link'}
-            previousClassName={'page-item'}
-            previousLinkClassName={'page-link'}
-            nextClassName={'page-item'}
-            nextLinkClassName={'page-link'}
-            activeClassName={'active'}
-          />
+          {properties.length ? (
+            <ReactPaginate
+              previousLabel={'<'}
+              nextLabel={'>'}
+              breakLabel={'...'}
+              pageCount={pageCount}
+              forcePage={page - 1}
+              initialPage={0}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              breakClassName={'page-item'}
+              breakLinkClassName={'page-link'}
+              containerClassName={'pagination'}
+              pageClassName={'page-item'}
+              pageLinkClassName={'page-link'}
+              previousClassName={'page-item'}
+              previousLinkClassName={'page-link'}
+              nextClassName={'page-item'}
+              nextLinkClassName={'page-link'}
+              activeClassName={'active'}
+            />
+          ) : (
+            ''
+          )}
         </Col>
         <Col
           md="9"
@@ -198,18 +231,16 @@ export default function PropertyListPage() {
           )}
         >
           <div style={{ height: '100%', width: '100%' }}>
-            {(properties.length && (
-              <Map
-                defaultCenter={defaultCenter}
-                markers={coordinates}
-                onMarkerClick={handleMarkerClick}
-                onMarkerMouseIn={handleMarkerMouseIn}
-                onMarkerMouseOut={handleMarkerMouseOut}
-                popupComponent={Popup}
-                popupInfo={popupCoordinates}
-              />
-            )) ||
-              ''}
+            <Map
+              defaultCenter={defaultCoordinates}
+              center={center}
+              markers={coordinates}
+              onMarkerClick={handleMarkerClick}
+              onMarkerMouseIn={handleMarkerMouseIn}
+              onMarkerMouseOut={handleMarkerMouseOut}
+              popupComponent={Popup}
+              popupInfo={popupCoordinates}
+            />
           </div>
         </Col>
         <Button

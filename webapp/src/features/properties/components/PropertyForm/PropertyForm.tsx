@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import cx from 'classnames';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Col, Spinner, Row } from 'react-bootstrap';
 import googleMapReact from 'google-map-react';
 import {
   FormikHelpers,
@@ -11,7 +11,7 @@ import {
 import _ from 'lodash';
 
 import styles from './PropertyForm.module.scss';
-import { Map } from '../../../../app/components';
+import { Map, Button } from '../../../../app/components';
 import { IPropertyForm, Property } from '../../../../app/models/property';
 import {
   getAddressByGeolocation,
@@ -103,8 +103,11 @@ export default function PropertyForm({
         <FormikProvider value={formik}>
           <div className={styles['property-form__controls']}>
             <Button
-              disabled={!_.isEmpty((formik as any).errors)}
+              disabled={
+                formik.isSubmitting || !_.isEmpty((formik as any).errors)
+              }
               onClick={() => formik.submitForm()}
+              loading={formik.isSubmitting}
             >
               {property.id ? 'Save Changes' : 'Create Apartment'}
             </Button>

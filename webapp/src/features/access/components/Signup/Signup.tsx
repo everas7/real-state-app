@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import cx from 'classnames';
 import _ from 'lodash';
+import { ButtonGroup, Spinner } from 'react-bootstrap';
+import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
 
 import './Signup.scss';
 import { Input, Button } from '../../../../app/components';
-import { ButtonGroup } from 'react-bootstrap';
 import { SignupForm } from '../../../../app/models/signup';
 import { Access } from '../../services/accessApi';
 import { useAppDispatch } from '../../../../app/store/hooks';
 import { login } from '../../services/accessSlice';
 import { signupSchema } from '../../validators/accessValidator';
 import { Role } from '../../../../app/models/role';
-import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
 import * as Constants from '../../../../app/constants';
 
 interface Props {
@@ -23,13 +23,16 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
   const [role, setRole] = useState<Role.Client | Role.Realtor>(Role.Client);
   const dispatch = useAppDispatch();
 
-  async function handleSignup(signupForm: SignupForm) {
+  async function handleSignup(signupForm: SignupForm, cb: () => void) {
     return Access.signup(signupForm).then((res) => {
       dispatch(
-        login({
-          email: signupForm.email,
-          password: signupForm.password,
-        })
+        login(
+          {
+            email: signupForm.email,
+            password: signupForm.password,
+          },
+          cb
+        )
       );
     });
   }
@@ -66,9 +69,7 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
           initialValues={{ name: '', email: '', password: '' }}
           validationSchema={signupSchema}
           onSubmit={(values, { setSubmitting }) => {
-            handleSignup({ ...values, role }).then(() => {
-              setSubmitting(false);
-            });
+            handleSignup({ ...values, role }, () => setSubmitting(false));
           }}
         >
           {({ isSubmitting, errors }) => (
@@ -97,6 +98,7 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
               <Button
                 type="submit"
                 disabled={isSubmitting || !_.isEmpty(errors)}
+                loading={isSubmitting}
               >
                 SIGN UP
               </Button>

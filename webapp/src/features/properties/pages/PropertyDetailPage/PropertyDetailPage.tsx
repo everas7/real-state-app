@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Modal, Container } from 'react-bootstrap';
+import { Col, Row, Modal, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import cx from 'classnames';
 
@@ -75,7 +75,20 @@ export default function PropertyDetailPage(): JSX.Element {
     });
   }
   if (error === 'Not Found') return <NotFound />;
-  if (!property) return <div>Loading Apartment...</div>;
+  if (!property)
+    return (
+      <div className="full-screen-spinner">
+        <Spinner
+          as="span"
+          animation="border"
+          role="status"
+          aria-hidden="true"
+          variant="primary"
+        />
+        <span className="sr-only">Loading apartment...</span>{' '}
+      </div>
+    );
+
   return (
     <>
       <Col>

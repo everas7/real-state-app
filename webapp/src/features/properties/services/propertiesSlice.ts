@@ -13,6 +13,7 @@ export interface PropertiesState {
   page: number;
   totalPages: number;
   filters: IPropertyFilters;
+  loadingList: boolean;
 }
 export const defaultFilters = {
   price: {
@@ -31,6 +32,7 @@ const initialState: PropertiesState = {
   page: 1,
   totalPages: 0,
   filters: defaultFilters,
+  loadingList: false,
 };
 
 export const propertiesSlice = createSlice({
@@ -49,11 +51,19 @@ export const propertiesSlice = createSlice({
     setFilters: (state, action: PayloadAction<IPropertyFilters>) => {
       state.filters = action.payload;
     },
+    setLoadingList: (state, action: PayloadAction<boolean>) => {
+      state.loadingList = action.payload;
+    },
   },
 });
 
-export const { setProperties, setPage, setTotalPages, setFilters } =
-  propertiesSlice.actions;
+export const {
+  setProperties,
+  setPage,
+  setTotalPages,
+  setFilters,
+  setLoadingList,
+} = propertiesSlice.actions;
 
 export const selectProperties = (state: RootState) =>
   state.properties.properties;
@@ -64,16 +74,19 @@ export const selectTotalPages = (state: RootState) =>
   state.properties.totalPages;
 
 export const selectFilters = (state: RootState) => state.properties.filters;
+export const selectLoadingList = (state: RootState) => state.properties.loadingList;
 
 export const fetchProperties = (): AppThunk => (dispatch, getState) => {
   const filters = getState().properties.filters;
   const page = getState().properties.page;
-  const pageSize = 10;
+  const pageSize = 3;
+  dispatch(setLoadingList(true));
   Properties.list(
     formatQueryParams(filters, defaultFilters, pageSize, page)
   ).then((res) => {
     dispatch(setProperties(res.data));
     dispatch(setTotalPages(res.pages));
+    dispatch(setLoadingList(false));
   });
 };
 

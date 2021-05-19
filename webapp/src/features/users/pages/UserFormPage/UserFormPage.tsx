@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import cx from 'classnames';
 import _ from 'lodash';
-import { Col, Row} from 'react-bootstrap';
+import { Col, Row, Spinner } from 'react-bootstrap';
 
 import styles from './UserFormPage.module.scss';
 import { Breadcrumb, Button, NotFound } from '../../../../app/components';
@@ -55,7 +55,19 @@ export default function UserFormPage() {
   };
 
   if (error === 'Not Found') return <NotFound />;
-  if (id && !user) return <div>Loading appartment...</div>;
+  if (id && !user)
+    return (
+      <div className="full-screen-spinner">
+        <Spinner
+          as="span"
+          animation="border"
+          role="status"
+          aria-hidden="true"
+          variant="primary"
+        />
+        <span className="sr-only">Loading user...</span>{' '}
+      </div>
+    );
 
   const breadCrumbItems = user?.id
     ? [
@@ -85,10 +97,14 @@ export default function UserFormPage() {
           validationSchema={user?.id ? userUpdateSchema : userCreateSchema}
           onSubmit={onSubmitClickHandler}
         >
-          {({ errors, submitForm }) => (
+          {({ errors, submitForm, isSubmitting }) => (
             <Form>
               <div className={styles['user-form-page__controls']}>
-                <Button disabled={!_.isEmpty(errors)} onClick={submitForm}>
+                <Button
+                  disabled={isSubmitting || !_.isEmpty(errors)}
+                  onClick={submitForm}
+                  loading={isSubmitting}
+                >
                   {user?.id ? 'Save Changes' : 'Create User'}
                 </Button>
                 <Button

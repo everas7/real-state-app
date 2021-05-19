@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { loginSchema } from '../../validators/accessValidator';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import * as Constants from '../../../../app/constants';
+import { Spinner } from 'react-bootstrap';
 
 interface Props {
   onSwitch(): void;
@@ -27,8 +28,7 @@ export default function Login({ onSwitch }: Props): React.ReactElement<Props> {
           initialValues={{ email: '', password: '' }}
           validationSchema={loginSchema}
           onSubmit={(values, { setSubmitting }) => {
-            dispatch(login(values));
-            setSubmitting(false);
+            dispatch(login(values, () => setSubmitting(false)));
           }}
         >
           {({ isSubmitting, errors }) => (
@@ -55,6 +55,7 @@ export default function Login({ onSwitch }: Props): React.ReactElement<Props> {
               <Button
                 type="submit"
                 disabled={isSubmitting || !_.isEmpty(errors)}
+                loading={isSubmitting}
               >
                 LOG IN
               </Button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Modal } from 'react-bootstrap';
+import { Col, Row, Modal, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import cx from 'classnames';
 
@@ -46,7 +46,20 @@ export default function UserDetailPage(): JSX.Element {
     });
   }
   if (error === 'Not Found') return <NotFound />;
-  if (!user) return <div>Loading User...</div>;
+  if (!user)
+    return (
+      <div className="full-screen-spinner">
+        <Spinner
+          as="span"
+          animation="border"
+          role="status"
+          aria-hidden="true"
+          variant="primary"
+        />
+        <span className="sr-only">Loading user...</span>{' '}
+      </div>
+    );
+
   return (
     <>
       <Col>

@@ -23,8 +23,9 @@ export const accessSlice = createSlice({
   name: 'access',
   initialState,
   reducers: {
-    setAuthenticated: (state, action: PayloadAction<boolean>) => {
-      state.isAuthenticated = action.payload;
+    setAuthenticated: (state, action: PayloadAction<User | null>) => {
+      state.isAuthenticated = !!action.payload;
+      state.authenticatedUser = action.payload;
     },
     setAuthenticationError: (state, action: PayloadAction<boolean>) => {
       state.authenticationError = action.payload;
@@ -51,32 +52,43 @@ export const selectAuthenticatedUser = (state: RootState) =>
   state.access.authenticatedUser;
 
 export const login =
-  (loginForm: LoginForm): AppThunk =>
+  (loginForm: LoginForm, callback?: () => void): AppThunk =>
   (dispatch, getState) => {
     Access.login(loginForm)
       .then((res) => {
-        if (res.accessToken) {
-          localStorage.setItem('jwt', res.accessToken);
-          dispatch(setCurrentUser());
-          history.push('/');
-        }
+        localStorage.setItem('jwt', res.accessToken);
+        dispatch(
+          setCurrentUser(() => {
+            if (callback) {
+              callback();
+            }
+
+            history.push('/');
+          })
+        );
       })
       .catch(() => {
         dispatch(setAuthenticationError(true));
+        if (callback) {
+          callback();
+        }
       });
   };
 
-export const setCurrentUser = (): AppThunk => async (dispatch, getState) => {
-  const user = await Users.me();
-  dispatch(setAuthenticatedUser(user));
-  dispatch(setAuthenticated(true));
-};
+export const setCurrentUser =
+  (cb?: () => void): AppThunk =>
+  async (dispatch, getState) => {
+    const user = await Users.me();
+    dispatch(setAuthenticated(user));
+    if (cb) {
+      cb();
+    }
+  };
 
 export const logout = (): AppThunk => (dispatch, getState) => {
   localStorage.removeItem('jwt');
   dispatch(setAuthenticationError(false));
-  dispatch(setAuthenticated(false));
-  dispatch(setAuthenticatedUser(null));
+  dispatch(setAuthenticated(null));
 };
 
 export default accessSlice.reducer;

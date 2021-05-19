@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Col, Row, Spinner } from 'react-bootstrap';
 
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
 import { Breadcrumb, NotFound } from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
-import { Col, Row } from 'react-bootstrap';
 import styles from './PropertyEditPage.module.scss';
+import { debug } from 'console';
 
 export default function PropertyEditPage() {
   const [property, setProperty] = useState<Property>();
@@ -43,7 +44,19 @@ export default function PropertyEditPage() {
   };
 
   if (error === 'Not Found') return <NotFound />;
-  if (!property) return <div>Loading appartment...</div>;
+  if (!property)
+    return (
+      <div className="full-screen-spinner">
+        <Spinner
+          as="span"
+          animation="border"
+          role="status"
+          aria-hidden="true"
+          variant="primary"
+        />
+        <span className="sr-only">Loading apartment...</span>{' '}
+      </div>
+    );
 
   return (
     <>

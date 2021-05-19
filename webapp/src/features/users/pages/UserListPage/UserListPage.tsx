@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Table } from 'react-bootstrap';
+import { Col, Table, ProgressBar } from 'react-bootstrap';
 
 import { User } from '../../../../app/models/user';
 import { Users } from '../../../../app/services/usersApi';
@@ -10,9 +10,12 @@ import { mapRoleAsString } from '../../../../app/helpers/userHelper';
 
 export default function UserListPage() {
   const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     Users.list().then((res) => {
       setUsers(res);
+      setLoading(false);
     });
   }, []);
 
@@ -25,7 +28,11 @@ export default function UserListPage() {
             Add User
           </Button>
         </div>
-
+        {loading ? (
+          <ProgressBar className="mb-3" animated={true} now={100} />
+        ) : (
+          ''
+        )}
         <Table striped={true} bordered={true} hover={true}>
           <thead>
             <tr>

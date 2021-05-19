@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { AccessPage } from './features/access';
@@ -18,7 +18,7 @@ import {
   selectIsAuthenticated,
   setCurrentUser,
 } from './features/access/services/accessSlice';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Spinner } from 'react-bootstrap';
 import { Navbar } from './app/components';
 import { Permissions } from './app/authorization/permissions';
 
@@ -39,7 +39,19 @@ export default function Routes() {
     }
   }, [dispatch, user, isAuthenticated]);
 
-  if (loadingApp) return <div>Loading app, please wait...</div>;
+  if (loadingApp)
+    return (
+      <div className="full-screen-spinner">
+        <Spinner
+          as="span"
+          animation="border"
+          role="status"
+          aria-hidden="true"
+          variant="primary"
+        />
+        <span className="sr-only">Loading app...</span>{' '}
+      </div>
+    );
 
   function renderAccessPage() {
     return !isAuthenticated ? <AccessPage /> : <Redirect to="/" />;
