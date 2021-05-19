@@ -41,17 +41,18 @@ const img = {
 };
 
 export const PhotoDropzone: React.FC<IProps> = ({ setFiles, files }) => {
-  console.log(files, 'veamos');
   const onDrop = useCallback(
     (acceptedFiles) => {
-      setFiles([
-        ...files,
-        ...acceptedFiles.map((file: {}) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        ),
-      ]);
+      setFiles(
+        [
+          ...files,
+          ...acceptedFiles.map((file: {}) =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            })
+          ),
+        ].slice(0, 10)
+      );
     },
     [setFiles, files]
   );
@@ -70,9 +71,14 @@ export const PhotoDropzone: React.FC<IProps> = ({ setFiles, files }) => {
     [setFiles, files]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxFiles: 10,
+    accept: 'image/jpeg, image/png',
+    maxSize: 20480000,
+  });
   const thumbs = files.map((file: any) => (
-    <div>
+    <div key={file.id || file.name}>
       <div style={thumb as any} key={file.name}>
         <IconButton
           variant="danger"
@@ -91,10 +97,13 @@ export const PhotoDropzone: React.FC<IProps> = ({ setFiles, files }) => {
     </div>
   ));
   return (
-    <section className="container">
+    <section>
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
+        <div>(10 files are the maximum number of files you can drop here)</div>
+        <div>(Only *.jpeg and *.png images will be accepted)</div>
+        <div>(Max Size: 20M)</div>
       </div>
       <aside style={thumbsContainer as any}>{thumbs}</aside>
     </section>
