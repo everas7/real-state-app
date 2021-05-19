@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Col, Row, Spinner } from 'react-bootstrap';
 
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
-import { Breadcrumb, NotFound } from '../../../../app/components';
+import { Breadcrumb, NotFound, FullScreenSpinner } from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
@@ -74,19 +74,7 @@ export default function PropertyEditPage() {
   };
 
   if (error === 'Not Found') return <NotFound />;
-  if (!property)
-    return (
-      <div className="full-screen-spinner">
-        <Spinner
-          as="span"
-          animation="border"
-          role="status"
-          aria-hidden="true"
-          variant="primary"
-        />
-        <span className="sr-only">Loading apartment...</span>{' '}
-      </div>
-    );
+  if (!property) return <FullScreenSpinner alt="Loading apartment..." />;
 
   return (
     <>

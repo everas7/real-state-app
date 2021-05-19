@@ -6,7 +6,12 @@ import _ from 'lodash';
 import { Col, Row, Spinner } from 'react-bootstrap';
 
 import styles from './ProfileSettingsPage.module.scss';
-import { Breadcrumb, Button, NotFound } from '../../../../app/components';
+import {
+  Breadcrumb,
+  Button,
+  NotFound,
+  FullScreenSpinner,
+} from '../../../../app/components';
 import { User } from '../../../../app/models/user';
 import { history } from '../../../../index';
 import { Users } from '../../../../app/services/usersApi';
@@ -32,19 +37,7 @@ export default function ProfileSettingsPage() {
     });
   };
 
-  if (!user)
-    return (
-      <div className="full-screen-spinner">
-        <Spinner
-          as="span"
-          animation="border"
-          role="status"
-          aria-hidden="true"
-          variant="primary"
-        />
-        <span className="sr-only">Loading user...</span>{' '}
-      </div>
-    );
+  if (!user) return <FullScreenSpinner alt="Loading user..." />;
 
   const breadCrumbItems = [{ name: 'Profile Settings' }];
 

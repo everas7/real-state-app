@@ -9,3 +9,4 @@ export * from './RangeInput/RangeInput';
 export * from './NumericInput/NumericInput';
 export * from './IconButton/IconButton';
 export * from './PhotoDropzone/PhotoDropzone';
+export * from './FullScreenSpinner/FullScreenSpinner';

@@ -9,6 +9,7 @@ import {
   Button,
   NotFound,
   IconButton,
+  FullScreenSpinner,
 } from '../../../../app/components';
 import { User } from '../../../../app/models/user';
 import { Users } from '../../../../app/services/usersApi';
@@ -51,19 +52,7 @@ export default function UserDetailPage(): JSX.Element {
     });
   }
   if (error === 'Not Found') return <NotFound />;
-  if (!user)
-    return (
-      <div className="full-screen-spinner">
-        <Spinner
-          as="span"
-          animation="border"
-          role="status"
-          aria-hidden="true"
-          variant="primary"
-        />
-        <span className="sr-only">Loading user...</span>{' '}
-      </div>
-    );
+  if (!user) return <FullScreenSpinner alt="Loading user..." />;
 
   return (
     <>

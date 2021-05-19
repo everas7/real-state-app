@@ -8,7 +8,12 @@ import {
   PropertyEditPage,
   PropertyCreatePage,
 } from './features/properties';
-import { UserListPage, UserDetailPage, UserFormPage, ProfileSettingsPage } from './features/users';
+import {
+  UserListPage,
+  UserDetailPage,
+  UserFormPage,
+  ProfileSettingsPage,
+} from './features/users';
 import * as authHelper from './app/helpers/authHelper';
 import { AuthorizedRoute } from './app/routes/AuthorizedRoute';
 import { NotFound } from './app/components/NotFound/NotFound';
@@ -18,8 +23,8 @@ import {
   selectIsAuthenticated,
   setCurrentUser,
 } from './features/access/services/accessSlice';
-import { Container, Row, Spinner } from 'react-bootstrap';
-import { Navbar } from './app/components';
+import { Container, Row } from 'react-bootstrap';
+import { Navbar, FullScreenSpinner } from './app/components';
 import { Permissions } from './app/authorization/permissions';
 
 export default function Routes() {
@@ -39,19 +44,7 @@ export default function Routes() {
     }
   }, [dispatch, user, isAuthenticated]);
 
-  if (loadingApp)
-    return (
-      <div className="full-screen-spinner">
-        <Spinner
-          as="span"
-          animation="border"
-          role="status"
-          aria-hidden="true"
-          variant="primary"
-        />
-        <span className="sr-only">Loading app...</span>{' '}
-      </div>
-    );
+  if (loadingApp) return <FullScreenSpinner />;
 
   function renderAccessPage() {
     return !isAuthenticated ? <AccessPage /> : <Redirect to="/" />;
@@ -131,7 +124,7 @@ export default function Routes() {
                   rolesAllowed={Permissions.Users.Edit.PageAccess}
                   exact={true}
                 />
-                 <AuthorizedRoute
+                <AuthorizedRoute
                   path={['/profile/settings']}
                   isLoggedIn={isAuthenticated}
                   component={ProfileSettingsPage}

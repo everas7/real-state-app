@@ -1,0 +1,13 @@
+.full-screen-spinner {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .spinner-border {
+    width: 5rem;
+    height: 5rem;
+    border-width: 0.4rem;
+  }
+}
