@@ -8,7 +8,7 @@ import {
   PropertyEditPage,
   PropertyCreatePage,
 } from './features/properties';
-import { UserListPage, UserDetailPage, UserFormPage } from './features/users';
+import { UserListPage, UserDetailPage, UserFormPage, ProfileSettingsPage } from './features/users';
 import * as authHelper from './app/helpers/authHelper';
 import { AuthorizedRoute } from './app/routes/AuthorizedRoute';
 import { NotFound } from './app/components/NotFound/NotFound';
@@ -129,6 +129,14 @@ export default function Routes() {
                   component={UserFormPage}
                   user={user!}
                   rolesAllowed={Permissions.Users.Edit.PageAccess}
+                  exact={true}
+                />
+                 <AuthorizedRoute
+                  path={['/profile/settings']}
+                  isLoggedIn={isAuthenticated}
+                  component={ProfileSettingsPage}
+                  user={user!}
+                  rolesAllowed={Permissions.All}
                   exact={true}
                 />
                 <Route path="/(.+)" component={NotFound} />

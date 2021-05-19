@@ -7,18 +7,35 @@ import { Input } from '../../../../app/components';
 import { User } from '../../../../app/models/user';
 import { mapRoleAsString } from '../../../../app/helpers/userHelper';
 import { Role } from '../../../../app/models/role';
+import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
+import { Permissions } from '../../../../app/authorization/permissions';
 
 interface Props {
   user: User;
   edit?: boolean;
   create?: boolean;
+  settings?: boolean;
 }
 
 export default function UserDetails({
   user,
   edit = false,
   create = false,
+  settings = false,
 }: Props): React.ReactElement<Props> {
+  const roleInput = (
+    <Field name="role">
+      {(props: FieldProps) => (
+        <Input {...props} as="select">
+          <option>Select a Role...</option>
+          <option value={Role.Client}>Client</option>
+          <option value={Role.Realtor}>Realtor</option>
+          <option value={Role.Admin}>Admin</option>
+        </Input>
+      )}
+    </Field>
+  );
+
   return (
     <div className={cx(styles['user-details'])}>
       <div className={styles['user-details__name']}>
@@ -65,16 +82,16 @@ export default function UserDetails({
       <div className={styles['user-details__role']}>
         <div className={styles['user-details__label']}>Role</div>
         {edit ? (
-          <Field name="role">
-            {(props: FieldProps) => (
-              <Input {...props} as="select">
-                <option>Select a Role...</option>
-                <option value={Role.Client}>Client</option>
-                <option value={Role.Realtor}>Realtor</option>
-                <option value={Role.Admin}>Admin</option>
-              </Input>
-            )}
-          </Field>
+          settings ? (
+            <AuthorizedComponent
+              rolesAllowed={Permissions.Profile.Settings.EditRole}
+            >
+              {roleInput}
+              {mapRoleAsString(user.role)}
+            </AuthorizedComponent>
+          ) : (
+            { roleInput }
+          )
         ) : (
           mapRoleAsString(user.role)
         )}

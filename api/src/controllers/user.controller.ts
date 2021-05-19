@@ -38,6 +38,11 @@ export const update = async (req: Request, res: Response) => {
   res.status(httpStatus.OK).send(toUserDto(user));
 };
 
+export const updateCurrent = async (req: Request, res: Response) => {
+  const user = await userService.updateCurrent((req.user as User).id, req.body);
+  res.status(httpStatus.OK).send(toUserDto(user));
+};
+
 export const remove = async (req: Request, res: Response) => {
   await userService.remove(parseInt(req.params.id, 10));
   res.status(httpStatus.OK).send();

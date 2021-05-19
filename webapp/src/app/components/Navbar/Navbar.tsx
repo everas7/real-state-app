@@ -1,5 +1,11 @@
 import React from 'react';
-import { Navbar as BootstrapNavbar, Nav, Col, Row } from 'react-bootstrap';
+import {
+  Navbar as BootstrapNavbar,
+  Nav,
+  Col,
+  Row,
+  NavDropdown,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import {
@@ -45,7 +51,11 @@ export function Navbar() {
             </AuthorizedComponent>
           </Nav>
           <Nav className="flex-row">
-            <BootstrapNavbar.Text>{`${user?.name} `}</BootstrapNavbar.Text>
+            <NavDropdown title={`${user?.name} `} id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/profile/settings">
+                Settings
+              </NavDropdown.Item>
+            </NavDropdown>
             <BootstrapNavbar.Text
               className={styles.navbar__logout}
               onClick={() => dispatch(logout())}

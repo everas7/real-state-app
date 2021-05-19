@@ -17,6 +17,7 @@ userRouter.get(
 );
 
 userRouter.get('/me', catchAsync(userController.getCurrent));
+userRouter.patch('/me', validate(userValidator.patch), catchAsync(userController.updateCurrent));
 
 userRouter.get('/:id', validateIsAdmin, catchAsync(userController.getById));
 

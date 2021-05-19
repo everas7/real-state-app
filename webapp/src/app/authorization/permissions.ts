@@ -1,6 +1,12 @@
 import { Role } from '../models/role';
 
 export const Permissions = {
+  All: [Role.Admin, Role.Realtor, Role.Client],
+  Profile: {
+    Settings: {
+      EditRole: [Role.Admin]
+    }
+  },
   Users: {
     List: {
       PageAccess: [Role.Admin],

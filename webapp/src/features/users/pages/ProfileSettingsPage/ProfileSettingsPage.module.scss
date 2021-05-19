@@ -1,0 +1,12 @@
+.user-form-page {
+  &__content {
+    height: 100%;
+  }
+
+  &__controls {
+    margin-bottom: 15px;
+    button:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
