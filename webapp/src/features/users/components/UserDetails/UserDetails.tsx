@@ -23,19 +23,6 @@ export default function UserDetails({
   create = false,
   settings = false,
 }: Props): React.ReactElement<Props> {
-  const roleInput = (
-    <Field name="role">
-      {(props: FieldProps) => (
-        <Input {...props} as="select">
-          <option>Select a Role...</option>
-          <option value={Role.Client}>Client</option>
-          <option value={Role.Realtor}>Realtor</option>
-          <option value={Role.Admin}>Admin</option>
-        </Input>
-      )}
-    </Field>
-  );
-
   return (
     <div className={cx(styles['user-details'])}>
       <div className={styles['user-details__name']}>
@@ -81,17 +68,17 @@ export default function UserDetails({
       </div>
       <div className={styles['user-details__role']}>
         <div className={styles['user-details__label']}>Role</div>
-        {edit ? (
-          settings ? (
-            <AuthorizedComponent
-              rolesAllowed={Permissions.Profile.Settings.EditRole}
-            >
-              {roleInput}
-              {mapRoleAsString(user.role)}
-            </AuthorizedComponent>
-          ) : (
-            { roleInput }
-          )
+        {edit && !settings ? (
+          <Field name="role">
+            {(props: FieldProps) => (
+              <Input {...props} as="select">
+                <option>Select a Role...</option>
+                <option value={Role.Client}>Client</option>
+                <option value={Role.Realtor}>Realtor</option>
+                <option value={Role.Admin}>Admin</option>
+              </Input>
+            )}
+          </Field>
         ) : (
           mapRoleAsString(user.role)
         )}
