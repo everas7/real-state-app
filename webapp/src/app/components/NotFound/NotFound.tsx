@@ -1,20 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Button } from 'react-bootstrap';
+import { Container, Row, Button, Col } from 'react-bootstrap';
 
 export function NotFound() {
   return (
-    <Container>
-      <Row md="12">
-        Oops - we've looked everywhere but couldn't find this.
-        <Container>
-          <Row md="4">
+    <div className="d-flex flex-row align-items-center w-100">
+      <Container>
+        <Row md="12" className="justify-content-center">
+          <Col md="12" className="text-center">
+            <span className="display-1 d-block">404</span>
+
+            <div className="mb-4 lead">
+              Oops - we've looked everywhere but couldn't find this.
+            </div>
             <Button as={Link} to="/">
               Browse Properties
             </Button>
-          </Row>
-        </Container>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }

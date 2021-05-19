@@ -31,15 +31,20 @@ export default function PropertyDetailPage(): JSX.Element {
   const handleShowDeleteModal = () => setShowDeleteModal(true);
 
   useEffect(() => {
-    Properties.get(parseInt(id, 10))
-      .then((res) => {
-        setProperty(res);
-      })
-      .catch((err) => {
-        if (err.status === 403 || err.status === 404) {
-          setError('Not Found');
-        }
-      });
+    const parsedId = parseInt(id, 10);
+    if (isNaN(parsedId)) {
+      setError('Not Found');
+    } else {
+      Properties.get(parsedId)
+        .then((res) => {
+          setProperty(res);
+        })
+        .catch((err) => {
+          if (err.status === 403 || err.status === 404) {
+            setError('Not Found');
+          }
+        });
+    }
   }, [id]);
   let coordinate;
 

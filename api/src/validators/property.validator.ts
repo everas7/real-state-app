@@ -33,6 +33,10 @@ export const get = {
   }),
 };
 
+export const getById = {
+  params: Joi.object().keys({ id: Joi.number().required() }),
+};
+
 export const update = {
   body: Joi.object().keys({
     name: Joi.string().required(),

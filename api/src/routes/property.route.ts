@@ -23,6 +23,7 @@ propertyRouter.get(
 
 propertyRouter.get(
   '/:id',
+  validate(propertyValidator.getById),
   validatePropertyExists,
   validateUserCanAccessProperty,
   catchAsync(propertyController.getById)

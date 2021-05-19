@@ -23,15 +23,20 @@ export default function UserFormPage() {
 
   useEffect(() => {
     if (id) {
-      Users.get(parseInt(id, 10))
-        .then((res) => {
-          setUser(res);
-        })
-        .catch((err) => {
-          if (err.status === 403 || err.status === 404) {
-            setError('Not Found');
-          }
-        });
+      const parsedId = parseInt(id, 10);
+      if (isNaN(parsedId)) {
+        setError('Not Found');
+      } else {
+        Users.get(parsedId)
+          .then((res) => {
+            setUser(res);
+          })
+          .catch((err) => {
+            if (err.status === 403 || err.status === 404) {
+              setError('Not Found');
+            }
+          });
+      }
     }
   }, [id]);
 
