@@ -1,0 +1,20 @@
+.access-page{
+  height: 100%;
+  width:  100%;
+  display: flex;
+  flex-direction: row;
+  &__image {
+    background-image: url(../../../app//assets/images/access-background.jpeg);
+
+    height: 100%; 
+    width: 50%;
+  
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  &__page {
+    width: 50%;
+  }
+  
+}
