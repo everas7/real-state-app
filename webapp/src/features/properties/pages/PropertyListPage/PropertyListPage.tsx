@@ -172,6 +172,18 @@ export default function PropertyListPage() {
           ) : (
             ''
           )}
+          {!loading && !properties.length ? (
+            <Row md="12" className="justify-content-center">
+              <Col md="8" className="text-left">
+                <h4 className="mb-4">
+                  Sorry, we couldn't find any properties available with the
+                  current filters.
+                </h4>
+              </Col>
+            </Row>
+          ) : (
+            ''
+          )}
           <CardDeck className={cx(styles['property-list-page__card-deck'])}>
             <Row>
               {properties.map((property, i) => (
