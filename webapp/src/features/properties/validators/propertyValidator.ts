@@ -18,6 +18,7 @@ export const propertySchema = yup.object().shape({
     .max(120, 'Name must not exceed 120 characters'),
   realtorId: yup
     .number()
+    .moreThan(0)
     .typeError('Must choose a valid realtor')
     .required('Realtor is required'),
   geolocation: yup.object().shape({

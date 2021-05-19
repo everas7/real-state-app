@@ -10,6 +10,7 @@ import { selectAuthenticatedUser } from '../../../access/services/accessSlice';
 import { Realtor } from '../../../../app/models/user';
 import { Col, Row } from 'react-bootstrap';
 import styles from './PropertyCreatePage.module.scss';
+import { Role } from '../../../../app/models/role';
 
 export default function PropertyCreatePage() {
   const user = useAppSelector(selectAuthenticatedUser);
@@ -22,7 +23,7 @@ export default function PropertyCreatePage() {
     rooms: 1,
     floorAreaSize: 0,
     geolocation: null,
-    realtorId: user!.id,
+    realtorId: user?.role === Role.Realtor ? user!.id : 0,
     realtor: user! as Realtor,
     available: true,
   });

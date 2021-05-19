@@ -65,6 +65,7 @@
     "@types/googlemaps": "^3.43.3",
     "@types/react-paginate": "^7.1.0",
     "@types/react-router-dom": "^5.1.7",
+    "@types/react-select": "^4.0.15",
     "@types/react-text-mask": "^5.4.7",
     "prettier": "^2.3.0",
     "tslint": "^6.1.3",

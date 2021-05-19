@@ -14,6 +14,7 @@ import { useAppSelector } from '../../../../app/store/hooks';
 import { selectAuthenticatedUser } from '../../../access/services/accessSlice';
 import { Role } from '../../../../app/models/role';
 import { Permissions } from '../../../../app/authorization/permissions';
+import Select, { ActionMeta } from 'react-select';
 
 export interface PropertyFormValues
   extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor'> {
@@ -170,22 +171,28 @@ export default function PropertyDetails({
           customValidation={() => edit}
         >
           {edit ? (
-            <Field
-              name="realtorId"
-              value={formik!.values.realtorId}
-              onChange={formik!.handleChange}
-            >
+            <Field name="realtorId">
               {(props: FieldProps) => (
-                <Input {...props} placeholder="Realtor" as="select">
-                  <option key="key-none" value="none">
-                    Select a Realtor
-                  </option>
-                  {userOptions.map((u, i) => (
-                    <option key={i} value={u.id}>
-                      {u.name} - {u.email}
-                    </option>
-                  ))}
-                </Input>
+                <Select
+                  {...props}
+                  placeholder="Realtor"
+                  searchable={true}
+                  labelKey="name"
+                  valueKey="id"
+                  getOptionLabel={(option: User) =>
+                    `${option.name}-${option.email}`
+                  }
+                  getOptionValue={(option: User) => String(option.id)}
+                  options={userOptions}
+                  value={userOptions.find(
+                    (u) => u.id === formik!.values.realtorId
+                  )}
+                  menuPlacement="auto"
+                  onChange={(
+                    value: User | null,
+                    actionMeta: ActionMeta<User>
+                  ) => formik!.setFieldValue('realtorId', value?.id || 0)}
+                />
               )}
             </Field>
           ) : null}
