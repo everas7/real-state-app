@@ -46,10 +46,7 @@ export default function ProfileSettingsPage() {
       </div>
     );
 
-  const breadCrumbItems = [
-    { name: 'Apartments', path: '/' },
-    { name: 'Profile Settings' },
-  ];
+  const breadCrumbItems = [{ name: 'Profile Settings' }];
 
   return (
     <>
