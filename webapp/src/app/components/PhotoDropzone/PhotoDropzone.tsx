@@ -79,7 +79,7 @@ export const PhotoDropzone: React.FC<IProps> = ({ setFiles, files }) => {
   });
   const thumbs = files.map((file: any) => (
     <div key={file.id || file.name}>
-      <div style={thumb as any} key={file.name}>
+      <div style={thumb as any}>
         <IconButton
           variant="danger"
           icon={<FaTrashAlt />}
