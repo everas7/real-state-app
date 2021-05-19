@@ -17,7 +17,7 @@ import { Permissions } from '../../../../app/authorization/permissions';
 import Select, { ActionMeta } from 'react-select';
 
 export interface PropertyFormValues
-  extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor' > {
+  extends Omit<IPropertyForm, 'realtorId' | 'available' | 'realtor'> {
   realtorId: number | null;
 }
 

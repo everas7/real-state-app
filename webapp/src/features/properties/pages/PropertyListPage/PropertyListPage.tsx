@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Row,
-  Col,
-  CardDeck,
-  Container,
-  ProgressBar,
-  Spinner,
-} from 'react-bootstrap';
+import { Row, Col, CardDeck, Container, ProgressBar } from 'react-bootstrap';
 import cx from 'classnames';
 import { FaList, FaMap } from 'react-icons/fa';
 import ReactPaginate from 'react-paginate';
@@ -66,6 +59,9 @@ export default function PropertyListPage() {
   const [popupCoordinates, setPopupCoordinates] =
     useState<undefined | IMarker>();
 
+  const [showFilters, setShowFilters] = useState(false);
+  const [showMap, setShowMap] = useState(false);
+
   function handleMarkerClick(id: number) {
     history.push(`/apartments/${id}`);
   }
@@ -81,6 +77,16 @@ export default function PropertyListPage() {
 
   function handleMarkerMouseOut() {
     setPopupCoordinates(undefined);
+  }
+
+  function handlePageClick({ selected }: { selected: number }) {
+    dispatch(setPage(selected + 1));
+    dispatch(fetchProperties());
+
+    const selectProtected: SelectProtected = {
+      listElement: document.getElementById('property-list'),
+    };
+    selectProtected.listElement!.scroll({ top: 0, behavior: 'smooth' });
   }
 
   const Popup = () => {
@@ -102,19 +108,6 @@ export default function PropertyListPage() {
       </div>
     );
   };
-
-  const [showFilters, setShowFilters] = useState(false);
-  const [showMap, setShowMap] = useState(false);
-
-  function handlePageClick({ selected }: { selected: number }) {
-    dispatch(setPage(selected + 1));
-    dispatch(fetchProperties());
-
-    const selectProtected: SelectProtected = {
-      listElement: document.getElementById('property-list'),
-    };
-    selectProtected.listElement!.scroll({ top: 0, behavior: 'smooth' });
-  }
 
   return (
     <Container

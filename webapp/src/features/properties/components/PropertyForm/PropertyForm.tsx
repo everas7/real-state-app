@@ -62,7 +62,7 @@ export default function PropertyForm({
   property,
   onSubmit,
 }: Props): React.ReactElement<Props> {
-  const [files, setFiles] = useState((property as any).photos || []);
+  const [files, setFiles] = useState((property as Property).photos || []);
 
   const formik = useFormik<PropertyFormValues>({
     initialValues: {
@@ -76,8 +76,10 @@ export default function PropertyForm({
       realtorId: property.realtorId || null,
     },
     validationSchema: propertySchema,
-    onSubmit: (values: any, formikHelpers) =>
-      onSubmit(values, files, formikHelpers),
+    onSubmit: (
+      values: PropertyFormValues,
+      formikHelpers: FormikHelpers<PropertyFormValues>
+    ) => onSubmit(values, files, formikHelpers),
   });
 
   const geolocationFieldValue = formik.getFieldProps('geolocation').value;
@@ -102,7 +104,7 @@ export default function PropertyForm({
   return (
     <>
       <Col md="6">
-        <PhotoDropzone setFiles={setFiles as any} files={files} />
+        <PhotoDropzone setFiles={setFiles} files={files} />
 
         <FormikProvider value={formik}>
           <div className={styles['property-form__controls']}>

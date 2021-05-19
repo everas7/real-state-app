@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FormikHelpers } from 'formik';
+import { Col, Row } from 'react-bootstrap';
 
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
 import { Breadcrumb } from '../../../../app/components';
@@ -8,9 +10,13 @@ import { history } from '../../../../index';
 import { useAppSelector } from '../../../../app/store/hooks';
 import { selectAuthenticatedUser } from '../../../access/services/accessSlice';
 import { Realtor } from '../../../../app/models/user';
-import { Col, Row } from 'react-bootstrap';
 import styles from './PropertyCreatePage.module.scss';
 import { Role } from '../../../../app/models/role';
+import { PropertyFormValues } from '../../components/PropertyDetails/PropertyDetails';
+import {
+  removeNonNumeric,
+  removeNonNumericForDecimal,
+} from '../../../../app/helpers/stringHelper';
 
 export default function PropertyCreatePage() {
   const user = useAppSelector(selectAuthenticatedUser);
@@ -30,20 +36,18 @@ export default function PropertyCreatePage() {
 
   const onSubmitClickHandler = (
     values: any,
-    files: any,
-    { setSubmitting }: any
+    files: any[],
+    { setSubmitting }: FormikHelpers<PropertyFormValues>
   ) => {
     Properties.create({
       ...values,
-      price: Number(String(values.price).replace(/[^0-9.]/g, '')),
-      floorAreaSize: Number(
-        String(values.floorAreaSize).replace(/[^0-9]/g, '')
-      ),
-      rooms: Number(String(values.rooms).replace(/[^0-9]/g, '')),
+      price: Number(removeNonNumericForDecimal(values.price)),
+      floorAreaSize: Number(removeNonNumeric(values.floorAreaSize)),
+      rooms: Number(removeNonNumeric(values.rooms)),
       realtorId: values.realtorId || user!.id,
       available: true,
     }).then((res) => {
-      var data = new FormData();
+      const data = new FormData();
       files.forEach((file: Blob) => data.append('photos', file));
       Properties.uploadPhotos(res.id, data).then(() => {
         setSubmitting(false);

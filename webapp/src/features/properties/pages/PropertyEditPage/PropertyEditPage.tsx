@@ -3,11 +3,19 @@ import { useParams } from 'react-router-dom';
 import { Col, Row, Spinner } from 'react-bootstrap';
 
 import PropertyForm from '../../components/PropertyForm/PropertyForm';
-import { Breadcrumb, NotFound, FullScreenSpinner } from '../../../../app/components';
+import {
+  Breadcrumb,
+  NotFound,
+  FullScreenSpinner,
+} from '../../../../app/components';
 import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
 import styles from './PropertyEditPage.module.scss';
+import {
+  removeNonNumeric,
+  removeNonNumericForDecimal,
+} from '../../../../app/helpers/stringHelper';
 
 export default function PropertyEditPage() {
   const [property, setProperty] = useState<Property>();
@@ -38,14 +46,13 @@ export default function PropertyEditPage() {
   ) => {
     Properties.update(+id, {
       ...values,
-      price: Number(String(values.price).replace(/[^0-9.]/g, '')),
-      floorAreaSize: Number(
-        String(values.floorAreaSize).replace(/[^0-9]/g, '')
-      ),
-      rooms: Number(String(values.rooms).replace(/[^0-9]/g, '')),
+      price: Number(removeNonNumericForDecimal(values.price)),
+      floorAreaSize: Number(removeNonNumeric(values.floorAreaSize)),
+      rooms: Number(removeNonNumeric(values.rooms)),
       available: property!.available,
       realtorId: values.realtorId || property!.realtorId,
     }).then(async () => {
+      // Delete Photos Logic
       const photosToDelete = property!.photos.filter(
         (p) => !files.some((f: any) => f.id === p.id)
       );
@@ -57,7 +64,7 @@ export default function PropertyEditPage() {
         });
         await Properties.deletePhotos(property!.id, deleteParams);
       }
-
+      // Add Photos Logic
       const formData = new FormData();
       if (files.length) {
         files
