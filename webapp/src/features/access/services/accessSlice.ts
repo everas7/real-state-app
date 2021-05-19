@@ -90,7 +90,7 @@ export const logout = (): AppThunk => (dispatch, getState) => {
   localStorage.removeItem('jwt');
   dispatch(setAuthenticationError(false));
   dispatch(setAuthenticated(null));
-  dispatch(resetPropertiesState())
+  dispatch(resetPropertiesState());
 };
 
 export default accessSlice.reducer;

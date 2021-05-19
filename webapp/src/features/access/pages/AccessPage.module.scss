@@ -16,5 +16,14 @@
   &__page {
     width: 50%;
   }
+
+  @media only screen and (max-width: 600px) {
+    &__image {
+      display: none;
+    }
+    &__page {
+      width: 100%;
+    }
+  }
   
 }
