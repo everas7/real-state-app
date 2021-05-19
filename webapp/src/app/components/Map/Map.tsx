@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
-
 import GoogleMapReact, { Props as GoogleMapReactProps } from 'google-map-react';
 import { MapMarker } from '../MapMarker/MapMarker';
+
 import styles from './Map.module.scss';
 
 export interface IMarker {

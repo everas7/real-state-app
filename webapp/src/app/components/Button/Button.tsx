@@ -11,6 +11,7 @@ interface Props extends BoostrapButtonProps {
   float?: boolean;
   loading?: boolean;
 }
+
 export function Button({
   children,
   as: Component = BoostrapButton,
@@ -26,7 +27,7 @@ export function Button({
       {loading ? (
         <>
           <Spinner
-            className={styles['button__spinner']}
+            className={styles.button__spinner}
             as="span"
             animation="border"
             size="sm"

@@ -4,8 +4,8 @@ export const Permissions = {
   All: [Role.Admin, Role.Realtor, Role.Client],
   Profile: {
     Settings: {
-      EditRole: [Role.Admin]
-    }
+      EditRole: [Role.Admin],
+    },
   },
   Users: {
     List: {

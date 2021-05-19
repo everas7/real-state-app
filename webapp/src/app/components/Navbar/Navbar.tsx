@@ -3,7 +3,6 @@ import {
   Navbar as BootstrapNavbar,
   Nav,
   Col,
-  Row,
   NavDropdown,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -34,7 +33,7 @@ export function Navbar() {
           as={Link}
           to="/"
         >
-          Real State
+          Real Estate
         </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle aria-controls="navbarScroll" />
         <BootstrapNavbar.Collapse id="navbarScroll">

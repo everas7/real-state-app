@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-
 import { FaTrashAlt } from 'react-icons/fa';
+
 import { IconButton } from '../IconButton/IconButton';
+import styles from './PhotoDropzone.module.scss';
 
 interface IProps {
   setFiles: (files: any[]) => void;
@@ -77,13 +78,14 @@ export const PhotoDropzone: React.FC<IProps> = ({ setFiles, files }) => {
     accept: 'image/jpeg, image/png',
     maxSize: 20480000,
   });
+
   const thumbs = files.map((file: any) => (
     <div key={file.id || file.name}>
       <div style={thumb as any}>
         <IconButton
           variant="danger"
           icon={<FaTrashAlt />}
-          className="dropzone__delete"
+          className={styles.dropzone__delete}
           onClick={() =>
             file.name
               ? handleDeleteByName(file.name)
@@ -98,7 +100,7 @@ export const PhotoDropzone: React.FC<IProps> = ({ setFiles, files }) => {
   ));
   return (
     <section>
-      <div {...getRootProps({ className: 'dropzone' })}>
+      <div {...getRootProps({ className: styles.dropzone })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
         <div>(10 files are the maximum number of files you can drop here)</div>

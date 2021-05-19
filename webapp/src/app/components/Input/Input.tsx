@@ -1,9 +1,10 @@
 import React from 'react';
 import { Form, FormControlProps } from 'react-bootstrap';
 import { FieldProps } from 'formik';
-import styles from './Input.module.scss';
 import cx from 'classnames';
 import { IconType } from 'react-icons';
+
+import styles from './Input.module.scss';
 
 interface Props extends FormControlProps, FieldProps {
   icon?: IconType;
