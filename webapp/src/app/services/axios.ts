@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 import { logout } from '../../features/access/services/accessSlice';
 import { Store } from '../store/store';
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:7000/api';
+axios.defaults.baseURL =
+  process.env.REACT_APP_API_URL || 'http://localhost:7000/api';
 
 axios.interceptors.request.use(
   (config) => {
@@ -45,6 +46,12 @@ const responseBody = (response: AxiosResponse) => response.data;
 const request = {
   get: (url: string, params?: URLSearchParams) => {
     return axios.get(url, { params }).then(responseBody);
+  },
+  getPaginated: (url: string, params?: URLSearchParams) => {
+    return axios.get(url, { params }).then((response) => ({
+      data: response.data,
+      pages: response.headers['total-pages'],
+    }));
   },
   post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
   put: (url: string, body: {}) => axios.put(url, body).then(responseBody),

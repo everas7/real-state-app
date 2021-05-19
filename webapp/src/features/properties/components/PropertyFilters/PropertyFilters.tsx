@@ -5,41 +5,25 @@ import cx from 'classnames';
 import { Button, RangeInput } from '../../../../app/components';
 import styles from './PropertyFilters.module.scss';
 import { Range } from 'react-input-range';
-
-export interface PropertyFiltersValues {
-  price: {
-    min: number;
-    max: number;
-  };
-  floorAreaSize: {
-    min: number;
-    max: number;
-  };
-  rooms: Set<number>;
-}
+import { IPropertyFilters } from '../../../../app/models/property';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import {
+  defaultFilters,
+  fetchProperties,
+  selectFilters,
+  setFilters,
+  setPage,
+} from '../../services/propertiesSlice';
 
 interface Props {
   className?: string;
-  onApplyFilter: (value: URLSearchParams) => void;
 }
 
-const defaultFilters = {
-  price: {
-    min: 0,
-    max: 20000,
-  },
-  floorAreaSize: {
-    min: 0,
-    max: 7000,
-  },
-  rooms: new Set<number>(),
-};
-
 export default function PropertyFilters({
-  onApplyFilter,
   className,
 }: Props): React.ReactElement<Props> {
-  const [filters, setFilters] = useState<PropertyFiltersValues>(defaultFilters);
+  const filters = useAppSelector(selectFilters);
+  const dispatch = useAppDispatch();
 
   function handleRoomsFilterChange(value: number) {
     const rooms = new Set(filters.rooms);
@@ -48,14 +32,16 @@ export default function PropertyFilters({
     } else {
       rooms.add(value);
     }
-    setFilters({
-      ...filters,
-      rooms: new Set(rooms),
-    });
+    dispatch(
+      setFilters({
+        ...filters,
+        rooms: new Set(rooms),
+      })
+    );
   }
 
-  function handleApplyFilter(filtersValues: PropertyFiltersValues) {
-    const filtersToSend: PropertyFiltersValues = _.cloneDeep({
+  function handleApplyFilter(filtersValues: IPropertyFilters) {
+    const filtersToSend: IPropertyFilters = _.cloneDeep({
       ...filtersValues,
       price: {
         min: filtersValues.price.min,
@@ -69,34 +55,20 @@ export default function PropertyFilters({
         ),
       },
     });
-    setFilters({
-      ...filters,
-      ...filtersToSend,
-    });
-    const params = new URLSearchParams();
-    params.append('filters[minPrice]', String(filtersToSend.price.min));
-    if (filtersToSend.price!.max !== defaultFilters.price.max) {
-      params.append('filters[maxPrice]', String(filtersToSend.price.max));
-    }
-    params.append(
-      'filters[minFloorAreaSize]',
-      String(filtersToSend.floorAreaSize.min)
+
+    dispatch(
+      setFilters({
+        ...filters,
+        ...filtersToSend,
+      })
     );
-    if (filtersToSend.floorAreaSize!.max !== defaultFilters.floorAreaSize.max) {
-      params.append(
-        'filters[maxFloorAreaSize]',
-        String(filtersToSend.floorAreaSize.max)
-      );
-    }
-    Array.from(filtersToSend.rooms).forEach((room) => {
-      params.append('filters[rooms][]', String(room));
-    });
-    onApplyFilter(params);
+    dispatch(setPage(1));
+    dispatch(fetchProperties());
   }
 
   function handleReset() {
-    setFilters(defaultFilters);
-    handleApplyFilter(defaultFilters);
+    dispatch(setFilters(defaultFilters));
+    dispatch(fetchProperties());
   }
 
   return (
@@ -114,13 +86,15 @@ export default function PropertyFilters({
         minValue={defaultFilters.price.min}
         maxValue={defaultFilters.price.max}
         onChange={(value) =>
-          setFilters({
-            ...filters,
-            price: {
-              min: Math.max((value as Range).min, defaultFilters.price.min),
-              max: Math.min((value as Range).max, defaultFilters.price.max),
-            },
-          })
+          dispatch(
+            setFilters({
+              ...filters,
+              price: {
+                min: Math.max((value as Range).min, defaultFilters.price.min),
+                max: Math.min((value as Range).max, defaultFilters.price.max),
+              },
+            })
+          )
         }
         minLabelPrefix="$"
         maxLabelPrefix="$"
@@ -134,19 +108,21 @@ export default function PropertyFilters({
         minValue={defaultFilters.floorAreaSize.min}
         maxValue={defaultFilters.floorAreaSize.max}
         onChange={(value) =>
-          setFilters({
-            ...filters,
-            floorAreaSize: {
-              min: Math.max(
-                (value as Range).min,
-                defaultFilters.floorAreaSize.min
-              ),
-              max: Math.min(
-                (value as Range).max,
-                defaultFilters.floorAreaSize.max
-              ),
-            },
-          })
+          dispatch(
+            setFilters({
+              ...filters,
+              floorAreaSize: {
+                min: Math.max(
+                  (value as Range).min,
+                  defaultFilters.floorAreaSize.min
+                ),
+                max: Math.min(
+                  (value as Range).max,
+                  defaultFilters.floorAreaSize.max
+                ),
+              },
+            })
+          )
         }
         minLabelSuffix=" ft²"
         maxLabelSuffix={`${

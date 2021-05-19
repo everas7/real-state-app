@@ -3,6 +3,7 @@ import db, { User } from '../models';
 import { Fn, Literal, Where } from 'sequelize/types/lib/utils';
 import { WhereAttributeHash, AndOperator, OrOperator } from 'sequelize/types';
 import { PropertyCreationAttributes } from '../models/property.model';
+import { Pagination, PaginatedResult } from '../interfaces/custom.interface';
 
 type WhereType =
   | Fn
@@ -19,10 +20,20 @@ export const findAll = async (): Promise<Property[]> => {
   );
 };
 
-export const findAllWhere = async (where: WhereType): Promise<Property[]> => {
-  return db.Property.findAll({
+export const findAllWhere = async (
+  where: WhereType,
+  { page, pageSize }: Pagination
+): Promise<PaginatedResult<Property>> => {
+  const offset = Math.max(0, page! - 1) * pageSize!;
+  const limit = pageSize;
+  return db.Property.findAndCountAll({
     where,
-  }).then((ul) => ul.map((ul) => ul.get({ plain: true })));
+    offset,
+    limit,
+  }).then((res) => ({
+    count: res.count,
+    rows: res.rows.map((p) => p.get({ plain: true })),
+  }));
 };
 
 export const findById = async (id: number): Promise<Property | undefined> => {

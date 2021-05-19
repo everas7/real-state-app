@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, CardDeck, Container } from 'react-bootstrap';
 import cx from 'classnames';
+import { FaList, FaMap } from 'react-icons/fa';
+import ReactPaginate from 'react-paginate';
 
 import { PropertyForList } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
@@ -11,14 +13,24 @@ import { history } from '../../../../index';
 import styles from './PropertyListPage.module.scss';
 import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
 import { Permissions } from '../../../../app/authorization/permissions';
-import { FaList, FaMap } from 'react-icons/fa';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import {
+  fetchProperties,
+  selectPage,
+  selectProperties,
+  selectTotalPages,
+  setPage,
+} from '../../services/propertiesSlice';
 
 export default function PropertyListPage() {
-  const [properties, setProperties] = useState<PropertyForList[]>([]);
+  const dispatch = useAppDispatch();
+
+  const properties = useAppSelector(selectProperties);
+  const pageCount = useAppSelector(selectTotalPages);
+  const page = useAppSelector(selectPage);
+
   useEffect(() => {
-    Properties.list().then((res) => {
-      setProperties(res);
-    });
+    dispatch(fetchProperties());
   }, []);
 
   const defaultCenter = {
@@ -33,11 +45,6 @@ export default function PropertyListPage() {
     lng: p.geolocation.longitude,
   }));
 
-  function onFilterProperties(filters: URLSearchParams) {
-    Properties.list(filters).then((res) => {
-      setProperties(res);
-    });
-  }
   const [popupCoordinates, setPopupCoordinates] =
     useState<undefined | IMarker>();
 
@@ -80,6 +87,11 @@ export default function PropertyListPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [showMap, setShowMap] = useState(false);
 
+  function handlePageClick({ selected }: { selected: number }) {
+    dispatch(setPage(selected + 1));
+    dispatch(fetchProperties());
+  }
+
   return (
     <Container
       fluid={true}
@@ -104,7 +116,6 @@ export default function PropertyListPage() {
               },
               'd-md-block'
             )}
-            onApplyFilter={onFilterProperties}
           />
         </Col>
         <Col
@@ -152,6 +163,27 @@ export default function PropertyListPage() {
               ))}
             </Row>
           </CardDeck>
+          <ReactPaginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            breakLabel={'...'}
+            pageCount={pageCount}
+            forcePage={page - 1}
+            initialPage={0}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            breakClassName={'page-item'}
+            breakLinkClassName={'page-link'}
+            containerClassName={'pagination'}
+            pageClassName={'page-item'}
+            pageLinkClassName={'page-link'}
+            previousClassName={'page-item'}
+            previousLinkClassName={'page-link'}
+            nextClassName={'page-item'}
+            nextLinkClassName={'page-link'}
+            activeClassName={'active'}
+          />
         </Col>
         <Col
           md="9"

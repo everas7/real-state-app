@@ -4,10 +4,11 @@ import {
   PropertyForList,
   IPropertyForm,
 } from '../../../app/models/property';
+import { Paginated } from '../../../app/models/custom';
 
 export const Properties = {
-  list: (params?: URLSearchParams): Promise<PropertyForList[]> =>
-    request.get('properties', params),
+  list: (params?: URLSearchParams): Promise<Paginated<PropertyForList>> =>
+    request.getPaginated('properties', params),
   get: (id: number): Promise<Property> => request.get(`properties/${id}`),
   update: (id: number, property: IPropertyForm): Promise<Property> =>
     request.put(`properties/${id}`, property),

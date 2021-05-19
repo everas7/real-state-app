@@ -46,10 +46,15 @@ export interface IPropertyForm
   geolocation: GeoLocation | null;
 }
 
+
 export interface IPropertyFilters {
-  minPrice?: number;
-  maxPrice?: number;
-  minFloorAreaSize?: number;
-  maxFloorAreaSize?: number;
-  rooms?: number[];
+  price: {
+    min: number;
+    max: number;
+  };
+  floorAreaSize: {
+    min: number;
+    max: number;
+  };
+  rooms: Set<number>;
 }

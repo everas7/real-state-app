@@ -28,6 +28,8 @@ export const get = {
       maxPrice: Joi.number(),
       rooms: Joi.array().items(Joi.number()),
     }),
+    page: Joi.number().greater(0),
+    pageSize: Joi.number().greater(0),
   }),
 };
 

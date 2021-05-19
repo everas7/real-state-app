@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import accessReducer from '../../features/access/services/accessSlice';
+import propertiesReducer from '../../features/properties/services/propertiesSlice';
 
 export const store = configureStore({
   reducer: {
     access: accessReducer,
+    properties: propertiesReducer,
   },
 });
 

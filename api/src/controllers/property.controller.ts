@@ -8,13 +8,19 @@ import { User } from '../interfaces/user.interface';
 import { PropertyFilters } from '../interfaces/property.interface';
 
 export const get = async (req: Request, res: Response) => {
-  const properties = (
-    await propertyService.getAll(
-      req.user as User,
-      (req.query.filters as PropertyFilters) || {}
-    )
-  ).map((u) => toPropertyDto(u));
-  res.status(httpStatus.OK).send(properties);
+  const pageSize = req.query.pageSize ? +req.query.pageSize : 10;
+  const page = req.query.page ? +req.query.page : 1;
+  const result = await propertyService.getAll(
+    req.user as User,
+    (req.query.filters as PropertyFilters) || {},
+    {
+      pageSize,
+      page,
+    }
+  );
+  const totalPages = Math.ceil(result.count / pageSize);
+  res.setHeader('Total-Pages', totalPages);
+  res.status(httpStatus.OK).send(result.rows.map((u) => toPropertyDto(u)));
 };
 
 export const getById = async (req: Request, res: Response) => {

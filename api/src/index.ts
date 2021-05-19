@@ -32,6 +32,7 @@ app.use(helmet());
 app.use(cors());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Expose-Headers', 'Authentication-Error');
+  res.setHeader('Access-Control-Expose-Headers', 'Total-Pages');
   next();
 });
 

@@ -7,11 +7,13 @@ import * as propertyRepository from '../repositories/property.repository';
 import { User } from '../interfaces/user.interface';
 import { Op } from 'sequelize';
 import { RoleEnum } from '../interfaces/role.interface';
+import { Pagination, PaginatedResult } from '../interfaces/custom.interface';
 
 export const getAll = async (
   user: User,
-  filters: PropertyFilters
-): Promise<Property[]> => {
+  filters: PropertyFilters,
+  pagination: Pagination
+): Promise<PaginatedResult<Property>> => {
   let where = (
     {
       [RoleEnum.Client]: {
@@ -23,7 +25,6 @@ export const getAll = async (
       [RoleEnum.Admin]: {},
     } as { [key in RoleEnum]: {} }
   )[user.roleId];
-
   where = {
     ...where,
     ...(filters.minPrice || filters.maxPrice
@@ -62,7 +63,7 @@ export const getAll = async (
       : {}),
   };
 
-  return propertyRepository.findAllWhere(where);
+  return propertyRepository.findAllWhere(where, pagination);
 };
 
 export const add = async (property: PropertyForm): Promise<Property> => {
