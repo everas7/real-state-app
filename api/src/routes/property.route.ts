@@ -2,7 +2,9 @@ import express from 'express';
 import { validate } from 'express-validation';
 
 import * as propertyController from '../controllers/property.controller';
+import * as photoController from '../controllers/photo.controller';
 import * as propertyValidator from '../validators/property.validator';
+import * as photoValidator from '../validators/photo.validator';
 import { catchAsync } from '../helpers/catchAsync';
 import {
   validateIsRealtorOrAdmin,
@@ -11,6 +13,7 @@ import {
   validateUserCanAccessProperty,
 } from '../middlewares/property.middleware';
 import { setUserInRequest } from '../middlewares/custom.middleware';
+import upload from '../helpers/multer';
 
 export const propertyRouter = express.Router();
 
@@ -49,4 +52,22 @@ propertyRouter.delete(
   validatePropertyExists,
   validateIsOwnerOrAdmin,
   catchAsync(propertyController.remove)
+);
+
+propertyRouter.post(
+  '/:id/photos',
+  validate(photoValidator.add),
+  validatePropertyExists,
+  validateIsOwnerOrAdmin,
+  upload.array('photos', 10),
+  catchAsync(photoController.add)
+);
+
+
+propertyRouter.delete(
+  '/:id/photos',
+  validate(photoValidator.remove),
+  validatePropertyExists,
+  validateIsOwnerOrAdmin,
+  catchAsync(photoController.remove)
 );

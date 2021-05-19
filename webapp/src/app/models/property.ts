@@ -5,6 +5,13 @@ export interface GeoLocation {
   longitude: number;
 }
 
+export interface Photo {
+  id: number;
+  url: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface PropertyForList {
   id: number;
   name: string;
@@ -14,6 +21,7 @@ export interface PropertyForList {
   rooms: number;
   available: boolean;
   geolocation: GeoLocation;
+  photo?: string;
   address: string;
   realtorId: number;
   createdAt?: string;
@@ -32,6 +40,7 @@ export interface Property {
   address: string;
   realtorId: number;
   realtor: Realtor;
+  photos: Photo[];
   createdAt?: string;
   updatedAt?: string;
 }
@@ -39,13 +48,12 @@ export interface Property {
 export interface IPropertyForm
   extends Omit<
     Property,
-    'id' | 'realtor' | 'createdAt' | 'updatedAt' | 'geolocation'
+    'id' | 'realtor' | 'createdAt' | 'updatedAt' | 'geolocation' | 'photos'
   > {
   id?: number;
   realtor?: Realtor;
   geolocation: GeoLocation | null;
 }
-
 
 export interface IPropertyFilters {
   price: {

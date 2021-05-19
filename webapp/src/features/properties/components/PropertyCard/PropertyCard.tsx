@@ -17,6 +17,7 @@ interface Props {
   available: boolean;
   onClick?(): void;
   column?: boolean;
+  photo: string | null;
 }
 
 export default function PropertyCard({
@@ -27,6 +28,7 @@ export default function PropertyCard({
   price,
   available,
   onClick,
+  photo,
   column = false,
 }: Props): React.ReactElement<Props> {
   return (
@@ -36,7 +38,10 @@ export default function PropertyCard({
           md={column ? '12' : '6'}
           className={cx('mb-3 mb-md-0', { 'mb-md-3': column })}
         >
-          <Card.Img variant="top" src={Constants.PROPERTY_PLACEHOLDER} />
+          <Card.Img
+            variant="top"
+            src={photo || Constants.PROPERTY_PLACEHOLDER}
+          />
         </Col>
         <Col md={column ? '12' : '6'} className="d-flex flex-column">
           <Card.Title className={styles['property-card__price']}>

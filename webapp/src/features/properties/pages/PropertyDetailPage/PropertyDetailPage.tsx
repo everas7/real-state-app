@@ -111,7 +111,7 @@ export default function PropertyDetailPage(): JSX.Element {
       >
         <Row className={cx(styles['property-detail-page__content'])}>
           <Col md="6">
-            <PropertyCorousel />
+            <PropertyCorousel photos={property.photos} />
             <AuthorizedComponent
               rolesAllowed={Permissions.Properties.Detail.ManageAction}
             >

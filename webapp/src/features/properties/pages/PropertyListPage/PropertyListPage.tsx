@@ -96,6 +96,7 @@ export default function PropertyListPage() {
           floorAreaSize={propertyInfo.floorAreaSize}
           address={propertyInfo.address}
           available={propertyInfo.available}
+          photo={propertyInfo.photo || null}
           column={true}
         />
       </div>
@@ -199,6 +200,7 @@ export default function PropertyListPage() {
                     floorAreaSize={property.floorAreaSize}
                     address={property.address}
                     available={property.available}
+                    photo={property.photo || null}
                   />
                 </Col>
               ))}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { Col, Spinner, Row } from 'react-bootstrap';
 import googleMapReact from 'google-map-react';
@@ -11,7 +11,7 @@ import {
 import _ from 'lodash';
 
 import styles from './PropertyForm.module.scss';
-import { Map, Button } from '../../../../app/components';
+import { Map, Button, PhotoDropzone } from '../../../../app/components';
 import { IPropertyForm, Property } from '../../../../app/models/property';
 import {
   getAddressByGeolocation,
@@ -28,6 +28,7 @@ interface Props {
   property: IPropertyForm;
   onSubmit(
     values: PropertyFormValues,
+    files: object[],
     formikHelpers: FormikHelpers<PropertyFormValues>
   ): void;
 }
@@ -61,6 +62,8 @@ export default function PropertyForm({
   property,
   onSubmit,
 }: Props): React.ReactElement<Props> {
+  const [files, setFiles] = useState((property as any).photos || []);
+
   const formik = useFormik<PropertyFormValues>({
     initialValues: {
       name: property.name,
@@ -73,7 +76,8 @@ export default function PropertyForm({
       realtorId: property.realtorId || null,
     },
     validationSchema: propertySchema,
-    onSubmit,
+    onSubmit: (values: any, formikHelpers) =>
+      onSubmit(values, files, formikHelpers),
   });
 
   const geolocationFieldValue = formik.getFieldProps('geolocation').value;
@@ -98,7 +102,7 @@ export default function PropertyForm({
   return (
     <>
       <Col md="6">
-        <PropertyCorousel />
+        <PhotoDropzone setFiles={setFiles as any} files={files} />
 
         <FormikProvider value={formik}>
           <div className={styles['property-form__controls']}>

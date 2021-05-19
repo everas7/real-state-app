@@ -9,6 +9,7 @@ import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
 import debug from 'debug';
 import passport from 'passport';
+import cloudinary from 'cloudinary';
 
 import { router } from './routes';
 import { HttpError } from './interfaces/error.interface';
@@ -36,6 +37,12 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // Automatically log all HTTP requests handled by Express.js
 const loggerOptions: expressWinston.LoggerOptions = {

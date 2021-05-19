@@ -8,7 +8,6 @@ import { Property } from '../../../../app/models/property';
 import { Properties } from '../../services/propertiesApi';
 import { history } from '../../../../index';
 import styles from './PropertyEditPage.module.scss';
-import { debug } from 'console';
 
 export default function PropertyEditPage() {
   const [property, setProperty] = useState<Property>();
@@ -32,7 +31,11 @@ export default function PropertyEditPage() {
     }
   }, [id]);
 
-  const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
+  const onSubmitClickHandler = (
+    values: any,
+    files: any,
+    { setSubmitting }: any
+  ) => {
     Properties.update(+id, {
       ...values,
       price: Number(String(values.price).replace(/[^0-9.]/g, '')),
@@ -42,7 +45,29 @@ export default function PropertyEditPage() {
       rooms: Number(String(values.rooms).replace(/[^0-9]/g, '')),
       available: property!.available,
       realtorId: values.realtorId || property!.realtorId,
-    }).then(() => {
+    }).then(async () => {
+      const photosToDelete = property!.photos.filter(
+        (p) => !files.some((f: any) => f.id === p.id)
+      );
+      if (photosToDelete.length) {
+        const deleteParams = new URLSearchParams();
+
+        photosToDelete.forEach((fileToDelete: any) => {
+          deleteParams.append('ids[]', String(fileToDelete.id));
+        });
+        await Properties.deletePhotos(property!.id, deleteParams);
+      }
+
+      const formData = new FormData();
+      if (files.length) {
+        files
+          ?.filter((f: any) => !property?.photos.some((p) => f.id === p.id))
+          .forEach((fileToUpload: any) => {
+            formData.append('photos', fileToUpload);
+          });
+        await Properties.uploadPhotos(property!.id, formData);
+      }
+
       setSubmitting(false);
       history.push(`/apartments/${id}`);
     });

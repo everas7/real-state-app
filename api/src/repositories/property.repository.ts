@@ -30,6 +30,7 @@ export const findAllWhere = async (
     where,
     offset,
     limit,
+    include: 'photos',
   }).then((res) => ({
     count: res.count,
     rows: res.rows.map((p) => p.get({ plain: true })),
@@ -38,7 +39,7 @@ export const findAllWhere = async (
 
 export const findById = async (id: number): Promise<Property | undefined> => {
   return db.Property.findByPk(id, {
-    include: 'realtor',
+    include: ['realtor', 'photos'],
   }).then((m) =>
     m?.get({
       plain: true,

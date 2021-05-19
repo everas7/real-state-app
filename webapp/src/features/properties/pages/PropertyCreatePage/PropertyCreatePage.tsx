@@ -28,7 +28,11 @@ export default function PropertyCreatePage() {
     available: true,
   });
 
-  const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
+  const onSubmitClickHandler = (
+    values: any,
+    files: any,
+    { setSubmitting }: any
+  ) => {
     Properties.create({
       ...values,
       price: Number(String(values.price).replace(/[^0-9.]/g, '')),
@@ -39,8 +43,12 @@ export default function PropertyCreatePage() {
       realtorId: values.realtorId || user!.id,
       available: true,
     }).then((res) => {
-      setSubmitting(false);
-      history.push(`/apartments/${res.id}`);
+      var data = new FormData();
+      files.forEach((file: Blob) => data.append('photos', file));
+      Properties.uploadPhotos(res.id, data).then(() => {
+        setSubmitting(false);
+        history.push(`/apartments/${res.id}`);
+      });
     });
   };
 

@@ -65,10 +65,9 @@ const request = {
     axios.post(url, body).then(sleep(1000)).then(responseBody),
   put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
   patch: (url: string, body: {}) => axios.patch(url, body).then(responseBody),
-  del: (url: string) => axios.delete(url).then(responseBody),
-  postForm: (url: string, file: Blob) => {
-    const formData = new FormData();
-    formData.append('File', file);
+  del: (url: string, params?: URLSearchParams) =>
+    axios.delete(url, { params }).then(responseBody),
+  postForm: (url: string, formData: FormData) => {
     return axios
       .post(url, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },

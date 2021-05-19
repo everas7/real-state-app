@@ -1,4 +1,5 @@
 import { UserDto, User } from './user.interface';
+import { Photo } from './photo.interface';
 
 export interface GeoLocation {
   type: 'POINT';
@@ -22,15 +23,18 @@ export interface Property {
   address: string;
   realtorId: number;
   realtor?: User;
+  photos?: Photo[];
   createdAt?: string;
   updatedAt?: string;
 }
 
-export interface PropertyDto extends Omit<Property, 'geolocation' | 'realtor'> {
+export interface PropertyDto extends Omit<Property, 'geolocation' | 'realtor' | 'photos'> {
   geolocation: GeoLocationDto;
+  photo: string | null;
 }
-export interface PropertyDetailedDto extends PropertyDto {
+export interface PropertyDetailedDto extends Omit<PropertyDto, 'photo'> {
   realtor: UserDto;
+  photos?: Photo[];
 }
 
 export type PropertyForm = Omit<Property, 'id' | 'createdAt' | 'updatedAt'>;
