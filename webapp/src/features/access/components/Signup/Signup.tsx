@@ -22,19 +22,27 @@ interface Props {
 export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
   const [role, setRole] = useState<Role.Client | Role.Realtor>(Role.Client);
   const dispatch = useAppDispatch();
+  const [signupError, setSignupError] = useState('');
 
   async function handleSignup(signupForm: SignupForm, cb: () => void) {
-    return Access.signup(signupForm).then((res) => {
-      dispatch(
-        login(
-          {
-            email: signupForm.email,
-            password: signupForm.password,
-          },
-          cb
-        )
-      );
-    });
+    return Access.signup(signupForm)
+      .then((res) => {
+        dispatch(
+          login(
+            {
+              email: signupForm.email,
+              password: signupForm.password,
+            },
+            cb
+          )
+        );
+      })
+      .catch((er) => {
+        if (er.data.message === 'User email already exists') {
+          setSignupError('Email is already registered');
+        }
+        cb();
+      });
   }
 
   return (
@@ -95,6 +103,9 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
                 component={Input}
                 icon={<FaLock color={Constants.GRAY_COLOR} />}
               />
+              {signupError && (
+                <div className="text-danger mb-3">{signupError}</div>
+              )}
               <Button
                 type="submit"
                 disabled={isSubmitting || !_.isEmpty(errors)}

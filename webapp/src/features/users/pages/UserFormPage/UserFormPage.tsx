@@ -20,6 +20,7 @@ import {
   userCreateSchema,
   userUpdateSchema,
 } from '../../validators/userValidator';
+import { toast } from 'react-toastify';
 
 export default function UserFormPage() {
   const [user, setUser] = useState<User>();
@@ -45,22 +46,34 @@ export default function UserFormPage() {
     }
   }, [id]);
 
-  const onSubmitClickHandler = (values: any, { setSubmitting }: any) => {
-    if (id) {
-      Users.update(+id, {
-        ...values,
-        password: values.password || user?.password,
-      }).then(() => {
-        setSubmitting(false);
-        history.push(`/users/${id}`);
-      });
-    } else {
-      Users.create({
-        ...values,
-      }).then((res) => {
-        setSubmitting(false);
-        history.push(`/users/${res.id}`);
-      });
+  const onSubmitClickHandler = async (values: any, { setSubmitting }: any) => {
+    try {
+      if (id) {
+        await Users.update(+id, {
+          ...values,
+          password: values.password || user?.password,
+        }).then(() => {
+          setSubmitting(false);
+          history.push(`/users/${id}`);
+        });
+      } else {
+        await Users.create({
+          ...values,
+        }).then((res) => {
+          setSubmitting(false);
+          history.push(`/users/${res.id}`);
+        });
+      }
+    } catch (err) {
+      if (
+        err.status === 400 &&
+        err.data.message === 'User email already exists'
+      ) {
+        toast.error('Email is already registered', {
+          position: 'top-center',
+        });
+      }
+      setSubmitting(false);
     }
   };
 

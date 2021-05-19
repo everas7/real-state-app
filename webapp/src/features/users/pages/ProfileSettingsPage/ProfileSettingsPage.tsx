@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik';
 import cx from 'classnames';
 import _ from 'lodash';
 import { Col, Row } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import styles from './ProfileSettingsPage.module.scss';
 import {
@@ -26,11 +27,23 @@ export default function ProfileSettingsPage() {
     Users.updateMe({
       ...values,
       password: values.password || user?.password,
-    }).then(() => {
-      setSubmitting(false);
-      history.push(`/`);
-      window.location.reload();
-    });
+    })
+      .then(() => {
+        setSubmitting(false);
+        history.push(`/`);
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (
+          err.status === 400 &&
+          err.data.message === 'User email already exists'
+        ) {
+          toast.error('Email is already registered', {
+            position: 'top-center',
+          });
+        }
+        setSubmitting(false);
+      });
   };
 
   if (!user) return <FullScreenSpinner alt="Loading user..." />;
