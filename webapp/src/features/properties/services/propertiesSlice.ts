@@ -80,7 +80,7 @@ export const selectLoadingList = (state: RootState) =>
 export const fetchProperties = (): AppThunk => (dispatch, getState) => {
   const filters = getState().properties.filters;
   const page = getState().properties.page;
-  const pageSize = 3;
+  const pageSize = 10;
   dispatch(setLoadingList(true));
   Properties.list(
     formatQueryParams(filters, defaultFilters, pageSize, page)
