@@ -33,13 +33,6 @@ export default function PropertyCorousel({
             alt="Example Slide 1"
           />
         </Carousel.Item>
-        <Carousel.Item key={2}>
-          <img
-            className={cx('d-block w-100', styles['property-corousel__img'])}
-            src={Constants.PROPERTY_PLACEHOLDER}
-            alt="Example Slide 2"
-          />
-        </Carousel.Item>
       </Carousel>
     );
   }

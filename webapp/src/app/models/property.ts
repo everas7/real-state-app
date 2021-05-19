@@ -48,11 +48,22 @@ export interface Property {
 export interface IPropertyForm
   extends Omit<
     Property,
-    'id' | 'realtor' | 'createdAt' | 'updatedAt' | 'geolocation' | 'photos'
+    | 'id'
+    | 'realtor'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'geolocation'
+    | 'photos'
+    | 'price'
+    | 'rooms'
+    | 'floorAreaSize'
   > {
   id?: number;
   realtor?: Realtor;
   geolocation: GeoLocation | null;
+  rooms: string | number;
+  floorAreaSize: string | number;
+  price: string | number;
 }
 
 export interface IPropertyFilters {

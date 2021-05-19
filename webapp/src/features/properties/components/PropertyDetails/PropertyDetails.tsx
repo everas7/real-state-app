@@ -95,7 +95,7 @@ export default function PropertyDetails({
               name="rooms"
               maskOptions={{
                 prefix: '',
-                suffix: ' rooms',
+                suffix: '',
                 allowDecimal: false,
               }}
               placeholder="0 rooms"
@@ -120,7 +120,7 @@ export default function PropertyDetails({
               name="floorAreaSize"
               maskOptions={{
                 prefix: '',
-                suffix: ' ft²',
+                suffix: '',
                 allowDecimal: false,
               }}
               placeholder="0 ft²"
