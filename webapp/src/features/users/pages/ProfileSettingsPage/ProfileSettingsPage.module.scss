@@ -1,10 +1,10 @@
-.user-form-page {
+.profile-settings-page {
   &__content {
     height: 100%;
   }
 
   &__controls {
-    margin-bottom: 15px;
+    margin-top: 20px;
     button:not(:last-child) {
       margin-right: 10px;
     }

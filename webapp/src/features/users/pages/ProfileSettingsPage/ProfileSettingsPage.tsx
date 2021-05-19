@@ -57,7 +57,7 @@ export default function ProfileSettingsPage() {
           </Col>
         </Row>
       </Col>
-      <Col md="8" className={cx(styles['user-form-page__content'])}>
+      <Col md="8" className={cx(styles['profile-settings-page__content'])}>
         <Formik
           initialValues={{
             name: user?.name || '',
@@ -70,29 +70,29 @@ export default function ProfileSettingsPage() {
         >
           {({ errors, submitForm, isSubmitting }) => (
             <Form>
-              <div className={styles['user-form-page__controls']}>
-                <Button
-                  disabled={isSubmitting || !_.isEmpty(errors)}
-                  onClick={submitForm}
-                  loading={isSubmitting}
-                >
-                  {user?.id ? 'Save Changes' : 'Create User'}
-                </Button>
-                <Button
-                  variant="light"
-                  onClick={() => {
-                    history.push(`/users/${user?.id || ''}`);
-                  }}
-                >
-                  Cancel
-                </Button>
-              </div>
               <UserDetails
                 user={user!}
                 edit={true}
                 settings={true}
                 create={!user?.id}
               />
+              <div className={styles['profile-settings-page__controls']}>
+                <Button
+                  disabled={isSubmitting || !_.isEmpty(errors)}
+                  onClick={submitForm}
+                  loading={isSubmitting}
+                >
+                  {'Save Changes'}
+                </Button>
+                <Button
+                  variant="light"
+                  onClick={() => {
+                    history.push(`/`);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>
