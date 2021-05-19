@@ -16,7 +16,10 @@ export const propertySchema = yup.object().shape({
     .string()
     .required('Address is required')
     .max(120, 'Name must not exceed 120 characters'),
-  realtorId: yup.string().required('Realtor is required'),
+  realtorId: yup
+    .number()
+    .typeError('Must choose a valid realtor')
+    .required('Realtor is required'),
   geolocation: yup.object().shape({
     latitude: yup.number().required(),
     longitude: yup.number().required(),

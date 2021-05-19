@@ -4,6 +4,7 @@ import {
   PropertyFilters,
 } from '../interfaces/property.interface';
 import * as propertyRepository from '../repositories/property.repository';
+import * as userRepository from '../repositories/user.repository';
 import { User } from '../interfaces/user.interface';
 import { Op } from 'sequelize';
 import { RoleEnum } from '../interfaces/role.interface';
@@ -67,6 +68,19 @@ export const getAll = async (
 };
 
 export const add = async (property: PropertyForm): Promise<Property> => {
+  const user = await userRepository.findById(property.realtorId);
+  if (!user) {
+    throw {
+      status: 400,
+      message: 'Realtor does not exist',
+    };
+  }
+  if (user?.roleId !== RoleEnum.Realtor) {
+    throw {
+      status: 400,
+      message: 'Properties can only be assigned to realtors',
+    };
+  }
   return propertyRepository.create(property);
 };
 
@@ -74,6 +88,19 @@ export const update = async (
   id: number,
   property: PropertyForm
 ): Promise<Property> => {
+  const user = await userRepository.findById(property.realtorId);
+  if (!user) {
+    throw {
+      status: 400,
+      message: 'Realtor does not exist',
+    };
+  }
+  if (user?.roleId !== RoleEnum.Realtor) {
+    throw {
+      status: 400,
+      message: 'Properties can only be assigned to realtors',
+    };
+  }
   return propertyRepository.update(id, property);
 };
 

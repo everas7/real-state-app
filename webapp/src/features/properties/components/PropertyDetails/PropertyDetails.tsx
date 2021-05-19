@@ -177,6 +177,9 @@ export default function PropertyDetails({
             >
               {(props: FieldProps) => (
                 <Input {...props} placeholder="Realtor" as="select">
+                  <option key="key-none" value="none">
+                    Select a Realtor
+                  </option>
                   {userOptions.map((u, i) => (
                     <option key={i} value={u.id}>
                       {u.name} - {u.email}
