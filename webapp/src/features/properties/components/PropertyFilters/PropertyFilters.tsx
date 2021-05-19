@@ -55,7 +55,24 @@ export default function PropertyFilters({
   }
 
   function handleApplyFilter(filtersValues: PropertyFiltersValues) {
-    const filtersToSend: PropertyFiltersValues = _.cloneDeep(filtersValues);
+    const filtersToSend: PropertyFiltersValues = _.cloneDeep({
+      ...filtersValues,
+      price: {
+        min: filtersValues.price.min,
+        max: Math.max(filtersValues.price.max!, filtersValues.price.min),
+      },
+      floorAreaSize: {
+        min: filtersValues.floorAreaSize.min,
+        max: Math.max(
+          filtersValues.floorAreaSize.max!,
+          filtersValues.floorAreaSize.min
+        ),
+      },
+    });
+    setFilters({
+      ...filters,
+      ...filtersToSend,
+    });
     const params = new URLSearchParams();
     params.append('filters[minPrice]', String(filtersToSend.price.min));
     if (filtersToSend.price!.max !== defaultFilters.price.max) {

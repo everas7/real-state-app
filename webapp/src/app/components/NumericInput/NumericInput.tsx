@@ -21,10 +21,12 @@ const defaultMaskOptions = {
   allowLeadingZeroes: false,
 };
 
-interface Props extends FieldProps {
-  maskOptions: MaskedInputProps;
+interface Props extends Partial<FieldProps> {
+  maskOptions: Partial<typeof defaultMaskOptions>;
   icon?: IconType;
   className?: string;
+  value: string | number;
+  onChange: (e: any) => void;
 }
 
 export function NumericInput({
@@ -45,7 +47,12 @@ export function NumericInput({
       <div className={icon && 'inner-addon left-addon'}>
         <span className="inputicon">{icon}</span>
         <Form.Control
-          isInvalid={form?.touched[field.name] && !!form?.errors[field.name]}
+          isInvalid={
+            (field?.name &&
+              form?.touched[field.name] &&
+              !!form?.errors[field?.name]) ||
+            false
+          }
           as={MaskedInput}
           mask={currencyMask}
           {...field}
@@ -55,7 +62,7 @@ export function NumericInput({
           type="invalid"
           className={styles['numeric-input__invalid-feedback']}
         >
-          {form?.errors[field.name]}
+          {field?.name && form?.errors[field?.name]}
         </Form.Control.Feedback>
       </div>
     </Form.Group>

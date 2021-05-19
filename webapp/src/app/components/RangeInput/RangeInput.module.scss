@@ -18,5 +18,16 @@
   &__label-values {
     color: $primary;
     font-size: 14px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__manual-controls {
+    display: flex;
+    flex-direction: row;
+    &-divider {
+      line-height: 37px;
+      margin: 0 2px;
+    }
   }
 }
