@@ -79,21 +79,21 @@ export default function Signup({ onSwitch }: Props): React.ReactElement<Props> {
                 name="name"
                 placeholder="Full Name"
                 component={Input}
-                icon={<FaUser color={Constants.PRIMARY_COLOR} />}
+                icon={<FaUser color={'#717171'} />}
               />
               <Field
                 type="email"
                 name="email"
                 placeholder="Email"
                 component={Input}
-                icon={<FaEnvelope color={Constants.PRIMARY_COLOR} />}
+                icon={<FaEnvelope color={'#717171'} />}
               />
               <Field
                 type="password"
                 name="password"
                 placeholder="Password"
                 component={Input}
-                icon={<FaLock color={Constants.PRIMARY_COLOR} />}
+                icon={<FaLock color={'#717171'} />}
               />
               <Button
                 type="submit"

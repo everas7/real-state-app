@@ -38,14 +38,14 @@ export default function Login({ onSwitch }: Props): React.ReactElement<Props> {
                 name="email"
                 placeholder="Email"
                 component={Input}
-                icon={<FaEnvelope color={Constants.PRIMARY_COLOR} />}
+                icon={<FaEnvelope color={'#717171'} />}
               />
               <Field
                 type="password"
                 name="password"
                 placeholder="Password"
                 component={Input}
-                icon={<FaLock color={Constants.PRIMARY_COLOR} />}
+                icon={<FaLock color={'#717171'} />}
               />
               {authenticationError && (
                 <div className="login__form-invalid-text text-danger">
