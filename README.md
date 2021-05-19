@@ -61,6 +61,9 @@ DB_DATABASE= demo_ar_db
 DB_HOST= localhost
 DB_PORT= 3306
 JWT_SECRET= top_secret_key_for_jwt_auth
+CLOUDINARY_CLOUD_NAME=yourcloudname
+CLOUDINARY_API_KEY=youcapikey
+CLOUDINARY_API_SECRET=yourapisecret
 ```
 
 

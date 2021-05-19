@@ -36,7 +36,6 @@ export const validatePropertyExists = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.params, 'veamos')
   const property = await propertyServices.getById(parseInt(req.params.id, 10));
   if (!property) {
     res

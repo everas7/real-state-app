@@ -2,12 +2,8 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import * as photoService from '../services/photo.service';
-import { User } from '../interfaces/user.interface';
-import datauri from 'datauri';
-import { uploadImage } from '../helpers/cloudinary';
 
 export const add = async (req: Request, res: Response) => {
-  console.log(req.files, 'no?');
   if (req.files.length) {
     await photoService.add({
       property: req.property as any,
