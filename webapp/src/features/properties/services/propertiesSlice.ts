@@ -74,7 +74,8 @@ export const selectTotalPages = (state: RootState) =>
   state.properties.totalPages;
 
 export const selectFilters = (state: RootState) => state.properties.filters;
-export const selectLoadingList = (state: RootState) => state.properties.loadingList;
+export const selectLoadingList = (state: RootState) =>
+  state.properties.loadingList;
 
 export const fetchProperties = (): AppThunk => (dispatch, getState) => {
   const filters = getState().properties.filters;
@@ -88,6 +89,14 @@ export const fetchProperties = (): AppThunk => (dispatch, getState) => {
     dispatch(setTotalPages(res.pages));
     dispatch(setLoadingList(false));
   });
+};
+
+export const resetPropertiesState = (): AppThunk => (dispatch, getState) => {
+  dispatch(setProperties([]));
+  dispatch(setTotalPages(0));
+  dispatch(setLoadingList(false));
+  dispatch(setFilters(defaultFilters));
+  dispatch(setPage(1));
 };
 
 export default propertiesSlice.reducer;

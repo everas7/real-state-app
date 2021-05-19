@@ -6,6 +6,7 @@ import { LoginForm } from '../../../app/models/login';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../../app/store/store';
 import { User } from '../../../app/models/user';
+import { resetPropertiesState } from '../../properties/services/propertiesSlice';
 
 export interface AccessState {
   isAuthenticated: boolean;
@@ -89,6 +90,7 @@ export const logout = (): AppThunk => (dispatch, getState) => {
   localStorage.removeItem('jwt');
   dispatch(setAuthenticationError(false));
   dispatch(setAuthenticated(null));
+  dispatch(resetPropertiesState())
 };
 
 export default accessSlice.reducer;
