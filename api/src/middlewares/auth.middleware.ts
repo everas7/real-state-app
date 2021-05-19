@@ -58,6 +58,10 @@ export const setupPassport = () => {
       },
       async (token, done) => {
         try {
+          const user = await userServices.getById(token.user.id);
+          if (!user) {
+            done(null, null);
+          }
           return done(null, token.user);
         } catch (error) {
           done(error);
