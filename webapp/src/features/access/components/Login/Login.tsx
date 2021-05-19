@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { loginSchema } from '../../validators/accessValidator';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import * as Constants from '../../../../app/constants';
-import { Spinner } from 'react-bootstrap';
 
 interface Props {
   onSwitch(): void;
@@ -38,14 +37,14 @@ export default function Login({ onSwitch }: Props): React.ReactElement<Props> {
                 name="email"
                 placeholder="Email"
                 component={Input}
-                icon={<FaEnvelope color={'#717171'} />}
+                icon={<FaEnvelope color={Constants.GRAY_COLOR} />}
               />
               <Field
                 type="password"
                 name="password"
                 placeholder="Password"
                 component={Input}
-                icon={<FaLock color={'#717171'} />}
+                icon={<FaLock color={Constants.GRAY_COLOR} />}
               />
               {authenticationError && (
                 <div className="login__form-invalid-text text-danger">

@@ -7,8 +7,6 @@ import { Input } from '../../../../app/components';
 import { User } from '../../../../app/models/user';
 import { mapRoleAsString } from '../../../../app/helpers/userHelper';
 import { Role } from '../../../../app/models/role';
-import { AuthorizedComponent } from '../../../../app/authorization/AuthorizedComponent';
-import { Permissions } from '../../../../app/authorization/permissions';
 
 interface Props {
   user: User;

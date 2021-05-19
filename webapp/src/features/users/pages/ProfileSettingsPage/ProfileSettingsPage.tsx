@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import cx from 'classnames';
 import _ from 'lodash';
-import { Col, Row, Spinner } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
 import styles from './ProfileSettingsPage.module.scss';
 import {
   Breadcrumb,
   Button,
-  NotFound,
   FullScreenSpinner,
 } from '../../../../app/components';
-import { User } from '../../../../app/models/user';
 import { history } from '../../../../index';
 import { Users } from '../../../../app/services/usersApi';
 import UserDetails from '../../components/UserDetails/UserDetails';

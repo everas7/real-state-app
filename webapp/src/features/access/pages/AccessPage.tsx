@@ -13,7 +13,7 @@ export default function AccessPage() {
 
   return (
     <div className={styles['access-page']}>
-      <div className={styles['access-page__image']}/>
+      <div className={styles['access-page__image']} />
 
       <div className={styles['access-page__page']}>
         <Container className="h-100">

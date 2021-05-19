@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import cx from 'classnames';
 import _ from 'lodash';
-import { Col, Row, Spinner } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
 import styles from './UserFormPage.module.scss';
 import {
