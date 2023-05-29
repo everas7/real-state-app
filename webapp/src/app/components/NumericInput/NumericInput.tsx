@@ -37,7 +37,7 @@ export function NumericInput({
   icon,
   className,
   ...props
-}: Props) {
+}: any) {
   const currencyMask = createNumberMask({
     ...defaultMaskOptions,
     ...maskOptions,

@@ -1,3 +1,5 @@
+      //@ts-ignore
+
 import React, { useState } from 'react';
 import InputRange, { Range, InputRangeProps } from 'react-input-range';
 import { FaCheck, FaPen } from 'react-icons/fa';
@@ -136,7 +138,6 @@ export function RangeInput({
           </div>
         </>
       )}
-      <InputRange allowSameValues={allowSameValues} {...props} />
     </div>
   );
 }

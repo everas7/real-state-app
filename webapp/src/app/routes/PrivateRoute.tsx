@@ -6,12 +6,8 @@ import {
   RouteComponentProps,
 } from 'react-router-dom';
 
-interface IProps extends RouteProps {
-  isLoggedIn: boolean;
-  component: React.ComponentType<RouteComponentProps<any>>;
-}
 
-export const PrivateRoute: React.FC<IProps> = ({
+export const PrivateRoute: React.FC<any> = ({
   component: Component,
   isLoggedIn,
   ...rest

@@ -9,14 +9,8 @@ import { NotFound } from '../components';
 import { Role } from '../models/role';
 import { User } from '../models/user';
 
-interface IProps extends RouteProps {
-  isLoggedIn: boolean;
-  component: React.ComponentType<RouteComponentProps<any>>;
-  rolesAllowed?: Role[];
-  user: User;
-}
 
-export const AuthorizedRoute: React.FC<IProps> = ({
+export const AuthorizedRoute: React.FC<any> = ({
   component: Component,
   isLoggedIn,
   rolesAllowed,

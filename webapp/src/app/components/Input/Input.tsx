@@ -6,12 +6,8 @@ import { IconType } from 'react-icons';
 
 import styles from './Input.module.scss';
 
-interface Props extends FormControlProps, FieldProps {
-  icon?: IconType;
-  placeholder?: string;
-}
 
-export const Input: React.FC<Props> = ({
+export const Input: React.FC<any> = ({
   field,
   form,
   meta,
@@ -22,7 +18,7 @@ export const Input: React.FC<Props> = ({
   return (
     <Form.Group className={cx(styles.input, className)}>
       <div className={cx({ 'inner-addon left-addon': !!icon })}>
-        <span className="inputicon">{icon}</span>
+        <span className="inputicon">{icon as React.ReactNode}</span>
         <Form.Control
           {...field}
           {...props}

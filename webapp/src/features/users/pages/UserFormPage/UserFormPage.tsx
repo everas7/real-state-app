@@ -64,7 +64,7 @@ export default function UserFormPage() {
           history.push(`/users/${res.id}`);
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       if (
         err.status === 400 &&
         err.data.message === 'User email already exists'

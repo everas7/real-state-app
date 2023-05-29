@@ -49,7 +49,7 @@ export const PhotoDropzone: React.FC<IProps> = ({ setFiles, files }) => {
           ...files,
           ...acceptedFiles.map((file: {}) =>
             Object.assign(file, {
-              preview: URL.createObjectURL(file),
+              preview: URL.createObjectURL(file as any),
             })
           ),
         ].slice(0, 10)

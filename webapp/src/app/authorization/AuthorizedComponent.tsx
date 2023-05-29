@@ -6,13 +6,7 @@ import { Role } from '../models/role';
 import { User } from '../models/user';
 import { useAppSelector } from '../store/hooks';
 
-interface IProps extends RouteProps {
-  children: React.ReactNode | React.ReactNode[];
-  rolesAllowed?: Role[];
-  customValidation?(user: User): boolean;
-}
-
-export const AuthorizedComponent: React.FC<IProps> = ({
+export const AuthorizedComponent: React.FC<any> = ({
   children,
   rolesAllowed,
   customValidation,
